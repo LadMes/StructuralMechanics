@@ -2,13 +2,16 @@
 
 namespace StructuralMechanics.Models
 {
-    public class Point : Geometry, IComparable<Point>
+    public class Point : GeometryObject, IComparable<Point>
     {
         [Required]
         public double X { get; set; }
         [Required]
         public double Y { get; set; }
         public PointPositionInCoordGrid PointPosition { get; private set; }
+
+        //Navigation Properties
+        public ShearForce ShearForce { get; set; }
 
         public Point(double x, double y)
         {

@@ -2,7 +2,7 @@
 
 namespace StructuralMechanics.Models
 {
-    public class Geometry
+    public class GeometryObject
     {
         public int Id { get; set; }
         protected GeometryType GeometryType { get; set; }

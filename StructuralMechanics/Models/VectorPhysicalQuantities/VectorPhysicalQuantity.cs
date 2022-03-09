@@ -2,13 +2,14 @@
 {
     public abstract class VectorPhysicalQuantity
     {
-        public int VectorPhysicalQuantityId { get; set; }
-        public Guid ProjectId { get; set; }
+        public int Id { get; set; }
         public double Magnitude { get; set; }
         public Direction Direction { get; set; }
         public VectorType VectorType { get; set; }
 
-        //public VectorPhysicalQuantity() { }
+        //Navigation Properties
+        public Project Project { get; set; }
+
 
         public VectorPhysicalQuantity(double magnitude, Direction direction)
         {

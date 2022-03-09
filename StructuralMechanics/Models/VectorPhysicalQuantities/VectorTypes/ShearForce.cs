@@ -2,6 +2,7 @@
 {
     public class ShearForce : VectorPhysicalQuantity
     {
+        //Navigation Properties
         public Point Location { get; set; }
 
 

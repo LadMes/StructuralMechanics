@@ -14,7 +14,7 @@ namespace StructuralMechanics.Models
         //public DbSet<StrengthMember> StrengthMembers { get; set; }
         //public DbSet<Moment> Moments { get; set; }
         //public DbSet<ShearForce> ShearForces { get; set; }
-        public DbSet<Geometry> GeometryObjects { get; set; }
+        public DbSet<GeometryObject> GeometryObjects { get; set; }
         //public DbSet<VectorPhysicalQuantity> VectorPhysicalQuantities { get; set; }
 
 
@@ -28,13 +28,14 @@ namespace StructuralMechanics.Models
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUser>().HasMany(b => b.Projects).WithOne(p => p.ApplicationUser);
+            builder.Entity<ApplicationUser>().HasMany(au => au.Projects).WithOne(p => p.ApplicationUser);
 
             builder.Entity<Project>().HasKey("Id").IsClustered(false);
-            builder.Entity<Project>().HasMany(p => p.Geometries).WithOne(b => b.Project);
+            builder.Entity<Project>().HasMany(p => p.GeometryObjects).WithOne(g => g.Project);
+            builder.Entity<Project>().HasMany(p => p.VectorPhysicalQuantities).WithOne(vpq => vpq.Project);
 
-            builder.Entity<Geometry>().ToTable("GeometryObjects");
-            builder.Entity<Geometry>().HasKey("Id");
+            builder.Entity<GeometryObject>().ToTable("GeometryObjects");
+            builder.Entity<GeometryObject>().HasKey("Id");
             //builder.Entity<ShapeSharedInfo>().ToTable("ShapeSharedInfos");
             //builder.Entity<BasicShape>().ToTable("BasicShapes");
 
@@ -84,8 +85,8 @@ namespace StructuralMechanics.Models
             //    });
 
 
-            //builder.Entity<VectorPhysicalQuantity>().ToTable("VectorPhysicalQuantities");
-            //builder.Entity<VectorPhysicalQuantity>().HasKey("VectorPhysicalQuantityId");
+            builder.Entity<VectorPhysicalQuantity>().ToTable("VectorPhysicalQuantities");
+            builder.Entity<VectorPhysicalQuantity>().HasKey("Id");
 
             //builder.Entity<Moment>().ToTable("Moments");
             //builder.Entity<Moment>(
@@ -94,14 +95,13 @@ namespace StructuralMechanics.Models
             //        p.Property(m => m.Magnitude);
             //        p.Property(m => m.Direction);
             //    });
-            //builder.Entity<ShearForce>().ToTable("ShearForces");
-            //builder.Entity<ShearForce>(
-            //    p =>
-            //    {
-            //        p.Property(m => m.Magnitude);
-            //        p.Property(m => m.Direction);
-            //        p.Property(m => m.Location);
-            //    });
+            builder.Entity<ShearForce>().ToTable("ShearForces");
+            builder.Entity<ShearForce>().HasOne(sf => sf.Location).WithOne(p => p.ShearForce);
+            builder.Entity<ShearForce>(
+                p =>
+                {
+                    p.Property(m => m.Location);
+                });
 
 
             foreach (var foreignKey in builder.Model.GetEntityTypes()

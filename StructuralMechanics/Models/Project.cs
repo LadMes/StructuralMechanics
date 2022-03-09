@@ -14,9 +14,10 @@ namespace StructuralMechanics.Models
         //public List<ShearForce>? ShearForces { get; set; }
         //public List<Moment>? Moments { get; set; }
 
+
         //Navigation Properties
-        //public Guid ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        public List<Geometry> Geometries { get; set; }
+        public List<GeometryObject> GeometryObjects { get; set; }
+        public List<VectorPhysicalQuantity> VectorPhysicalQuantities { get; set; }
     }
 }
