@@ -15,7 +15,7 @@ namespace StructuralMechanics.Models
         //public DbSet<Moment> Moments { get; set; }
         //public DbSet<ShearForce> ShearForces { get; set; }
         public DbSet<GeometryObject> GeometryObjects { get; set; }
-        //public DbSet<VectorPhysicalQuantity> VectorPhysicalQuantities { get; set; }
+        public DbSet<VectorPhysicalQuantity> VectorPhysicalQuantities { get; set; }
 
 
 
@@ -36,12 +36,13 @@ namespace StructuralMechanics.Models
 
             builder.Entity<GeometryObject>().ToTable("GeometryObjects");
             builder.Entity<GeometryObject>().HasKey("Id");
-            //builder.Entity<ShapeSharedInfo>().ToTable("ShapeSharedInfos");
-            //builder.Entity<BasicShape>().ToTable("BasicShapes");
+            builder.Entity<GeneralGeometryProperties>().ToTable("GeneralGeometryProperties");
 
-            ////builder.Entity<BasicShape>().HasOne(b => b.FirstPoint).WithOne();
+            builder.Entity<SimpleShape>().ToTable("SimpleShapes");
+            builder.Entity<SimpleShape>().HasOne(ss => ss.FirstPoint).WithOne(p => p.SimpleShape).HasForeignKey<Point>(p => p.Id);
+            builder.Entity<SimpleShape>().HasOne(ss => ss.SecondPoint).WithOne(p => p.SimpleShape).HasForeignKey<Point>(p => p.Id);
 
-            //builder.Entity<Arc>().ToTable("Arcs");
+            builder.Entity<Arc>().ToTable("Arcs");
             //builder.Entity<Arc>(
             //    p =>
             //    {
@@ -49,8 +50,7 @@ namespace StructuralMechanics.Models
             //        p.Property(m => m.SecondPoint);
             //        p.Property(m => m.Thickness);
             //    });
-            ////builder.Entity<Arc>().HasOne(b => b.FirstPoint).WithOne();
-            //builder.Entity<HorizontalLine>().ToTable("HorizontalLines");
+            builder.Entity<HorizontalLine>().ToTable("HorizontalLines");
             //builder.Entity<HorizontalLine>(
             //    p =>
             //    {
@@ -59,7 +59,7 @@ namespace StructuralMechanics.Models
             //        p.Property(m => m.Thickness);
             //    });
             builder.Entity<Point>().ToTable("Points");
-            //builder.Entity<SlopeLine>().ToTable("SlopeLines");
+            builder.Entity<SlopeLine>().ToTable("SlopeLines");
             //builder.Entity<SlopeLine>(
             //    p =>
             //    {
@@ -67,7 +67,8 @@ namespace StructuralMechanics.Models
             //        p.Property(m => m.SecondPoint);
             //        p.Property(m => m.Thickness);
             //    });
-            //builder.Entity<StrengthMember>().ToTable("StrengthMembers");
+            builder.Entity<StrengthMember>().ToTable("StrengthMembers");
+            builder.Entity<StrengthMember>().HasOne(sm => sm.Location).WithOne(p => p.StrengthMember).HasForeignKey<Point>(p => p.Id);
             //builder.Entity<StrengthMember>(
             //    p =>
             //    {
@@ -75,7 +76,7 @@ namespace StructuralMechanics.Models
             //        p.Property(m => m.Area);
             //        p.Property(m => m.Location);
             //    });
-            //builder.Entity<VerticalLine>().ToTable("VerticalLines");
+            builder.Entity<VerticalLine>().ToTable("VerticalLines");
             //builder.Entity<VerticalLine>(
             //    p =>
             //    {
@@ -88,7 +89,7 @@ namespace StructuralMechanics.Models
             builder.Entity<VectorPhysicalQuantity>().ToTable("VectorPhysicalQuantities");
             builder.Entity<VectorPhysicalQuantity>().HasKey("Id");
 
-            //builder.Entity<Moment>().ToTable("Moments");
+            builder.Entity<Moment>().ToTable("Moments");
             //builder.Entity<Moment>(
             //    p =>
             //    {
@@ -96,12 +97,12 @@ namespace StructuralMechanics.Models
             //        p.Property(m => m.Direction);
             //    });
             builder.Entity<ShearForce>().ToTable("ShearForces");
-            builder.Entity<ShearForce>().HasOne(sf => sf.Location).WithOne(p => p.ShearForce);
-            builder.Entity<ShearForce>(
-                p =>
-                {
-                    p.Property(m => m.Location);
-                });
+            builder.Entity<ShearForce>().HasOne(sf => sf.Location).WithOne(p => p.ShearForce).HasForeignKey<Point>(p => p.Id);
+            //builder.Entity<ShearForce>(
+            //    p =>
+            //    {
+            //        p.Property(m => m.Location);
+            //    });
 
 
             foreach (var foreignKey in builder.Model.GetEntityTypes()

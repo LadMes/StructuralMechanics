@@ -1,12 +1,22 @@
-﻿namespace StructuralMechanics.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StructuralMechanics.Models
 {
-    public class Arc : BasicShape
+    public class Arc : SimpleShape
     {
+        [Required]
         public double Radius { get; protected set; }
+        [Required]
         public ArcQuadrant ArcQuadrant { get; protected set; }
 
 
         public Arc(Point firstPoint, Point secondPoint, double thickness) : base(firstPoint, secondPoint, thickness)
+        {
+            this.GeometryType = GeometryType.Arc;
+        }
+
+        //Constructor for EF Core
+        private Arc(double thickness) : base(thickness)
         {
             this.GeometryType = GeometryType.Arc;
         }

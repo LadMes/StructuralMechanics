@@ -1,11 +1,20 @@
-﻿namespace StructuralMechanics.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StructuralMechanics.Models
 {
-    public class SlopeLine : BasicShape
+    public class SlopeLine : SimpleShape
     {
+        [Required]
         public SlopeAngle SlopeAngle { get; protected set; }
 
 
         public SlopeLine(Point firstPoint, Point secondPoint, double thickness) : base(firstPoint, secondPoint, thickness)
+        {
+            this.GeometryType = GeometryType.SlopeLine;
+        }
+
+        //Constructor for EF Core
+        private SlopeLine(double thickness) : base(thickness)
         {
             this.GeometryType = GeometryType.SlopeLine;
         }

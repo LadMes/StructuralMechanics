@@ -2,17 +2,21 @@
 
 namespace StructuralMechanics.Models
 {
-    public abstract class BasicShape : ShapeSharedInfo
+    public abstract class SimpleShape : GeneralGeometryProperties
     {
+        [Required]
+        public double Thickness { get; set; }
+        [Required]
+        public double Length { get; protected set; }
+
+        //Navigation Properties
         [Required]
         public Point FirstPoint { get; set; }
         [Required]
         public Point SecondPoint { get; set; }
-        [Required]
-        public double Thickness { get; set; }
-        public double Length { get; protected set; }
+        
 
-        public BasicShape(Point firstPoint, Point secondPoint, double thickness)
+        public SimpleShape(Point firstPoint, Point secondPoint, double thickness)
         {
             this.FirstPoint = firstPoint;
             this.SecondPoint = secondPoint;
@@ -21,6 +25,12 @@ namespace StructuralMechanics.Models
             this.CalculateLength();
             this.CalculateFirstMomentOfArea();
             this.CalculateSecondMomentOfArea();
+        }
+
+        //Constructor for EF Core
+        protected SimpleShape(double thickness)
+        {
+            this.Thickness = thickness;
         }
 
         protected abstract void ChangePointsOrder(Point firstPoint, Point secondPoint);
@@ -64,7 +74,7 @@ namespace StructuralMechanics.Models
             }
             else
             {
-                BasicShape shapeToCompare = (BasicShape)obj;
+                SimpleShape shapeToCompare = (SimpleShape)obj;
 
                 return (this.FirstPoint == shapeToCompare.FirstPoint) && (this.SecondPoint == shapeToCompare.SecondPoint)
                        && (this.Thickness == shapeToCompare.Thickness) && (this.GeometryType == shapeToCompare.GeometryType);

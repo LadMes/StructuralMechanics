@@ -2,12 +2,14 @@
 
 namespace StructuralMechanics.Models
 {
-    public class StrengthMember : ShapeSharedInfo
+    public class StrengthMember : GeneralGeometryProperties
     {
         [Required]
         public double ReductionCoefficient { get; set; }
         [Required]
         public double Area { get; set; }
+
+        //Navigation Properties
         [Required]
         public Point Location { get; set; }
 
@@ -20,6 +22,14 @@ namespace StructuralMechanics.Models
             this.GeometryType = GeometryType.StrengthMember;
             CalculateFirstMomentOfArea();
             CalculateSecondMomentOfArea();
+        }
+
+        //Constructor for EF Core
+        private StrengthMember(double reductionCoefficient, double area)
+        {
+            this.ReductionCoefficient = reductionCoefficient;
+            this.Area = area;
+            this.GeometryType = GeometryType.StrengthMember;
         }
 
         private void CalculateFirstMomentOfArea()

@@ -1,8 +1,14 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public class VerticalLine : BasicShape
+    public class VerticalLine : SimpleShape
     {
         public VerticalLine(Point firstPoint, Point secondPoint, double thickness) : base(firstPoint, secondPoint, thickness)
+        {
+            this.GeometryType = GeometryType.VerticalLine;
+        }
+
+        //Constructor for EF Core
+        private VerticalLine(double thickness) : base(thickness)
         {
             this.GeometryType = GeometryType.VerticalLine;
         }

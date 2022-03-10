@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Models;
 
 namespace StructuralMechanics.Controllers
 {
@@ -6,6 +7,7 @@ namespace StructuralMechanics.Controllers
     {
         public IActionResult Index()
         {
+            //using (AppDbContext context = new AppDbContext())
             return View();
         }
     }

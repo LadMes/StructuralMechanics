@@ -1,8 +1,14 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public class HorizontalLine : BasicShape
+    public class HorizontalLine : SimpleShape
     {
         public HorizontalLine(Point firstPoint, Point secondPoint, double thickness) : base(firstPoint, secondPoint, thickness)
+        {
+            this.GeometryType = GeometryType.HorizontalLine;
+        }
+
+        //Constructor for EF Core
+        private HorizontalLine(double thickness) : base(thickness)
         {
             this.GeometryType = GeometryType.HorizontalLine;
         }
