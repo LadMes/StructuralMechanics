@@ -1,23 +1,38 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<ApplicationUser> signInManager
+<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link href="~/css/site.css" rel="stylesheet" />
+    <link id="main-css" href="~/css/main.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div>
-
-    </div>
-    <div>
-        <div>
-
+    <div class="container">
+        <header class="header">
+            <nav class="header-nav">
+                <img class="header-image" src="~/images/bridge.png" />
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <ul>
+                        <li><a asp-controller="Projects" asp-action="Index">My Projects</a></li>
+                    </ul>
+                }
+            </nav>
+        </header>
+        <div class="inner-container">
+            @if (IsSectionDefined("Menu"))
+            {
+                @RenderSection("Menu")
+            }
+            <div class="workarea-inner-container">
+                @RenderBody()
+            </div>
         </div>
-        <div>
-            @RenderBody()
-        </div>
     </div>
-    <div></div>
+    @if (IsSectionDefined("Scripts"))
+    {
+        @RenderSection("Scripts");
+    }
 </body>
 </html>

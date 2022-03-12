@@ -7,7 +7,6 @@ namespace StructuralMechanics.Controllers
     {
         public IActionResult Index()
         {
-            //using (AppDbContext context = new AppDbContext())
             return View();
         }
     }
