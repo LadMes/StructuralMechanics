@@ -10,8 +10,10 @@ namespace StructuralMechanics.Models
         public double Length { get; protected set; }
 
         //Navigation Properties
+        public int FirstPointId { get; set; }
         [Required]
         public Point FirstPoint { get; set; }
+        public int SecondPointId { get; set; }
         [Required]
         public Point SecondPoint { get; set; }
         

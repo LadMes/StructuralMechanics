@@ -10,7 +10,7 @@ namespace StructuralMechanics.Models
         [Required]
         public Direction Direction { get; set; }
         [Required]
-        public VectorType VectorType { get; set; }
+        public VectorType VectorType { get; protected set; }
 
         //Navigation Properties
         [Required]

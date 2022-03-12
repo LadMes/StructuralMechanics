@@ -11,11 +11,6 @@ namespace StructuralMechanics.Models
         [Required]
         public PointPositionInCoordGrid PointPosition { get; private set; }
 
-        //Navigation Properties
-        public ShearForce ShearForce { get; set; }
-        public SimpleShape SimpleShape { get; set; }
-        public StrengthMember StrengthMember { get; set; }
-
 
         public Point(double x, double y)
         {

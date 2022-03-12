@@ -5,6 +5,7 @@ namespace StructuralMechanics.Models
     public class ShearForce : VectorPhysicalQuantity
     {
         //Navigation Properties
+        public int LocationId { get; set; }
         [Required]
         public Point Location { get; set; }
 

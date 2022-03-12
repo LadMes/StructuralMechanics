@@ -5,7 +5,7 @@ namespace StructuralMechanics.Models
     public class SlopeLine : SimpleShape
     {
         [Required]
-        public SlopeAngle SlopeAngle { get; protected set; }
+        public SlopeAngle SlopeAngle { get; private set; }
 
 
         public SlopeLine(Point firstPoint, Point secondPoint, double thickness) : base(firstPoint, secondPoint, thickness)

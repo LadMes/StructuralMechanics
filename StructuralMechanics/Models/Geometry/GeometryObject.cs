@@ -6,7 +6,7 @@ namespace StructuralMechanics.Models
     {
         public int Id { get; set; }
         [Required]
-        protected GeometryType GeometryType { get; set; }
+        public GeometryType GeometryType { get; protected set; }
 
 
         //Navigation Properties

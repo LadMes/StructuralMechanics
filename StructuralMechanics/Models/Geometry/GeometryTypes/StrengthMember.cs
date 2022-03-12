@@ -10,6 +10,7 @@ namespace StructuralMechanics.Models
         public double Area { get; set; }
 
         //Navigation Properties
+        public int LocationId { get; set; }
         [Required]
         public Point Location { get; set; }
 

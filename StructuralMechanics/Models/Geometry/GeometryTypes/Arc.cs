@@ -5,9 +5,9 @@ namespace StructuralMechanics.Models
     public class Arc : SimpleShape
     {
         [Required]
-        public double Radius { get; protected set; }
+        public double Radius { get; private set; }
         [Required]
-        public ArcQuadrant ArcQuadrant { get; protected set; }
+        public ArcQuadrant ArcQuadrant { get; private set; }
 
 
         public Arc(Point firstPoint, Point secondPoint, double thickness) : base(firstPoint, secondPoint, thickness)
