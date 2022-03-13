@@ -1,6 +1,9 @@
 ﻿@import 'shared/variables.css';
 @import 'shared/fonts.css';
 @import 'shared/header.css';
+@import 'shared/buttons.css';
+@import 'shared/form.css';
+
 
 :root {
     font-family: 'Gotham Rounded';
@@ -42,7 +45,6 @@ body {
 }
 
 .sidebar-inner-container {
-    /*background-color: black;*/
     width: var(--width-sidebar-inner-container);
 }
 
@@ -61,6 +63,12 @@ body {
     font-size: 2rem;
 }
 
+.main-hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
 .error-message {
-    color: var(--color-danger);
+    color: hsl(var(--color-danger-hue), 100%, 50%);
 }

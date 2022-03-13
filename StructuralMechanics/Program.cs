@@ -5,10 +5,12 @@ using StructuralMechanics.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Services
-builder.Services.AddDbContextPool<AppDbContext>(
-                                                options => 
+builder.Services.AddDbContextPool<AppDbContext>(options => 
                                                 options.UseSqlServer(builder.Configuration.GetConnectionString("StructuralMechanicsDbConnection")));
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                                                            {
+                                                                options.SignIn.RequireConfirmedEmail = true;
+                                                            }).AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthorization();
 //builder.Services.AddAuthorization(options => options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Claim")));
