@@ -11,7 +11,9 @@
     <div class="container">
         <header class="header">
             <nav class="header-nav">
-                <img class="header-image" src="~/images/bridge.png" />
+                <div class="header-nav-image">
+                    <img src="~/images/bridge.png" />
+                </div>
                 @if (signInManager.IsSignedIn(User))
                 {
                     <ul>
@@ -21,14 +23,22 @@
             </nav>
         </header>
         <div class="inner-container">
-            @if (IsSectionDefined("Menu"))
-            {
-                @RenderSection("Menu")
-            }
-            <div class="workarea-inner-container">
+            <div class="sidebar-inner-container">
+                @if (IsSectionDefined("Menu"))
+                {
+                    @RenderSection("Menu")
+                }
+            </div>
+            <div class="middle-inner-container">
                 @RenderBody()
             </div>
+            <div class="sidebar-inner-container">
+
+            </div>
         </div>
+        <footer class="footer">
+            <h3>2022</h3>
+        </footer>
     </div>
     @if (IsSectionDefined("Scripts"))
     {

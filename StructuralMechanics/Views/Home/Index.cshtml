@@ -1,5 +1,14 @@
-﻿@{
+﻿@inject SignInManager<ApplicationUser> signInManager
+
+@{
     ViewBag.Title = "Structural Mechanics";
 }
 
-<h2>Hello World</h2>
+@if (!signInManager.IsSignedIn(User))
+{
+    <div class="info-message">Please Sign In or Sign Up</div>
+}
+else
+{
+    <h2>Hello!</h2>
+}
