@@ -62,17 +62,7 @@
     border-color: var(--form-input-border-color-light);
 }
 
-.filepond--root {
-    font-family: 'Gotham Rounded';
-    margin-bottom: 0;
-}
-
-.filepond--panel-root {
-    background-color: var(--form-input-background-color);
-    border: 1px solid var(--form-input-border-color);
-}
-
-.filepond--drop-label {
-    color: var(--color-text-light);
-    font-size: inherit;
+.checkbox {
+    display: flex;
+    align-items: center;
 }

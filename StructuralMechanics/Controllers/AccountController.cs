@@ -60,10 +60,10 @@ namespace StructuralMechanics.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                    {
-                        return RedirectToAction("ListUsers", "Administration");
-                    }
+                    //if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    //{
+                    //    return RedirectToAction("ListUsers", "Administration");
+                    //}
 
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
@@ -96,6 +96,14 @@ namespace StructuralMechanics.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await userManager.FindByEmailAsync(model.Email);
+
+                if (user != null && !user.EmailConfirmed &&
+                            (await userManager.CheckPasswordAsync(user, model.Password)))
+                {
+                    ModelState.AddModelError(string.Empty, "Email not confirmed yet");
+                    return View(model);
+                }
 
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
@@ -105,9 +113,8 @@ namespace StructuralMechanics.Controllers
                     {
                         return LocalRedirect(returnUrl);
                     }
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("Index", "Home");
                 }
-
 
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
             }
