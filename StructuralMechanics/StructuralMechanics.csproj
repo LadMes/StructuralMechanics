@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,22 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\TWC Repository\**" />
-    <Content Remove="Models\TWC Repository\**" />
-    <EmbeddedResource Remove="Models\TWC Repository\**" />
-    <None Remove="Models\TWC Repository\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Account\AccessDenied.cshtml" />
-    <None Include="Views\Account\Login.cshtml" />
-    <None Include="Views\Account\Register.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,8 +9,9 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
                                                 options.UseSqlServer(builder.Configuration.GetConnectionString("StructuralMechanicsDbConnection")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                                                             {
-                                                                options.SignIn.RequireConfirmedEmail = true;
-                                                            }).AddEntityFrameworkStores<AppDbContext>();
+                                                                options.SignIn.RequireConfirmedEmail = false;
+                                                            }).AddEntityFrameworkStores<AppDbContext>()
+                                                              .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthorization();
 //builder.Services.AddAuthorization(options => options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Claim")));

@@ -14,16 +14,24 @@
                 <div class="header-nav-image">
                     <img src="~/images/bridge.png" />
                 </div>
-                @if (signInManager.IsSignedIn(User))
+                @if (!signInManager.IsSignedIn(User))
+                {
+                    <ul>
+                        <li><a asp-controller="Account" asp-action="Login">Sign In</a></li>
+                        <li><a asp-controller="Account" asp-action="Register">Sign Up</a></li>
+                    </ul>
+                }
+                else
                 {
                     <ul>
                         <li><a asp-controller="Projects" asp-action="Index">My Projects</a></li>
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                                    <button type="submit">
+                                            Log out
+                                    </button>
+                        </form>
                     </ul>
                 }
-                <ul>
-                    <li><a asp-controller="Account" asp-action="Login">Sign In</a></li>
-                    <li><a asp-controller="Account" asp-action="Register">Sign Up</a></li>
-                </ul>
             </nav>
         </header>
         <div class="inner-container">
