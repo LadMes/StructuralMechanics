@@ -150,6 +150,7 @@ namespace StructuralMechanics.Controllers
                     {
                         return LocalRedirect(returnUrl);
                     }
+
                     return RedirectToAction("Index", "Home");
                 }
 

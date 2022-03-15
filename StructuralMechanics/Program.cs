@@ -15,7 +15,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthorization();
 //builder.Services.AddAuthorization(options => options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Claim")));
-//builder.Services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
+builder.Services.AddScoped<IProjectService, SQLServerProjectService>();
 
 
 
