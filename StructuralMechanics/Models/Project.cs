@@ -13,7 +13,7 @@ namespace StructuralMechanics.Models
         //Navigation Properties
         [Required]
         public ApplicationUser ApplicationUser { get; set; }
-        public List<GeometryObject>? GeometryObjects { get; set; }
-        public List<VectorPhysicalQuantity>? VectorPhysicalQuantities { get; set; }
+        [Required]
+        public Structure Structure { get; set; }
     }
 }

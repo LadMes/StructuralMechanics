@@ -23,11 +23,15 @@ namespace StructuralMechanics.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = await userManager.FindByIdAsync(id);
+            var user = await userManager.GetUserAsync(User);
 
-            var projects = user.Projects;
+            if (user != null)
+            {
+                var projects = user.Projects;
+                return View(projects);
+            }
 
-            return View(projects);
+            return View();
         }
     }
 }

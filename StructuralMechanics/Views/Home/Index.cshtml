@@ -1,5 +1,5 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager
-
+@model IEnumerable<Project>
 
 @{
     ViewBag.Title = "Structural Mechanics";
@@ -11,5 +11,25 @@
 }
 else
 {
-    
+    if (Model != null)
+    {
+        foreach (Project project in Model)
+        {
+            <div>
+                <div class="projectName">
+                    @project.ProjectName
+                </div>
+                <div>
+                    <a asp-controller="Projects" asp-action="Show">Show</a>
+                    <a asp-controller="Projects" asp-action="Edit">Edit</a>
+                    <a asp-controller="Projects" asp-action="Delete">Delete</a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h1>There's no projects! Create one.</h1>
+        <a asp-controller="Projects" asp-action="Create">Create</a>
+    }
 }

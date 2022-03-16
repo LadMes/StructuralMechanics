@@ -14,7 +14,7 @@ namespace StructuralMechanics.Models
 
         //Navigation Properties
         [Required]
-        public Project Project { get; set; }
+        public Structure Structure { get; set; }
 
 
         public VectorPhysicalQuantity(double magnitude, Direction direction)
