@@ -12,5 +12,7 @@ namespace StructuralMechanics.Models
         public Project Project { get; set; }
         public List<GeometryObject>? GeometryObjects { get; set; }
         public List<VectorPhysicalQuantity>? VectorPhysicalQuantities { get; set; }
+        //For future
+        //public List<Constraint> Constraints { get; set; }
     }
 }
