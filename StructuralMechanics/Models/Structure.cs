@@ -10,8 +10,13 @@ namespace StructuralMechanics.Models
         //Navigation Properties
         [Required]
         public Project Project { get; set; }
-        public List<GeometryObject>? GeometryObjects { get; set; }
+        //public List<GeometryObject>? GeometryObjects { get; set; }
+        public List<Point>? Points { get; set; }
+        public List<SimpleShape>? SimpleShapes { get; set; }
+        public List<StrengthMember>? StrengthMembers { get; set; }
         public List<VectorPhysicalQuantity>? VectorPhysicalQuantities { get; set; }
+
+
         //For future
         //public List<Constraint> Constraints { get; set; }
     }

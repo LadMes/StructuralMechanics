@@ -7,6 +7,9 @@ namespace StructuralMechanics.Models
     {
         public DbSet<Project> Projects { get; set; }
         public DbSet<GeometryObject> GeometryObjects { get; set; }
+        public DbSet<Point> Points { get; set; }
+        public DbSet<SimpleShape> SimpleShapes { get; set; }
+        public DbSet<StrengthMember> StrengthMembers { get; set; }
         public DbSet<VectorPhysicalQuantity> VectorPhysicalQuantities { get; set; }
 
 
@@ -23,8 +26,11 @@ namespace StructuralMechanics.Models
             builder.Entity<ApplicationUser>().HasMany(au => au.Projects).WithOne(p => p.ApplicationUser);
 
             builder.Entity<Project>().HasKey("Id").IsClustered(false);
-            builder.Entity<Project>().HasMany(p => p.GeometryObjects).WithOne(g => g.Project);
-            builder.Entity<Project>().HasMany(p => p.VectorPhysicalQuantities).WithOne(vpq => vpq.Project);
+            builder.Entity<Project>().HasOne(p => p.Structure).WithOne(g => g.Project);
+
+            builder.Entity<Structure>().ToTable("Structures");
+
+            builder.Entity<ThinWalledStructure>().ToTable("ThinWalledStructures");
 
             builder.Entity<GeometryObject>().ToTable("GeometryObjects");
             builder.Entity<GeometryObject>().HasKey("Id");
