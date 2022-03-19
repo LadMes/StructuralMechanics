@@ -10,15 +10,9 @@ namespace StructuralMechanics.Models
         [Required]
         public ThinWalledStructureType ThinWalledStructureType { get; set; }
         public double SecondMomentOfAreaOfStructure { get; private set; }
-        public List<double> SheathStresses { get; private set; }
-        public double MaxSheathStress { get; private set; }
-        public List<double> StrengthMemberStresses { get; private set; }
-        public double MaxStrengthMemberStress { get; private set; }
         public double FullShearForce { get; private set; }
-        public double MultiplicationCoefficientForT { get; private set; }
-
-
-        //Add Lists of First Moment of Area and Shear Flow, logic for properties
+        public double MultiplicationCoefficientForShearFlow { get; private set; }
+        
 
         public ThinWalledStructure(ThinWalledStructureType thinWalledStructureType)
         {
@@ -53,7 +47,7 @@ namespace StructuralMechanics.Models
 
         public void CalculateMultiplicationCoefficientForT()
         {
-            this.MultiplicationCoefficientForT = this.FullShearForce / this.SecondMomentOfAreaOfStructure;
+            this.MultiplicationCoefficientForShearFlow = this.FullShearForce / this.SecondMomentOfAreaOfStructure;
         }
     }
 }

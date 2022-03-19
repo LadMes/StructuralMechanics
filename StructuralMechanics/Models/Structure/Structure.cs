@@ -8,6 +8,7 @@ namespace StructuralMechanics.Models
         public StructureType StructureType { get; set; }
 
         //Navigation Properties
+        public Guid ProjectId { get; set; }
         [Required]
         public Project Project { get; set; }
         //public List<GeometryObject>? GeometryObjects { get; set; }

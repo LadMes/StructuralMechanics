@@ -49,6 +49,19 @@ namespace StructuralMechanics.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GeometryObjects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GeometryType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeometryObjects", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -175,48 +188,6 @@ namespace StructuralMechanics.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GeometryObjects",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GeometryType = table.Column<int>(type: "int", nullable: false),
-                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GeometryObjects", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_GeometryObjects_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VectorPhysicalQuantities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Magnitude = table.Column<double>(type: "float", nullable: false),
-                    Direction = table.Column<int>(type: "int", nullable: false),
-                    VectorType = table.Column<int>(type: "int", nullable: false),
-                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VectorPhysicalQuantities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_VectorPhysicalQuantities_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GeneralGeometryProperties",
                 columns: table => new
                 {
@@ -235,13 +206,34 @@ namespace StructuralMechanics.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Structures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StructureType = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Structures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Structures_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Points",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     X = table.Column<double>(type: "float", nullable: false),
                     Y = table.Column<double>(type: "float", nullable: false),
-                    PointPosition = table.Column<int>(type: "int", nullable: false)
+                    PointPosition = table.Column<int>(type: "int", nullable: false),
+                    StructureId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -251,6 +243,125 @@ namespace StructuralMechanics.Migrations
                         column: x => x.Id,
                         principalTable: "GeometryObjects",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Points_Structures_StructureId",
+                        column: x => x.StructureId,
+                        principalTable: "Structures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ThinWalledStructures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    ThinWalledStructureType = table.Column<int>(type: "int", nullable: false),
+                    SecondMomentOfAreaOfStructure = table.Column<double>(type: "float", nullable: false),
+                    FullShearForce = table.Column<double>(type: "float", nullable: false),
+                    MultiplicationCoefficientForShearFlow = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ThinWalledStructures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ThinWalledStructures_Structures_Id",
+                        column: x => x.Id,
+                        principalTable: "Structures",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VectorPhysicalQuantities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Magnitude = table.Column<double>(type: "float", nullable: false),
+                    Direction = table.Column<int>(type: "int", nullable: false),
+                    VectorType = table.Column<int>(type: "int", nullable: false),
+                    StructureId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VectorPhysicalQuantities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VectorPhysicalQuantities_Structures_StructureId",
+                        column: x => x.StructureId,
+                        principalTable: "Structures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SimpleShapes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Thickness = table.Column<double>(type: "float", nullable: false),
+                    Length = table.Column<double>(type: "float", nullable: false),
+                    FirstPointId = table.Column<int>(type: "int", nullable: false),
+                    SecondPointId = table.Column<int>(type: "int", nullable: false),
+                    StructureId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SimpleShapes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SimpleShapes_GeneralGeometryProperties_Id",
+                        column: x => x.Id,
+                        principalTable: "GeneralGeometryProperties",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SimpleShapes_Points_FirstPointId",
+                        column: x => x.FirstPointId,
+                        principalTable: "Points",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SimpleShapes_Points_SecondPointId",
+                        column: x => x.SecondPointId,
+                        principalTable: "Points",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SimpleShapes_Structures_StructureId",
+                        column: x => x.StructureId,
+                        principalTable: "Structures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StrengthMembers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    ReductionCoefficient = table.Column<double>(type: "float", nullable: false),
+                    Area = table.Column<double>(type: "float", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
+                    StructureId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StrengthMembers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StrengthMembers_GeneralGeometryProperties_Id",
+                        column: x => x.Id,
+                        principalTable: "GeneralGeometryProperties",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_StrengthMembers_Points_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Points",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_StrengthMembers_Structures_StructureId",
+                        column: x => x.StructureId,
+                        principalTable: "Structures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -290,63 +401,6 @@ namespace StructuralMechanics.Migrations
                         column: x => x.Id,
                         principalTable: "VectorPhysicalQuantities",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SimpleShapes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Thickness = table.Column<double>(type: "float", nullable: false),
-                    Length = table.Column<double>(type: "float", nullable: false),
-                    FirstPointId = table.Column<int>(type: "int", nullable: false),
-                    SecondPointId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SimpleShapes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SimpleShapes_GeneralGeometryProperties_Id",
-                        column: x => x.Id,
-                        principalTable: "GeneralGeometryProperties",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SimpleShapes_Points_FirstPointId",
-                        column: x => x.FirstPointId,
-                        principalTable: "Points",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_SimpleShapes_Points_SecondPointId",
-                        column: x => x.SecondPointId,
-                        principalTable: "Points",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StrengthMembers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    ReductionCoefficient = table.Column<double>(type: "float", nullable: false),
-                    Area = table.Column<double>(type: "float", nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StrengthMembers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StrengthMembers_GeneralGeometryProperties_Id",
-                        column: x => x.Id,
-                        principalTable: "GeneralGeometryProperties",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_StrengthMembers_Points_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Points",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -456,9 +510,9 @@ namespace StructuralMechanics.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GeometryObjects_ProjectId",
-                table: "GeometryObjects",
-                column: "ProjectId");
+                name: "IX_Points_StructureId",
+                table: "Points",
+                column: "StructureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_ApplicationUserId",
@@ -487,6 +541,11 @@ namespace StructuralMechanics.Migrations
                 filter: "[SecondPointId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SimpleShapes_StructureId",
+                table: "SimpleShapes",
+                column: "StructureId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StrengthMembers_LocationId",
                 table: "StrengthMembers",
                 column: "LocationId",
@@ -494,9 +553,20 @@ namespace StructuralMechanics.Migrations
                 filter: "[LocationId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VectorPhysicalQuantities_ProjectId",
+                name: "IX_StrengthMembers_StructureId",
+                table: "StrengthMembers",
+                column: "StructureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Structures_ProjectId",
+                table: "Structures",
+                column: "ProjectId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VectorPhysicalQuantities_StructureId",
                 table: "VectorPhysicalQuantities",
-                column: "ProjectId");
+                column: "StructureId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -535,6 +605,9 @@ namespace StructuralMechanics.Migrations
                 name: "StrengthMembers");
 
             migrationBuilder.DropTable(
+                name: "ThinWalledStructures");
+
+            migrationBuilder.DropTable(
                 name: "VerticalLines");
 
             migrationBuilder.DropTable(
@@ -554,6 +627,9 @@ namespace StructuralMechanics.Migrations
 
             migrationBuilder.DropTable(
                 name: "GeometryObjects");
+
+            migrationBuilder.DropTable(
+                name: "Structures");
 
             migrationBuilder.DropTable(
                 name: "Projects");

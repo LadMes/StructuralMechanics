@@ -47,3 +47,15 @@
 .header-nav li a:hover {
     background-color: hsl(var(--color-base-hue), 100%, 36%);
 }
+
+/*.header-nav li button {
+    display: inline-block;
+    height: 100%;
+    color: var(--color-header-text);
+    font-weight: var(--nav-link-font-weight);
+}*/
+
+.header-nav-button {
+    height: 100%;
+    width: 100%;
+}

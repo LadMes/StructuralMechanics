@@ -25,11 +25,14 @@
                 {
                     <ul>
                         <li><a asp-controller="Projects" asp-action="Index">My Projects</a></li>
-                        <form method="post" asp-controller="Account" asp-action="Logout">
-                                    <button type="submit">
+                        <li>
+                            <form method="post" asp-controller="Account" asp-action="Logout">
+                                    <button class="header-nav-button" type="submit">
                                             Log out
                                     </button>
-                        </form>
+                            </form>
+                        </li>
+                        @*<li><a asp-controller="Account" asp-action="Logout">Sign out</a></li>*@
                     </ul>
                 }
             </nav>
