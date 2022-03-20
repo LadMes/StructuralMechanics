@@ -19,7 +19,12 @@
     margin: 0 0 0 2rem;
 }
 
-.header-nav-image img {
+.header-nav-image a {
+    display: inline-block;
+    height: 100%;
+}
+
+.header-nav-image a img {
     width: 100%;
     height: 100%;
 }
@@ -48,14 +53,24 @@
     background-color: hsl(var(--color-base-hue), 100%, 36%);
 }
 
-/*.header-nav li button {
-    display: inline-block;
+.header-nav li form {
     height: 100%;
-    color: var(--color-header-text);
-    font-weight: var(--nav-link-font-weight);
-}*/
+    padding: 1rem;
+    cursor: pointer;
+}
 
-.header-nav-button {
+.header-nav li form button {
     height: 100%;
-    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--color-header-text);
+    font-family: 'Gotham Rounded';
+    font-weight: var(--nav-link-font-weight);
+    font-size: inherit;
+    cursor: pointer;
+}
+
+.header-nav li form:hover {
+    background-color: hsl(var(--color-base-hue), 100%, 36%);
 }

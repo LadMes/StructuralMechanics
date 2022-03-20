@@ -12,7 +12,7 @@
         <header class="header">
             <nav class="header-nav">
                 <div class="header-nav-image">
-                    <img src="~/images/bridge.png" />
+                    <a asp-controller="Home" asp-action="Index"><img src="~/images/bridge.png" /></a>
                 </div>
                 @if (!signInManager.IsSignedIn(User))
                 {
@@ -28,8 +28,9 @@
                         <li>
                             <form method="post" asp-controller="Account" asp-action="Logout">
                                     <button class="header-nav-button" type="submit">
-                                            Log out
+                                            Sign out
                                     </button>
+                                    @*<a onclick="this.parentElement.submit()">Sign out</a>*@
                             </form>
                         </li>
                         @*<li><a asp-controller="Account" asp-action="Logout">Sign out</a></li>*@

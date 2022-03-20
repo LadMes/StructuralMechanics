@@ -1,13 +1,10 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager
 @model IEnumerable<Project>
 
-@{
-    ViewBag.Title = "Structural Mechanics";
-}
 
 @if (!signInManager.IsSignedIn(User))
 {
-    <div class="info-message">Please Sign In or Sign Up</div>
+    <h1 class="info-message">Please Sign In or Sign Up</h1>
 }
 else
 {
@@ -29,7 +26,9 @@ else
     }
     else
     {
-        <h1>There's no projects! Create one.</h1>
-        <a asp-controller="Projects" asp-action="Create">Create</a>
+        <div class="info-message">
+            <h1>There's no projects! Create one.</h1>
+            <a asp-controller="Projects" asp-action="Create">Create</a>
+        </div> 
     }
 }

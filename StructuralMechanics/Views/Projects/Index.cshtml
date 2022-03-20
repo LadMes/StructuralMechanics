@@ -16,15 +16,17 @@
                 @project.ProjectName
             </div>
             <div>
-                <a asp-controller="Project" asp-action="Show">Show</a>
-                <a asp-controller="Project" asp-action="Edit">Edit</a>
-                <a asp-controller="Project" asp-action="Delete">Delete</a>
+                <a asp-controller="Projects" asp-action="Show">Show</a>
+                <a asp-controller="Projects" asp-action="Edit">Edit</a>
+                <a asp-controller="Projects" asp-action="Delete">Delete</a>
             </div>
         </div>
     }
 }
 else
 {
-    <h1>There's no projects! Create one.</h1>
-    <a asp-controller="Project" asp-action="Create">Create</a>
+    <div class="info-message">
+        <h1>There's no projects! Create one.</h1>
+        <a asp-controller="Projects" asp-action="Create">Create</a>
+    </div>   
 }
