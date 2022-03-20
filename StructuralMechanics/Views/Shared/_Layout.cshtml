@@ -27,13 +27,11 @@
                         <li><a asp-controller="Projects" asp-action="Index">My Projects</a></li>
                         <li>
                             <form method="post" asp-controller="Account" asp-action="Logout">
-                                    <button class="header-nav-button" type="submit">
+                                    <button type="submit">
                                             Sign out
                                     </button>
-                                    @*<a onclick="this.parentElement.submit()">Sign out</a>*@
                             </form>
                         </li>
-                        @*<li><a asp-controller="Account" asp-action="Logout">Sign out</a></li>*@
                     </ul>
                 }
             </nav>

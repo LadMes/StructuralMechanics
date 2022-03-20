@@ -15,19 +15,26 @@ namespace StructuralMechanics.Controllers
             this.userManager = userManager;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var user = await userManager.GetUserAsync(User);
 
             if (user == null)
             {
-                ViewBag.Error = "User is not found";
+                ViewBag.ErrorMessage = "User is not found";
                 return View("NotFound");
             }
 
             var projects = user.Projects;
 
             return View(projects);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }

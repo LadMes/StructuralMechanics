@@ -5,6 +5,7 @@ namespace StructuralMechanics.Models
     public abstract class Structure
     {
         public int Id { get; set; }
+        [Display(Name = "Structure Type")]
         public StructureType StructureType { get; set; }
 
         //Navigation Properties

@@ -8,6 +8,7 @@ namespace StructuralMechanics.Models
     public class ThinWalledStructure : Structure
     {  
         [Required]
+        [Display(Name = "Thin-walled Structure Type")]
         public ThinWalledStructureType ThinWalledStructureType { get; set; }
         public double SecondMomentOfAreaOfStructure { get; private set; }
         public double FullShearForce { get; private set; }
