@@ -8,17 +8,15 @@ namespace StructuralMechanics.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IProjectService projectService;
 
-        public HomeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public HomeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+                                IProjectService projectService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.projectService = projectService;
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -27,7 +25,7 @@ namespace StructuralMechanics.Controllers
 
             if (user != null)
             {
-                var projects = user.Projects;
+                var projects = projectService.GetProjects(user.Id);
                 return View(projects);
             }
 

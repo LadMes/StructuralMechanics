@@ -12,8 +12,6 @@ namespace StructuralMechanics.ViewModels
         public string ProjectName { get; set; }
 
         [Required]
-        public ApplicationUser ApplicationUser { get; set; }
-        [Required]
         public Structure Structure { get; set; }
         public ThinWalledStructure? ThinWalledStructure { get; set; }
 

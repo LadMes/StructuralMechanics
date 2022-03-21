@@ -4,11 +4,10 @@
     ViewBag.Title = "Create Project";
 }
 
-<form>
+<form method="post" asp-controller="Projects" asp-action="Create">
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>
     </div>
-    <input hidden asp-for="ApplicationUser.Id"/>
     <div class="form-row">
         <div class="form-item">
             <label asp-for="ProjectName"></label>
@@ -44,7 +43,7 @@
                 document.getElementById("thinWalledStructure").style.display = "flex";  
             }
             else {
-                alert();
+                document.getElementById("thinWalledStructure").style.display = "none";
             }
         } 
     </script>

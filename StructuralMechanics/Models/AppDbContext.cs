@@ -11,6 +11,11 @@ namespace StructuralMechanics.Models
         public DbSet<SimpleShape> SimpleShapes { get; set; }
         public DbSet<StrengthMember> StrengthMembers { get; set; }
         public DbSet<VectorPhysicalQuantity> VectorPhysicalQuantities { get; set; }
+        public DbSet<ShearForce> ShearForces { get; set; }
+        public DbSet<Structure> Structures { get; set; }
+        public DbSet<ThinWalledStructure> ThinWalledStructures { get; set; }
+        public DbSet<CirclePlate> CirclePlates { get; set; }
+        public DbSet<RotationalShell> RotationalShells { get; set; }
 
 
 

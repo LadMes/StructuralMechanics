@@ -16,6 +16,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthorization();
 //builder.Services.AddAuthorization(options => options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Claim")));
 builder.Services.AddScoped<IProjectService, SQLServerProjectService>();
+builder.Services.AddScoped<IStructureService, SQLServerStructureService>();
 
 
 
