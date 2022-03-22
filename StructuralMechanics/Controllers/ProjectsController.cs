@@ -11,9 +11,9 @@ namespace StructuralMechanics.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IProjectService projectService;
-        private readonly IStructureService structureService;
+        private readonly IThinWalledStructureService structureService;
 
-        public ProjectsController(UserManager<ApplicationUser> userManager, IProjectService projectService, IStructureService structureService)
+        public ProjectsController(UserManager<ApplicationUser> userManager, IProjectService projectService, IThinWalledStructureService structureService)
         {
             this.userManager = userManager;
             this.projectService = projectService;
@@ -45,7 +45,7 @@ namespace StructuralMechanics.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateProjectViewModel model)
         {
-            if (ModelState.IsValid && model.Structure.StructureType == StructureType.ThinWalledStructure)
+            if (ModelState.IsValid && model.StructureType == StructureType.ThinWalledStructure)
             {
                 var user = await userManager.GetUserAsync(User);
                 if (user == null)
@@ -54,7 +54,7 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                ThinWalledStructure structure = new ThinWalledStructure(model.ThinWalledStructure.ThinWalledStructureType);
+                ThinWalledStructure structure = new ThinWalledStructure(model.ThinWalledStructureType);
 
                 Project project = new Project()
                 {
@@ -64,7 +64,7 @@ namespace StructuralMechanics.Controllers
                 };
 
                 projectService.AddProject(project);
-                structureService.AddStructure(structure);
+                structureService.AddThinWalledStructure(structure);
 
                 return RedirectToAction("Index", "Projects");
             }

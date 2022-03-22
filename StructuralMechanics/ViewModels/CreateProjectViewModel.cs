@@ -12,11 +12,7 @@ namespace StructuralMechanics.ViewModels
         public string ProjectName { get; set; }
 
         [Required]
-        public Structure Structure { get; set; }
-        public ThinWalledStructure? ThinWalledStructure { get; set; }
-
-        //For future
-        //public CirclePlate? CirclePlate { get; set; }
-        //public RotationalShell? RotationalShell { get; set; }
+        public StructureType StructureType { get; set; }
+        public ThinWalledStructureType ThinWalledStructureType { get; set; }
     }
 }

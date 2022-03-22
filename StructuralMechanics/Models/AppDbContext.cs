@@ -40,6 +40,8 @@ namespace StructuralMechanics.Models
             builder.Entity<Structure>().HasMany(s => s.StrengthMembers).WithOne(p => p.Structure);
 
             builder.Entity<ThinWalledStructure>().ToTable("ThinWalledStructures");
+            builder.Entity<CirclePlate>().ToTable("CirclePlates");
+            builder.Entity<RotationalShell>().ToTable("RotationalShells");
 
             builder.Entity<GeometryObject>().ToTable("GeometryObjects");
             builder.Entity<GeometryObject>().HasKey("Id");
