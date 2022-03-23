@@ -11,9 +11,9 @@ namespace StructuralMechanics.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IProjectService projectService;
-        private readonly IThinWalledStructureService structureService;
+        private readonly IStructureService<Structure> structureService;
 
-        public ProjectsController(UserManager<ApplicationUser> userManager, IProjectService projectService, IThinWalledStructureService structureService)
+        public ProjectsController(UserManager<ApplicationUser> userManager, IProjectService projectService, IStructureService<Structure> structureService)
         {
             this.userManager = userManager;
             this.projectService = projectService;
@@ -64,7 +64,7 @@ namespace StructuralMechanics.Controllers
                 };
 
                 projectService.AddProject(project);
-                structureService.AddThinWalledStructure(structure);
+                structureService.AddStructure(structure);
 
                 return RedirectToAction("Index", "Projects");
             }
