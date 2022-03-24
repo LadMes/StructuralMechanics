@@ -13,6 +13,6 @@ namespace StructuralMechanics.ViewModels
 
         [Required]
         public StructureType StructureType { get; set; }
-        public ThinWalledStructureType ThinWalledStructureType { get; set; }
+        public ThinWalledStructureType? ThinWalledStructureType { get; set; }
     }
 }
