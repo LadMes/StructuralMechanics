@@ -12,8 +12,8 @@ using StructuralMechanics.Models;
 namespace StructuralMechanics.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220322170558_AddedTwoStructureTypes")]
-    partial class AddedTwoStructureTypes
+    [Migration("20220326095630_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

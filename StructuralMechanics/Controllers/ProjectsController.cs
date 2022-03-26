@@ -58,10 +58,14 @@ namespace StructuralMechanics.Controllers
 
                 if (model.StructureType == StructureType.ThinWalledStructure)
                 {
-
                     if (model.ThinWalledStructureType == null)
                     {
                         ModelState.AddModelError(string.Empty, "Select Thin-walled Structure Type");
+                        return View(model);
+                    }
+                    else if (model.ThinWalledStructureType == ThinWalledStructureType.OneTimeClosed)
+                    {
+                        ModelState.AddModelError(string.Empty, "One-time closed Thin-walled Structure type is not supported right now");
                         return View(model);
                     }
                     else
@@ -90,7 +94,6 @@ namespace StructuralMechanics.Controllers
                     ModelState.AddModelError(string.Empty, "Select Structure Type");
                     return View(model);
                 }
-
 
                 Project project = new Project()
                 {

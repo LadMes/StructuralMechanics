@@ -226,6 +226,22 @@ namespace StructuralMechanics.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CirclePlates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CirclePlates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CirclePlates_Structures_Id",
+                        column: x => x.Id,
+                        principalTable: "Structures",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Points",
                 columns: table => new
                 {
@@ -249,6 +265,22 @@ namespace StructuralMechanics.Migrations
                         principalTable: "Structures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RotationalShells",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RotationalShells", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RotationalShells_Structures_Id",
+                        column: x => x.Id,
+                        principalTable: "Structures",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -590,10 +622,16 @@ namespace StructuralMechanics.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CirclePlates");
+
+            migrationBuilder.DropTable(
                 name: "HorizontalLines");
 
             migrationBuilder.DropTable(
                 name: "Moments");
+
+            migrationBuilder.DropTable(
+                name: "RotationalShells");
 
             migrationBuilder.DropTable(
                 name: "ShearForces");

@@ -1,7 +1,7 @@
-﻿@model CreateProjectViewModel
+﻿@model EditProjectViewModel
 
 @{
-    ViewBag.Title = "Create Project";
+    ViewBag.Title = "Edit Project";
 }
 
 @section SidebarNavigation {
@@ -57,17 +57,3 @@
     <hr class="main-hr" />
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
-
-@section Scripts {
-    <script type="text/javascript">
-        function structureTypeChanged() {
-            var select = document.getElementById("structureTypes");
-            if (select.options[select.selectedIndex].value == @((int)StructureType.ThinWalledStructure)) {
-                document.getElementById("thinWalledStructure").style.display = "flex";  
-            }
-            else {
-                document.getElementById("thinWalledStructure").style.display = "none";
-            }
-        } 
-    </script>
-}

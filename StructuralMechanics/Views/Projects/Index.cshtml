@@ -4,9 +4,11 @@
     ViewBag.Title = "My Projects";
 }
 
-@section Menu {
-    <div class="menu">
-        <a asp-controller="Projects" asp-action="Create">Create</a>
+@section SidebarNavigation {
+    <div class="sidebar-nav">
+        <ul>
+            <li><a asp-controller="Projects" asp-action="Create">Create Project</a></li>
+        </ul>
     </div>
 }
 
@@ -14,14 +16,17 @@
 {
     foreach (Project project in Model)
     {
-        <div>
-            <div class="projectName">
+        <div class="project-card">
+            <div class="project-card-project-name">
                 @project.ProjectName
             </div>
-            <div>
-                <a asp-controller="Projects" asp-action="Show">Show</a>
-                <a asp-controller="Projects" asp-action="Edit">Edit</a>
-                <a asp-controller="Projects" asp-action="Delete">Delete</a>
+            @*<div class="project-card-structure-type">
+                @project.Structure.StructureType
+            </div>*@
+            <div class="project-card-buttons">
+                @*<a class="btn btn-primary" asp-controller="Structure" asp-action="Overview" asp-route-id="@project.Structure.Id">Continue</a>*@
+                <a class="btn btn-primary" asp-controller="Projects" asp-action="Edit" asp-route-id="@project.Id">Edit</a>
+                <a class="btn btn-danger" asp-controller="Projects" asp-action="Delete" asp-route-id="@project.Id">Delete</a>
             </div>
         </div>
     }
