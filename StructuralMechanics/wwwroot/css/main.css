@@ -4,6 +4,8 @@
 @import 'shared/buttons.css';
 @import 'shared/form.css';
 @import 'shared/links.css';
+@import 'shared/projectCard.css';
+@import 'shared/sidebarNav.css';
 
 
 :root {
@@ -40,13 +42,13 @@ body {
 
 .inner-container {
     display: flex;
-    margin: 0;
     height: var(--height-inner-container);
     margin: 0 10rem;
 }
 
 .sidebar-inner-container {
     width: var(--width-sidebar-inner-container);
+    padding: 1rem;
 }
 
 .middle-inner-container {

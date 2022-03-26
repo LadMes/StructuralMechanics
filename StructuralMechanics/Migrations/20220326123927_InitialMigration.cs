@@ -62,6 +62,18 @@ namespace StructuralMechanics.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Structures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Structures", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -168,26 +180,6 @@ namespace StructuralMechanics.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProjectName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Projects", x => x.Id)
-                        .Annotation("SqlServer:Clustered", false);
-                    table.ForeignKey(
-                        name: "FK_Projects_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GeneralGeometryProperties",
                 columns: table => new
                 {
@@ -203,26 +195,6 @@ namespace StructuralMechanics.Migrations
                         column: x => x.Id,
                         principalTable: "GeometryObjects",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Structures",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StructureType = table.Column<int>(type: "int", nullable: false),
-                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Structures", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Structures_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -261,6 +233,34 @@ namespace StructuralMechanics.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Points_Structures_StructureId",
+                        column: x => x.StructureId,
+                        principalTable: "Structures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProjectName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    StructureType = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StructureId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.Id)
+                        .Annotation("SqlServer:Clustered", false);
+                    table.ForeignKey(
+                        name: "FK_Projects_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_Structures_StructureId",
                         column: x => x.StructureId,
                         principalTable: "Structures",
                         principalColumn: "Id",
@@ -552,6 +552,12 @@ namespace StructuralMechanics.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Projects_StructureId",
+                table: "Projects",
+                column: "StructureId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShearForces_LocationId",
                 table: "ShearForces",
                 column: "LocationId",
@@ -590,12 +596,6 @@ namespace StructuralMechanics.Migrations
                 column: "StructureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Structures_ProjectId",
-                table: "Structures",
-                column: "ProjectId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_VectorPhysicalQuantities_StructureId",
                 table: "VectorPhysicalQuantities",
                 column: "StructureId");
@@ -631,6 +631,9 @@ namespace StructuralMechanics.Migrations
                 name: "Moments");
 
             migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
                 name: "RotationalShells");
 
             migrationBuilder.DropTable(
@@ -652,6 +655,9 @@ namespace StructuralMechanics.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "VectorPhysicalQuantities");
 
             migrationBuilder.DropTable(
@@ -668,12 +674,6 @@ namespace StructuralMechanics.Migrations
 
             migrationBuilder.DropTable(
                 name: "Structures");
-
-            migrationBuilder.DropTable(
-                name: "Projects");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }

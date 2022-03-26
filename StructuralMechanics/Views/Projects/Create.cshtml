@@ -14,9 +14,6 @@
 
 <form method="post" asp-controller="Projects" asp-action="Create">
     <div class="form-row">
-        <div asp-validation-summary="All" class="error-message"></div>
-    </div>
-    <div class="form-row">
         <div class="form-item">
             <label asp-for="ProjectName"></label>
             <input asp-for="ProjectName" />
@@ -54,6 +51,9 @@
             </div>
         </div>
     }
+    <div class="form-row">
+        <div asp-validation-summary="All" class="error-message"></div>
+    </div>
     <hr class="main-hr" />
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

@@ -12,7 +12,7 @@ using StructuralMechanics.Models;
 namespace StructuralMechanics.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220326095630_InitialMigration")]
+    [Migration("20220326123927_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -253,11 +253,20 @@ namespace StructuralMechanics.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("StructureId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StructureType")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("StructureId")
+                        .IsUnique();
 
                     b.ToTable("Projects");
                 });
@@ -270,16 +279,7 @@ namespace StructuralMechanics.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("StructureType")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProjectId")
-                        .IsUnique();
 
                     b.ToTable("Structures", (string)null);
                 });
@@ -552,18 +552,15 @@ namespace StructuralMechanics.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("StructuralMechanics.Models.Structure", b =>
-                {
-                    b.HasOne("StructuralMechanics.Models.Project", "Project")
-                        .WithOne("Structure")
-                        .HasForeignKey("StructuralMechanics.Models.Structure", "ProjectId")
+                    b.HasOne("StructuralMechanics.Models.Structure", "Structure")
+                        .WithOne("Project")
+                        .HasForeignKey("StructuralMechanics.Models.Project", "StructureId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Project");
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Structure");
                 });
 
             modelBuilder.Entity("StructuralMechanics.Models.VectorPhysicalQuantity", b =>
@@ -755,15 +752,12 @@ namespace StructuralMechanics.Migrations
                     b.Navigation("Projects");
                 });
 
-            modelBuilder.Entity("StructuralMechanics.Models.Project", b =>
-                {
-                    b.Navigation("Structure")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("StructuralMechanics.Models.Structure", b =>
                 {
                     b.Navigation("Points");
+
+                    b.Navigation("Project")
+                        .IsRequired();
 
                     b.Navigation("SimpleShapes");
 

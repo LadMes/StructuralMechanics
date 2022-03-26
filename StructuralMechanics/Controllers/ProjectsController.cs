@@ -99,7 +99,8 @@ namespace StructuralMechanics.Controllers
                 {
                     ApplicationUser = user,
                     ProjectName = model.ProjectName,
-                    Structure = structure
+                    StructureType = model.StructureType,
+                    Structure = structure,
                 };
 
                 projectService.AddProject(project);

@@ -31,7 +31,7 @@ namespace StructuralMechanics.Models
             builder.Entity<ApplicationUser>().HasMany(au => au.Projects).WithOne(p => p.ApplicationUser);
 
             builder.Entity<Project>().HasKey("Id").IsClustered(false);
-            builder.Entity<Project>().HasOne(p => p.Structure).WithOne(g => g.Project).HasForeignKey<Structure>(s => s.ProjectId);
+            builder.Entity<Project>().HasOne(p => p.Structure).WithOne(s => s.Project).HasForeignKey<Project>(p => p.StructureId);
 
             builder.Entity<Structure>().ToTable("Structures");
             builder.Entity<Structure>().HasMany(s => s.Points).WithOne(p => p.Structure);

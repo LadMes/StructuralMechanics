@@ -17,7 +17,7 @@ namespace StructuralMechanics.Models
 
         public ThinWalledStructure(ThinWalledStructureType thinWalledStructureType)
         {
-            this.StructureType = StructureType.ThinWalledStructure;
+            //this.StructureType = StructureType.ThinWalledStructure;
             this.ThinWalledStructureType = thinWalledStructureType;
         }
 
