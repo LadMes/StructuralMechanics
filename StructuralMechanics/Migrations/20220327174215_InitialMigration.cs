@@ -243,7 +243,7 @@ namespace StructuralMechanics.Migrations
                 name: "Projects",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProjectName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     StructureType = table.Column<int>(type: "int", nullable: false),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -252,7 +252,7 @@ namespace StructuralMechanics.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id)
-                        .Annotation("SqlServer:Clustered", false);
+                        .Annotation("SqlServer:Clustered", true);
                     table.ForeignKey(
                         name: "FK_Projects_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,

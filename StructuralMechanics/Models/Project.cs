@@ -4,7 +4,7 @@ namespace StructuralMechanics.Models
 {
     public class Project
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         [Required]
         [MaxLength(50, ErrorMessage = "Name cannot exceed 50 characters")]
         public string ProjectName { get; set; }

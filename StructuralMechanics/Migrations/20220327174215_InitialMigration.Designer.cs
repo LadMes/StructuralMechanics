@@ -12,7 +12,7 @@ using StructuralMechanics.Models;
 namespace StructuralMechanics.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220326123927_InitialMigration")]
+    [Migration("20220327174215_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -240,9 +240,8 @@ namespace StructuralMechanics.Migrations
 
             modelBuilder.Entity("StructuralMechanics.Models.Project", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
@@ -261,7 +260,7 @@ namespace StructuralMechanics.Migrations
 
                     b.HasKey("Id");
 
-                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
 
                     b.HasIndex("ApplicationUserId");
 

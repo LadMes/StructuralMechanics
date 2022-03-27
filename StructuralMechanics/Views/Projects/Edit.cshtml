@@ -1,4 +1,4 @@
-﻿@model EditProjectViewModel
+﻿@model CreateProjectViewModel
 
 @{
     ViewBag.Title = "Edit Project";
@@ -12,7 +12,7 @@
     </div>
 }
 
-<form method="post" asp-controller="Projects" asp-action="Create">
+<form method="post" asp-controller="Projects" asp-action="Edit">
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>
     </div>
@@ -24,13 +24,11 @@
         </div>
         <div class="form-item">
             <label asp-for="StructureType"></label>
-            <select id="structureTypes" asp-for="StructureType" asp-items="Html.GetEnumSelectList<StructureType>()" onChange="structureTypeChanged()">
-                <option value="">Please select structure type</option>
-            </select>
+            <input disabled asp-for="StructureType"/>
             <span asp-validation-for="StructureType" class="error-message"></span>
         </div>
     </div>
-    @if (Model != null && Model.StructureType == StructureType.ThinWalledStructure)
+    @if (Model.StructureType == StructureType.ThinWalledStructure)
     {
         <div id="thinWalledStructure" class="form-row">
             <div class="form-item">
@@ -42,18 +40,6 @@
             </div>
         </div>
     }
-    else
-    {
-        <div id="thinWalledStructure" class="form-row" style="display: none;">
-            <div class="form-item">
-                <label asp-for="ThinWalledStructureType"></label>
-                <select id="thinWalledStructureTypes" asp-for="ThinWalledStructureType" asp-items="Html.GetEnumSelectList<ThinWalledStructureType>()">
-                    <option value="">Please select thin-walled type</option>
-                </select>
-                <span asp-validation-for="ThinWalledStructureType" class="error-message"></span>
-            </div>
-        </div>
-    }
     <hr class="main-hr" />
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Update</button>
 </form>

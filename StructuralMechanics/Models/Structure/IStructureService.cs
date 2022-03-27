@@ -1,10 +1,10 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public interface IStructureService<T> where T : Structure
+    public interface IStructureService
     {
-        T GetStructureByProjectId(string projectId);
-        T AddStructure(T structure);
-        T UpdateStructure(T structure);
-        T DeleteStructureById(string structureId);
+        Structure GetStructureByProjectId(string projectId);
+        Structure AddStructure(Structure structure);
+        Structure UpdateStructure(Structure structure);
+        Structure DeleteStructureById(string structureId);
     }
 }

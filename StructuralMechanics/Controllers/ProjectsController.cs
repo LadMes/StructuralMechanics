@@ -11,9 +11,10 @@ namespace StructuralMechanics.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IProjectService projectService;
-        private readonly IStructureService<Structure> structureService;
+        private readonly IStructureService structureService;
 
-        public ProjectsController(UserManager<ApplicationUser> userManager, IProjectService projectService, IStructureService<Structure> structureService)
+        public ProjectsController(UserManager<ApplicationUser> userManager, IProjectService projectService, 
+                                    IStructureService structureService)
         {
             this.userManager = userManager;
             this.projectService = projectService;
@@ -97,6 +98,7 @@ namespace StructuralMechanics.Controllers
 
                 Project project = new Project()
                 {
+                    Id = Guid.NewGuid().ToString(),
                     ApplicationUser = user,
                     ProjectName = model.ProjectName,
                     StructureType = model.StructureType,
@@ -107,6 +109,27 @@ namespace StructuralMechanics.Controllers
 
                 return RedirectToAction("Index", "Projects");
             }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(string projectId)
+        {
+            var project = projectService.GetProjectById(projectId);
+            if (project == null)
+            {
+                ViewBag.ErrorMessage = "Project is not found";
+                return View("NotFound");
+            }
+
+            CreateProjectViewModel model = new CreateProjectViewModel()
+            {
+                ProjectName = project.ProjectName,
+                StructureType = project.StructureType,
+                ThinWalledStructureType = (project.StructureType == StructureType.ThinWalledStructure) 
+                                            ? ((ThinWalledStructure)structureService.GetStructureByProjectId(projectId)).ThinWalledStructureType : null
+            };
 
             return View(model);
         }

@@ -1,15 +1,17 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public class SQLServerStructureService<T> : IStructureService<T> where T : Structure
+    public class SQLServerStructureService : IStructureService
     {
         private readonly AppDbContext context;
+        private readonly IProjectService projectService;
 
-        public SQLServerStructureService(AppDbContext context)
+        public SQLServerStructureService(AppDbContext context, IProjectService projectService)
         {
             this.context = context;
+            this.projectService = projectService;
         }
 
-        public T AddStructure(T structure)
+        public Structure AddStructure(Structure structure)
         {
             if (structure is ThinWalledStructure thinWalledStructure)
             {
@@ -31,17 +33,31 @@
             return structure;
         }
 
-        public T DeleteStructureById(string structureId)
+        public Structure DeleteStructureById(string structureId)
         {
             throw new NotImplementedException();
         }
 
-        public T GetStructureByProjectId(string projectId)
+        public Structure GetStructureByProjectId(string projectId)
         {
-            throw new NotImplementedException();
+            var project = projectService.GetProjectById(projectId);
+            if (project.StructureType == StructureType.ThinWalledStructure)
+            {
+                return context.ThinWalledStructures.Find(project.StructureId);
+            }
+            else if (project.StructureType == StructureType.CirclePlate)
+            {
+                return context.CirclePlates.Find(project.StructureId);
+            }
+            else if (project.StructureType == StructureType.RotationalShell)
+            {
+                return context.RotationalShells.Find(project.StructureId);
+            }
+
+            return null;
         }
 
-        public T UpdateStructure(T structure)
+        public Structure UpdateStructure(Structure structure)
         {
             throw new NotImplementedException();
         }

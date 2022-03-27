@@ -30,7 +30,7 @@ namespace StructuralMechanics.Models
 
             builder.Entity<ApplicationUser>().HasMany(au => au.Projects).WithOne(p => p.ApplicationUser);
 
-            builder.Entity<Project>().HasKey("Id").IsClustered(false);
+            builder.Entity<Project>().HasKey("Id").IsClustered(true);
             builder.Entity<Project>().HasOne(p => p.Structure).WithOne(s => s.Project).HasForeignKey<Project>(p => p.StructureId);
 
             builder.Entity<Structure>().ToTable("Structures");
