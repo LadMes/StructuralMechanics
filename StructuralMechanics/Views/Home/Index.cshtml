@@ -21,9 +21,9 @@ else
                         Structure Type: @project.StructureType
                     </div>
                     <div class="project-card-buttons">
-                        <a class="btn btn-primary" asp-controller="Structure" asp-action="Overview" asp-route-id="@project.StructureId">Continue</a>
-                        <a class="btn btn-primary" asp-controller="Projects" asp-action="Edit" asp-route-id="@project.Id">Edit</a>
-                        <a class="btn btn-danger" asp-controller="Projects" asp-action="Delete" asp-route-id="@project.Id">Delete</a>
+                        <a class="btn btn-primary" asp-controller="Structure" asp-action="Overview" asp-route-structureId="@project.StructureId">Continue</a>
+                        <a class="btn btn-primary" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.Id">Edit</a>
+                        <a class="btn btn-danger" asp-controller="Projects" asp-action="Delete" asp-route-projectId="@project.Id">Delete</a>
                     </div>
                 </div>
             }
