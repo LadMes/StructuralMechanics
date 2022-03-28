@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using StructuralMechanics.Models;
 using StructuralMechanics.ViewModels;
 
 namespace StructuralMechanics.Controllers
@@ -114,22 +113,102 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(string projectId)
+        [Route("Edit/{projectId}")]
+        public async Task<IActionResult> Edit(string projectId)
         {
+            var user = await userManager.GetUserAsync(User);
             var project = projectService.GetProjectById(projectId);
             if (project == null)
             {
                 ViewBag.ErrorMessage = "Project is not found";
                 return View("NotFound");
             }
-
-            CreateProjectViewModel model = new CreateProjectViewModel()
+            else if (project.ApplicationUser.Id != user.Id)
             {
+                ViewBag.ErrorMessage = "The current user doesn't have access to this project";
+                return View("NotFound");
+            }
+
+            EditProjectViewModel model = new EditProjectViewModel()
+            {
+                ProjectId = projectId,
                 ProjectName = project.ProjectName,
                 StructureType = project.StructureType,
                 ThinWalledStructureType = (project.StructureType == StructureType.ThinWalledStructure) 
                                             ? ((ThinWalledStructure)structureService.GetStructureByProjectId(projectId)).ThinWalledStructureType : null
             };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Edit/{projectId}")]
+        public async Task<IActionResult> Edit(EditProjectViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(User);
+
+                if (user == null)
+                {
+                    ViewBag.ErrorMessage = "User is not found";
+                    return View("NotFound");
+                }
+                
+                var project = projectService.GetProjectById(model.ProjectId);
+                if (project.ApplicationUser.Id != user.Id)
+                {
+                    ViewBag.ErrorMessage = "The current user doesn't have access to this project";
+                    return View("NotFound");
+                }
+
+                Structure structure;
+
+                if (model.StructureType == StructureType.ThinWalledStructure)
+                {
+                    if (model.ThinWalledStructureType == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Select Thin-walled Structure Type");
+                        return View(model);
+                    }
+                    else if (model.ThinWalledStructureType == ThinWalledStructureType.OneTimeClosed)
+                    {
+                        ModelState.AddModelError(string.Empty, "One-time closed Thin-walled Structure type is not supported right now");
+                        return View(model);
+                    }
+                    else
+                    {
+                        structure = new ThinWalledStructure(model.ThinWalledStructureType.Value);
+                    }
+                }
+                else if (model.StructureType == StructureType.CirclePlate)
+                {
+                    ModelState.AddModelError(string.Empty, "Others types aren't supported right now");
+                    return View(model);
+
+                    //For Future
+                    //structure = new CirclePlate();
+                }
+                else if (model.StructureType == StructureType.RotationalShell)
+                {
+                    ModelState.AddModelError(string.Empty, "Others types aren't supported right now");
+                    return View(model);
+
+                    //For Future
+                    //structure = new RotationalShell();
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Select Structure Type");
+                    return View(model);
+                }
+
+                project.ProjectName = model.ProjectName;
+                project.Structure = structure;
+
+                projectService.UpdateProject(project);
+                return RedirectToAction("Index");
+            }
 
             return View(model);
         }

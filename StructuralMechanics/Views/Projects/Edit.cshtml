@@ -1,4 +1,4 @@
-﻿@model CreateProjectViewModel
+﻿@model EditProjectViewModel
 
 @{
     ViewBag.Title = "Edit Project";
@@ -14,7 +14,10 @@
 
 <form method="post" asp-controller="Projects" asp-action="Edit">
     <div class="form-row">
-        <div asp-validation-summary="All" class="error-message"></div>
+        <div class="form-item">
+            <label asp-for="ProjectId"></label>
+            <input disabled asp-for="ProjectId" />
+        </div>
     </div>
     <div class="form-row">
         <div class="form-item">
@@ -25,7 +28,6 @@
         <div class="form-item">
             <label asp-for="StructureType"></label>
             <input disabled asp-for="StructureType"/>
-            <span asp-validation-for="StructureType" class="error-message"></span>
         </div>
     </div>
     @if (Model.StructureType == StructureType.ThinWalledStructure)
@@ -40,6 +42,9 @@
             </div>
         </div>
     }
+    <div class="form-row">
+        <div asp-validation-summary="All" class="error-message"></div>
+    </div>
     <hr class="main-hr" />
     <button type="submit" class="btn btn-primary">Update</button>
 </form>

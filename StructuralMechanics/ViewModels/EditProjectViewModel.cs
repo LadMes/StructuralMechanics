@@ -4,7 +4,8 @@ namespace StructuralMechanics.ViewModels
 {
     public class EditProjectViewModel
     {
-        public Guid ProjectId { get; set; }
+        [Display(Name = "Project Id")]
+        public string ProjectId { get; set; }
         [Required]
         [MaxLength(50, ErrorMessage = "Name cannot exceed 50 characters")]
         [Display(Name = "Project Name")]
