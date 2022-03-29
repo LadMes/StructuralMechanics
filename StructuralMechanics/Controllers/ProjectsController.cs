@@ -31,7 +31,7 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            var projects = projectService.GetProjects(user.Id);
+            var projects = projectService.GetProjects(user.Id).Take(10);
 
             return View(projects);
         }
@@ -178,7 +178,9 @@ namespace StructuralMechanics.Controllers
                     }
                     else
                     {
-                        structure = new ThinWalledStructure(model.ThinWalledStructureType.Value);
+                        //structure = new ThinWalledStructure(model.ThinWalledStructureType.Value);
+                        structure = structureService.GetStructureByProjectId(model.ProjectId);
+                        ((ThinWalledStructure)structure).ThinWalledStructureType = model.ThinWalledStructureType.Value;
                     }
                 }
                 else if (model.StructureType == StructureType.CirclePlate)
@@ -204,8 +206,7 @@ namespace StructuralMechanics.Controllers
                 }
 
                 project.ProjectName = model.ProjectName;
-                project.Structure = structure;
-
+                structureService.UpdateStructure(structure);
                 projectService.UpdateProject(project);
                 return RedirectToAction("Index");
             }

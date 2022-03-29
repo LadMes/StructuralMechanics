@@ -59,7 +59,28 @@
 
         public Structure UpdateStructure(Structure structure)
         {
-            throw new NotImplementedException();
+            if (structure is ThinWalledStructure thinWalledStructure)
+            {
+                var thinWalledStructureToUpdate = context.ThinWalledStructures.Attach(thinWalledStructure);
+                thinWalledStructureToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            }
+            else if (structure is CirclePlate circlePlate)
+            {
+                var circlePlateToUpdate = context.CirclePlates.Attach(circlePlate);
+                circlePlateToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            }
+            else if (structure is RotationalShell rotationalShell)
+            {
+                var rotationalShellToUpdate =  context.RotationalShells.Attach(rotationalShell);
+                rotationalShellToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            }
+            else
+            {
+                throw new InvalidCastException();
+            }
+
+            context.SaveChanges();
+            return structure;
         }
     }
 }

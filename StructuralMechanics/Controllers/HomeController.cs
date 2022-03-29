@@ -25,7 +25,7 @@ namespace StructuralMechanics.Controllers
 
             if (user != null)
             {
-                var projects = projectService.GetProjects(user.Id);
+                var projects = projectService.GetProjects(user.Id).Take(10);
                 return View(projects);
             }
 

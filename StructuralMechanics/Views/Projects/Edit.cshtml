@@ -36,7 +36,6 @@
             <div class="form-item">
                 <label asp-for="ThinWalledStructureType"></label>
                 <select id="thinWalledStructureTypes" asp-for="ThinWalledStructureType" asp-items="Html.GetEnumSelectList<ThinWalledStructureType>()">
-                    <option value="">Please select thin-walled type</option>
                 </select>
                 <span asp-validation-for="ThinWalledStructureType" class="error-message"></span>
             </div>
