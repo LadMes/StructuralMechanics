@@ -33,9 +33,17 @@
             return structure;
         }
 
-        public Structure DeleteStructureById(string structureId)
+        public Structure DeleteStructureById(int structureId)
         {
-            throw new NotImplementedException();
+            var structure = context.Structures.Find(structureId);
+            if (structure != null)
+            {
+                //var project = context.Projects.Find(structure.Project.Id);
+                context.Structures.Remove(structure);
+                //projectService.DeleteProjectById(project.Id);
+                context.SaveChanges();
+            } 
+            return structure;
         }
 
         public Structure GetStructureByProjectId(string projectId)

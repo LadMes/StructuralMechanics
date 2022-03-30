@@ -213,5 +213,30 @@ namespace StructuralMechanics.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        [Route("Delete/{projectId}")]
+        public async Task<IActionResult> Delete(string projectId)
+        {
+            var user = await userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = "User is not found";
+                return View("NotFound");
+            }
+
+            var project = projectService.GetProjectById(projectId);
+            if (project.ApplicationUser.Id != user.Id)
+            {
+                ViewBag.ErrorMessage = "The current user doesn't have access to this project";
+                return View("NotFound");
+            }
+
+            structureService.DeleteStructureById(project.StructureId);
+            projectService.DeleteProjectById(project.Id);
+
+            return RedirectToAction("Index", "Projects");
+        }
     }
 }

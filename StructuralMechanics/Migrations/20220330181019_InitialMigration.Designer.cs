@@ -12,7 +12,7 @@ using StructuralMechanics.Models;
 namespace StructuralMechanics.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220327174215_InitialMigration")]
+    [Migration("20220330181019_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -233,6 +233,9 @@ namespace StructuralMechanics.Migrations
                     b.Property<int>("GeometryType")
                         .HasColumnType("int");
 
+                    b.Property<int>("StructureId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("GeometryObjects", (string)null);
@@ -344,9 +347,6 @@ namespace StructuralMechanics.Migrations
                     b.Property<int>("PointPosition")
                         .HasColumnType("int");
 
-                    b.Property<int>("StructureId")
-                        .HasColumnType("int");
-
                     b.Property<double>("X")
                         .HasColumnType("float");
 
@@ -411,9 +411,6 @@ namespace StructuralMechanics.Migrations
                     b.Property<int>("SecondPointId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StructureId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Thickness")
                         .HasColumnType("float");
 
@@ -442,9 +439,6 @@ namespace StructuralMechanics.Migrations
 
                     b.Property<double>("ReductionCoefficient")
                         .HasColumnType("float");
-
-                    b.Property<int>("StructureId")
-                        .HasColumnType("int");
 
                     b.HasIndex("LocationId")
                         .IsUnique()
@@ -497,7 +491,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -506,7 +500,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -515,7 +509,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -524,13 +518,13 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StructuralMechanics.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -539,7 +533,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -554,7 +548,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.Structure", "Structure")
                         .WithOne("Project")
                         .HasForeignKey("StructuralMechanics.Models.Project", "StructureId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
@@ -567,7 +561,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.Structure", "Structure")
                         .WithMany("VectorPhysicalQuantities")
                         .HasForeignKey("StructureId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Structure");
@@ -611,7 +605,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.Structure", "Structure")
                         .WithMany("Points")
                         .HasForeignKey("StructureId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Structure");
@@ -675,7 +669,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.Structure", "Structure")
                         .WithMany("SimpleShapes")
                         .HasForeignKey("StructureId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("FirstPoint");
@@ -702,7 +696,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.Structure", "Structure")
                         .WithMany("StrengthMembers")
                         .HasForeignKey("StructureId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Location");

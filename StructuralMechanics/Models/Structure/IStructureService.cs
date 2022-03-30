@@ -5,6 +5,6 @@
         Structure GetStructureByProjectId(string projectId);
         Structure AddStructure(Structure structure);
         Structure UpdateStructure(Structure structure);
-        Structure DeleteStructureById(string structureId);
+        Structure DeleteStructureById(int structureId);
     }
 }
