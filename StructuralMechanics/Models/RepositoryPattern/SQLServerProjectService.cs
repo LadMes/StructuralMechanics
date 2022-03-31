@@ -1,4 +1,6 @@
-﻿namespace StructuralMechanics.Models
+﻿using StructuralMechanics.ViewModels;
+
+namespace StructuralMechanics.Models
 {
     public class SQLServerProjectService : IProjectService
     {

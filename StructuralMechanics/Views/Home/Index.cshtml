@@ -1,5 +1,5 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager
-@model IEnumerable<Project>
+@model IQueryable<ProjectsViewModel>
 
 
 @if (!signInManager.IsSignedIn(User))
@@ -11,7 +11,7 @@ else
     if (Model.Any())
     {
         <div class="projects"> 
-            @foreach (Project project in Model)
+            @foreach (var project in Model)
             {
                 <div class="project-card">
                     <div class="project-card-project-name">
@@ -22,8 +22,8 @@ else
                     </div>
                     <div class="project-card-buttons">
                         <a class="btn btn-primary" asp-controller="Structure" asp-action="Overview" asp-route-structureId="@project.StructureId">Continue</a>
-                        <a class="btn btn-primary" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.Id">Edit</a>
-                        <form method="post" asp-action="Delete" asp-controller="Projects" asp-route-projectId="@project.Id">
+                        <a class="btn btn-primary" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.ProjectId">Edit</a>
+                        <form method="post" asp-action="Delete" asp-controller="Projects" asp-route-projectId="@project.ProjectId">
                             <button class="btn btn-danger">Delete</button>
                         </form>  
                     </div>

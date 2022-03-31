@@ -25,7 +25,18 @@ namespace StructuralMechanics.Controllers
 
             if (user != null)
             {
-                var projects = projectService.GetProjects(user.Id).Take(10);
+                var projects = projectService.GetProjects(user.Id);
+                //.Where(p => p.ApplicationUser.Id == userId)
+                //                   .Join(context.Structures,
+                //                         project => project.Id,
+                //                         structure => structure.ProjectId,
+                //                         (project, structure) => new ProjectsViewModel()
+                //                         {
+                //                             ProjectId = project.Id,
+                //                             ProjectName = project.ProjectName,
+                //                             StructureType = structure.StructureType,
+                //                             StructureId = structure.Id,
+                //                         });
                 return View(projects);
             }
 

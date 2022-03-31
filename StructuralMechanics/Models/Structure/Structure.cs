@@ -6,10 +6,10 @@ namespace StructuralMechanics.Models
     {
         public int Id { get; set; }
         [Display(Name = "Structure Type")]
-        //public StructureType StructureType { get; set; }
+        public StructureType StructureType { get; set; }
 
         //Navigation Properties
-        //public Guid ProjectId { get; set; }
+        public string ProjectId { get; set; }
         [Required]
         public Project Project { get; set; }
         //public List<GeometryObject>? GeometryObjects { get; set; }

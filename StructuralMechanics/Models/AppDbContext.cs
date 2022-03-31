@@ -18,7 +18,6 @@ namespace StructuralMechanics.Models
         public DbSet<RotationalShell> RotationalShells { get; set; }
 
 
-
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
@@ -32,7 +31,7 @@ namespace StructuralMechanics.Models
 
             builder.Entity<Project>().HasKey("Id").IsClustered(true);
             builder.Entity<Project>().HasOne(p => p.Structure).WithOne(s => s.Project)
-                                                              .HasForeignKey<Project>(p => p.StructureId)
+                                                              .HasForeignKey<Structure>(s => s.ProjectId)
                                                               .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Structure>().ToTable("Structures");
@@ -50,15 +49,18 @@ namespace StructuralMechanics.Models
             builder.Entity<GeneralGeometryProperties>().ToTable("GeneralGeometryProperties");
 
             builder.Entity<SimpleShape>().ToTable("SimpleShapes");
-            builder.Entity<SimpleShape>().HasOne(ss => ss.FirstPoint).WithOne().HasForeignKey<SimpleShape>(ss => ss.FirstPointId).OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<SimpleShape>().HasOne(ss => ss.SecondPoint).WithOne().HasForeignKey<SimpleShape>(ss => ss.SecondPointId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<SimpleShape>().HasOne(ss => ss.FirstPoint).WithOne().HasForeignKey<SimpleShape>(ss => ss.FirstPointId)
+                                                                               .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<SimpleShape>().HasOne(ss => ss.SecondPoint).WithOne().HasForeignKey<SimpleShape>(ss => ss.SecondPointId)
+                                                                                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Arc>().ToTable("Arcs");
             builder.Entity<HorizontalLine>().ToTable("HorizontalLines");
             builder.Entity<Point>().ToTable("Points");
             builder.Entity<SlopeLine>().ToTable("SlopeLines");
             builder.Entity<StrengthMember>().ToTable("StrengthMembers");
-            builder.Entity<StrengthMember>().HasOne(sm => sm.Location).WithOne().HasForeignKey<StrengthMember>(sm => sm.LocationId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<StrengthMember>().HasOne(sm => sm.Location).WithOne().HasForeignKey<StrengthMember>(sm => sm.LocationId)
+                                                                                .OnDelete(DeleteBehavior.Restrict);
             builder.Entity<VerticalLine>().ToTable("VerticalLines");
 
             builder.Entity<VectorPhysicalQuantity>().ToTable("VectorPhysicalQuantities");
@@ -66,7 +68,8 @@ namespace StructuralMechanics.Models
 
             builder.Entity<Moment>().ToTable("Moments");
             builder.Entity<ShearForce>().ToTable("ShearForces");
-            builder.Entity<ShearForce>().HasOne(sf => sf.Location).WithOne().HasForeignKey<ShearForce>(sf => sf.LocationId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ShearForce>().HasOne(sf => sf.Location).WithOne().HasForeignKey<ShearForce>(sf => sf.LocationId)
+                                                                            .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -49,17 +49,17 @@
         public Structure GetStructureByProjectId(string projectId)
         {
             var project = projectService.GetProjectById(projectId);
-            if (project.StructureType == StructureType.ThinWalledStructure)
+            if (project.Structure.StructureType == StructureType.ThinWalledStructure)
             {
-                return context.ThinWalledStructures.Find(project.StructureId);
+                return context.ThinWalledStructures.Find(project.Structure.Id);
             }
-            else if (project.StructureType == StructureType.CirclePlate)
+            else if (project.Structure.StructureType == StructureType.CirclePlate)
             {
-                return context.CirclePlates.Find(project.StructureId);
+                return context.CirclePlates.Find(project.Structure.Id);
             }
-            else if (project.StructureType == StructureType.RotationalShell)
+            else if (project.Structure.StructureType == StructureType.RotationalShell)
             {
-                return context.RotationalShells.Find(project.StructureId);
+                return context.RotationalShells.Find(project.Structure.Id);
             }
 
             return null;

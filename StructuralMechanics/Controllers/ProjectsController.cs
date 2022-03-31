@@ -31,7 +31,7 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            var projects = projectService.GetProjects(user.Id).Take(10);
+            var projects = projectService.GetProjects(user.Id);
 
             return View(projects);
         }
@@ -100,7 +100,6 @@ namespace StructuralMechanics.Controllers
                     Id = Guid.NewGuid().ToString(),
                     ApplicationUser = user,
                     ProjectName = model.ProjectName,
-                    StructureType = model.StructureType,
                     Structure = structure,
                 };
 
@@ -133,8 +132,8 @@ namespace StructuralMechanics.Controllers
             {
                 ProjectId = projectId,
                 ProjectName = project.ProjectName,
-                StructureType = project.StructureType,
-                ThinWalledStructureType = (project.StructureType == StructureType.ThinWalledStructure) 
+                StructureType = project.Structure.StructureType,
+                ThinWalledStructureType = (project.Structure.StructureType == StructureType.ThinWalledStructure) 
                                             ? ((ThinWalledStructure)structureService.GetStructureByProjectId(projectId)).ThinWalledStructureType : null
             };
 
@@ -233,7 +232,7 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            structureService.DeleteStructureById(project.StructureId);
+            structureService.DeleteStructureById(project.Structure.Id);
             projectService.DeleteProjectById(project.Id);
 
             return RedirectToAction("Index", "Projects");

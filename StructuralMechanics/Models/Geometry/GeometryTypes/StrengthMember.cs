@@ -64,7 +64,7 @@ namespace StructuralMechanics.Models
             CalculateSecondMomentOfArea();
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
             {

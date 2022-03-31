@@ -14,6 +14,7 @@ namespace StructuralMechanics.Models
 
         //Navigation Properties
         [Required]
+        public int StructureId { get; set; }
         public Structure Structure { get; set; }
 
 
