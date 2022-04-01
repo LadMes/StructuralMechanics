@@ -1,5 +1,5 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager
-@model IQueryable<ProjectsViewModel>
+@model IEnumerable<ProjectsViewModel>
 
 
 @if (!signInManager.IsSignedIn(User))

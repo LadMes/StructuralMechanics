@@ -10,8 +10,8 @@ namespace StructuralMechanics.Models
 
 
         //Navigation Properties
-        [Required]
         public int StructureId { get; set; }
+        [Required]
         public Structure Structure { get; set; }
     }
 }

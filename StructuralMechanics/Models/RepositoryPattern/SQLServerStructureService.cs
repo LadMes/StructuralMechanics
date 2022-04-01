@@ -46,6 +46,11 @@
             return structure;
         }
 
+        public IEnumerable<Structure> GetAllStructures()
+        {
+            return context.Structures;
+        }
+
         public Structure GetStructureByProjectId(string projectId)
         {
             var project = projectService.GetProjectById(projectId);

@@ -27,7 +27,7 @@ namespace StructuralMechanics.Models
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUser>().HasMany(au => au.Projects).WithOne(p => p.ApplicationUser).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(au => au.Projects).WithOne(p => p.ApplicationUser).OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Project>().HasKey("Id").IsClustered(true);
             builder.Entity<Project>().HasOne(p => p.Structure).WithOne(s => s.Project)
@@ -35,10 +35,15 @@ namespace StructuralMechanics.Models
                                                               .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Structure>().ToTable("Structures");
-            builder.Entity<Structure>().HasMany(s => s.Points).WithOne(p => p.Structure).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<Structure>().HasMany(s => s.VectorPhysicalQuantities).WithOne(p => p.Structure).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<Structure>().HasMany(s => s.SimpleShapes).WithOne(p => p.Structure).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<Structure>().HasMany(s => s.StrengthMembers).WithOne(p => p.Structure).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<Structure>().HasMany(s => s.GeometryObjects).WithOne(go => go.Structure).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Structure>().HasMany(s => s.Points).WithOne(p => p.Structure).HasForeignKey(p => p.StructureId)
+                                                              .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Structure>().HasMany(s => s.VectorPhysicalQuantities).WithOne(vpq => vpq.Structure).HasForeignKey(vpq => vpq.StructureId)
+                                                                                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Structure>().HasMany(s => s.SimpleShapes).WithOne(ss => ss.Structure).HasForeignKey(ss => ss.StructureId)
+                                                                    .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Structure>().HasMany(s => s.StrengthMembers).WithOne(sm => sm.Structure).HasForeignKey(sm => sm.StructureId)
+                                                                       .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ThinWalledStructure>().ToTable("ThinWalledStructures");
             builder.Entity<CirclePlate>().ToTable("CirclePlates");

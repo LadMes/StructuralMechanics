@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Models;
+using StructuralMechanics.ViewModels;
 
 namespace StructuralMechanics.Controllers
 {
@@ -9,13 +10,15 @@ namespace StructuralMechanics.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IProjectService projectService;
+        private readonly IStructureService structureService;
 
         public HomeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-                                IProjectService projectService)
+                                IProjectService projectService, IStructureService structureService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.projectService = projectService;
+            this.structureService = structureService;
         }
 
         [HttpGet]
@@ -26,6 +29,18 @@ namespace StructuralMechanics.Controllers
             if (user != null)
             {
                 var projects = projectService.GetProjects(user.Id);
+                var structures = structureService.GetAllStructures();
+
+                var query = projects.Join(structures,
+                                         project => project.Id,
+                                         structure => structure.ProjectId,
+                                         (project, structure) => new ProjectsViewModel()
+                                         {
+                                             ProjectId = project.Id,
+                                             ProjectName = project.ProjectName,
+                                             StructureType = structure.StructureType,
+                                             StructureId = structure.Id,
+                                         });
                 //.Where(p => p.ApplicationUser.Id == userId)
                 //                   .Join(context.Structures,
                 //                         project => project.Id,
@@ -37,7 +52,7 @@ namespace StructuralMechanics.Controllers
                 //                             StructureType = structure.StructureType,
                 //                             StructureId = structure.Id,
                 //                         });
-                return View(projects);
+                return View(query);
             }
 
             return View();
