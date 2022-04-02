@@ -31,9 +31,21 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            var projects = projectService.GetProjects(user.Id);
+            var projects = projectService.GetProjects(user.Id).Select(p => new { p.Id, p.ProjectName });
+            var structures = structureService.GetAllStructures().Select(s => new { s.Id, s.ProjectId, s.StructureType });
 
-            return View(projects);
+            var query = projects.Join(structures,
+                                      project => project.Id,
+                                      structure => structure.ProjectId,
+                                      (project, structure) => new ProjectsViewModel
+                                      {
+                                          ProjectName = project.ProjectName,
+                                          ProjectId = project.Id,
+                                          StructureId = structure.Id,
+                                          StructureType = structure.StructureType
+                                      }).Take(10);
+
+            return View(query);
         }
 
         [HttpGet]
@@ -128,12 +140,14 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
+            var structure = structureService.GetStructureByProjectId(projectId);
+
             EditProjectViewModel model = new EditProjectViewModel()
             {
                 ProjectId = projectId,
                 ProjectName = project.ProjectName,
-                StructureType = project.Structure.StructureType,
-                ThinWalledStructureType = (project.Structure.StructureType == StructureType.ThinWalledStructure) 
+                StructureType = structure.StructureType,
+                ThinWalledStructureType = (structure.StructureType == StructureType.ThinWalledStructure) 
                                             ? ((ThinWalledStructure)structureService.GetStructureByProjectId(projectId)).ThinWalledStructureType : null
             };
 
@@ -177,7 +191,6 @@ namespace StructuralMechanics.Controllers
                     }
                     else
                     {
-                        //structure = new ThinWalledStructure(model.ThinWalledStructureType.Value);
                         structure = structureService.GetStructureByProjectId(model.ProjectId);
                         ((ThinWalledStructure)structure).ThinWalledStructureType = model.ThinWalledStructureType.Value;
                     }
@@ -232,7 +245,7 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            structureService.DeleteStructureById(project.Structure.Id);
+            //structureService.DeleteStructureById(project.Structure.Id);
             projectService.DeleteProjectById(project.Id);
 
             return RedirectToAction("Index", "Projects");

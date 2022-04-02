@@ -236,6 +236,8 @@ namespace StructuralMechanics.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("StructureId");
+
                     b.ToTable("GeometryObjects", (string)null);
                 });
 
@@ -259,7 +261,7 @@ namespace StructuralMechanics.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("StructuralMechanics.Models.Structure", b =>
@@ -352,8 +354,6 @@ namespace StructuralMechanics.Migrations
                     b.Property<double>("Y")
                         .HasColumnType("float");
 
-                    b.HasIndex("StructureId");
-
                     b.ToTable("Points", (string)null);
                 });
 
@@ -421,8 +421,6 @@ namespace StructuralMechanics.Migrations
                         .IsUnique()
                         .HasFilter("[SecondPointId] IS NOT NULL");
 
-                    b.HasIndex("StructureId");
-
                     b.ToTable("SimpleShapes", (string)null);
                 });
 
@@ -442,8 +440,6 @@ namespace StructuralMechanics.Migrations
                     b.HasIndex("LocationId")
                         .IsUnique()
                         .HasFilter("[LocationId] IS NOT NULL");
-
-                    b.HasIndex("StructureId");
 
                     b.ToTable("StrengthMembers", (string)null);
                 });
@@ -536,6 +532,17 @@ namespace StructuralMechanics.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("StructuralMechanics.Models.GeometryObject", b =>
+                {
+                    b.HasOne("StructuralMechanics.Models.Structure", "Structure")
+                        .WithMany("GeometryObjects")
+                        .HasForeignKey("StructureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Structure");
+                });
+
             modelBuilder.Entity("StructuralMechanics.Models.Project", b =>
                 {
                     b.HasOne("StructuralMechanics.Models.ApplicationUser", "ApplicationUser")
@@ -603,14 +610,6 @@ namespace StructuralMechanics.Migrations
                         .HasForeignKey("StructuralMechanics.Models.Point", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.HasOne("StructuralMechanics.Models.Structure", "Structure")
-                        .WithMany("Points")
-                        .HasForeignKey("StructureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Structure");
                 });
 
             modelBuilder.Entity("StructuralMechanics.Models.RotationalShell", b =>
@@ -633,7 +632,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.Point", "Location")
                         .WithOne()
                         .HasForeignKey("StructuralMechanics.Models.ShearForce", "LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Location");
@@ -653,7 +652,7 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.Point", "FirstPoint")
                         .WithOne()
                         .HasForeignKey("StructuralMechanics.Models.SimpleShape", "FirstPointId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("StructuralMechanics.Models.GeneralGeometryProperties", null)
@@ -665,20 +664,12 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.Point", "SecondPoint")
                         .WithOne()
                         .HasForeignKey("StructuralMechanics.Models.SimpleShape", "SecondPointId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("StructuralMechanics.Models.Structure", "Structure")
-                        .WithMany("SimpleShapes")
-                        .HasForeignKey("StructureId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("FirstPoint");
 
                     b.Navigation("SecondPoint");
-
-                    b.Navigation("Structure");
                 });
 
             modelBuilder.Entity("StructuralMechanics.Models.StrengthMember", b =>
@@ -692,18 +683,10 @@ namespace StructuralMechanics.Migrations
                     b.HasOne("StructuralMechanics.Models.Point", "Location")
                         .WithOne()
                         .HasForeignKey("StructuralMechanics.Models.StrengthMember", "LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("StructuralMechanics.Models.Structure", "Structure")
-                        .WithMany("StrengthMembers")
-                        .HasForeignKey("StructureId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Location");
-
-                    b.Navigation("Structure");
                 });
 
             modelBuilder.Entity("StructuralMechanics.Models.Arc", b =>
@@ -755,11 +738,7 @@ namespace StructuralMechanics.Migrations
 
             modelBuilder.Entity("StructuralMechanics.Models.Structure", b =>
                 {
-                    b.Navigation("Points");
-
-                    b.Navigation("SimpleShapes");
-
-                    b.Navigation("StrengthMembers");
+                    b.Navigation("GeometryObjects");
 
                     b.Navigation("VectorPhysicalQuantities");
                 });

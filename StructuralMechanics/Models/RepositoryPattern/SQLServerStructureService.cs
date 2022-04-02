@@ -33,18 +33,17 @@
             return structure;
         }
 
-        public Structure DeleteStructureById(int structureId)
-        {
-            var structure = context.Structures.Find(structureId);
-            if (structure != null)
-            {
-                //var project = context.Projects.Find(structure.Project.Id);
-                context.Structures.Remove(structure);
-                //projectService.DeleteProjectById(project.Id);
-                context.SaveChanges();
-            } 
-            return structure;
-        }
+        // This method is not required due to the cascade delete mode.
+        //public Structure DeleteStructureById(int structureId)
+        //{
+        //    var structure = context.Structures.Find(structureId);
+        //    if (structure != null)
+        //    {
+        //        context.Structures.Remove(structure);
+        //        context.SaveChanges();
+        //    } 
+        //    return structure;
+        //}
 
         public IEnumerable<Structure> GetAllStructures()
         {
@@ -53,19 +52,23 @@
 
         public Structure GetStructureByProjectId(string projectId)
         {
-            var project = projectService.GetProjectById(projectId);
-            if (project.Structure.StructureType == StructureType.ThinWalledStructure)
+            var structure = context.Structures.Single(s => s.ProjectId == projectId);
+            if (structure != null)
             {
-                return context.ThinWalledStructures.Find(project.Structure.Id);
+                return structure;
             }
-            else if (project.Structure.StructureType == StructureType.CirclePlate)
-            {
-                return context.CirclePlates.Find(project.Structure.Id);
-            }
-            else if (project.Structure.StructureType == StructureType.RotationalShell)
-            {
-                return context.RotationalShells.Find(project.Structure.Id);
-            }
+            //if (structure.StructureType == StructureType.ThinWalledStructure)
+            //{
+            //    return context.ThinWalledStructures.Find(structure.Id);
+            //}
+            //else if (structure.StructureType == StructureType.CirclePlate)
+            //{
+            //    return context.CirclePlates.Find(structure.Id);
+            //}
+            //else if (structure.StructureType == StructureType.RotationalShell)
+            //{
+            //    return context.RotationalShells.Find(structure.Id);
+            //}
 
             return null;
         }

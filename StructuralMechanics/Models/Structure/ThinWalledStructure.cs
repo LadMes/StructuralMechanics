@@ -17,7 +17,7 @@ namespace StructuralMechanics.Models
 
         public ThinWalledStructure(ThinWalledStructureType thinWalledStructureType)
         {
-            //this.StructureType = StructureType.ThinWalledStructure;
+            this.StructureType = StructureType.ThinWalledStructure;
             this.ThinWalledStructureType = thinWalledStructureType;
         }
 
@@ -25,15 +25,15 @@ namespace StructuralMechanics.Models
         {
             this.SecondMomentOfAreaOfStructure = 0;
             
-            foreach (var simpleShape in SimpleShapes)
-            {
-                this.SecondMomentOfAreaOfStructure += simpleShape.SecondMomentOfArea * 2;
-            }
+            //foreach (var simpleShape in SimpleShapes)
+            //{
+            //    this.SecondMomentOfAreaOfStructure += simpleShape.SecondMomentOfArea * 2;
+            //}
 
-            foreach (var strengthMember in StrengthMembers)
-            {
-                this.SecondMomentOfAreaOfStructure += strengthMember.SecondMomentOfArea * 2;
-            }
+            //foreach (var strengthMember in StrengthMembers)
+            //{
+            //    this.SecondMomentOfAreaOfStructure += strengthMember.SecondMomentOfArea * 2;
+            //}
         }
 
         public void CalculateFullShearForce()

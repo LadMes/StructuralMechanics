@@ -6,6 +6,8 @@
         Structure GetStructureByProjectId(string projectId);
         Structure AddStructure(Structure structure);
         Structure UpdateStructure(Structure structure);
-        Structure DeleteStructureById(int structureId);
+
+        // This method is not required due to the cascade delete mode.
+        //Structure DeleteStructureById(int structureId);
     }
 }
