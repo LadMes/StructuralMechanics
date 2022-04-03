@@ -27,7 +27,9 @@
                 <div class="project-card-buttons">
                     <a class="btn btn-primary" asp-controller="Structure" asp-action="Overview" asp-route-structureId="@project.StructureId">Continue</a>
                     <a class="btn btn-primary" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.ProjectId">Edit</a>
-                    <a class="btn btn-danger" asp-controller="Projects" asp-action="Delete" asp-route-projectId="@project.ProjectId">Delete</a>
+                    <form method="post" asp-action="Delete" asp-controller="Projects" asp-route-projectId="@project.ProjectId">
+                            <button class="btn btn-danger">Delete</button>
+                    </form>
                 </div>
             </div>
         }

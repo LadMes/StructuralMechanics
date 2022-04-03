@@ -245,7 +245,9 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            //structureService.DeleteStructureById(project.Structure.Id);
+            var structure = structureService.GetStructureByProjectId(projectId);
+
+            structureService.DeleteStructureById(structure.Id);
             projectService.DeleteProjectById(project.Id);
 
             return RedirectToAction("Index", "Projects");

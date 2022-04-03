@@ -24,6 +24,8 @@ namespace StructuralMechanics.Models
 
             if (project != null)
             {
+                //var structure = structureService.GetStructureByProjectId(projectId);
+                //structureService.DeleteStructureById(structure.Id);
                 context.Projects.Remove(project);
                 context.SaveChanges();
             }

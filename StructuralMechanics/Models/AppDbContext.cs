@@ -38,14 +38,6 @@ namespace StructuralMechanics.Models
             builder.Entity<Structure>().HasMany(s => s.GeometryObjects).WithOne(go => go.Structure)
                                                                        .HasForeignKey(go => go.StructureId)
                                                                        .OnDelete(DeleteBehavior.Cascade);
-            //builder.Entity<Structure>().HasMany(s => s.Points).WithOne(p => p.Structure).HasForeignKey(p => p.StructureId)
-            //                                                  .OnDelete(DeleteBehavior.Cascade);
-            //builder.Entity<Structure>().HasMany(s => s.VectorPhysicalQuantities).WithOne(vpq => vpq.Structure).HasForeignKey(vpq => vpq.StructureId)
-            //                                                                    .OnDelete(DeleteBehavior.Cascade);
-            //builder.Entity<Structure>().HasMany(s => s.SimpleShapes).WithOne(ss => ss.Structure).HasForeignKey(ss => ss.StructureId)
-            //                                                        .OnDelete(DeleteBehavior.Cascade);
-            //builder.Entity<Structure>().HasMany(s => s.StrengthMembers).WithOne(sm => sm.Structure).HasForeignKey(sm => sm.StructureId)
-            //                                                           .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ThinWalledStructure>().ToTable("ThinWalledStructures");
             builder.Entity<CirclePlate>().ToTable("CirclePlates");
