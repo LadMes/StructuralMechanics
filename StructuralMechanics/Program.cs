@@ -13,8 +13,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                                                             }).AddEntityFrameworkStores<AppDbContext>()
                                                               .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
-builder.Services.AddAuthorization();
-//builder.Services.AddAuthorization(options => options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Claim")));
+//builder.Services.AddAuthorization();
 builder.Services.AddScoped<IProjectService, SQLServerProjectService>();
 builder.Services.AddScoped<IStructureService, SQLServerStructureService>();
 

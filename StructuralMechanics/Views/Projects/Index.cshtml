@@ -22,7 +22,7 @@
                     Project Name: @project.ProjectName
                 </div>
                 <div class="project-card-structure-type">
-                    Structure Type: @project.StructureType
+                    Structure Type: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(project.StructureType)
                 </div>
                 <div class="project-card-buttons">
                     <a class="btn btn-primary" asp-controller="Structure" asp-action="Overview" asp-route-structureId="@project.StructureId">Continue</a>

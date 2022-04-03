@@ -124,9 +124,14 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpGet]
-        [Route("Edit/{projectId}")]
-        public async Task<IActionResult> Edit(string projectId)
+        [Route("Edit/{projectId?}")]
+        public async Task<IActionResult> Edit(string? projectId)
         {
+            if (projectId == null)
+            {
+                ViewBag.ErrorMessage = "ID must be specified";
+                return View("NotFound");
+            }
             var user = await userManager.GetUserAsync(User);
             var project = projectService.GetProjectById(projectId);
             if (project == null)
@@ -148,7 +153,8 @@ namespace StructuralMechanics.Controllers
                 ProjectName = project.ProjectName,
                 StructureType = structure.StructureType,
                 ThinWalledStructureType = (structure.StructureType == StructureType.ThinWalledStructure) 
-                                            ? ((ThinWalledStructure)structureService.GetStructureByProjectId(projectId)).ThinWalledStructureType : null
+                                            ? ((ThinWalledStructure)structureService.GetStructureByProjectId(projectId)).ThinWalledStructureType 
+                                            : null
             };
 
             return View(model);
@@ -175,7 +181,7 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                Structure structure;
+                Structure structure = structureService.GetStructureByProjectId(model.ProjectId);
 
                 if (model.StructureType == StructureType.ThinWalledStructure)
                 {
@@ -191,7 +197,6 @@ namespace StructuralMechanics.Controllers
                     }
                     else
                     {
-                        structure = structureService.GetStructureByProjectId(model.ProjectId);
                         ((ThinWalledStructure)structure).ThinWalledStructureType = model.ThinWalledStructureType.Value;
                     }
                 }
@@ -199,17 +204,11 @@ namespace StructuralMechanics.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "Others types aren't supported right now");
                     return View(model);
-
-                    //For Future
-                    //structure = new CirclePlate();
                 }
                 else if (model.StructureType == StructureType.RotationalShell)
                 {
                     ModelState.AddModelError(string.Empty, "Others types aren't supported right now");
                     return View(model);
-
-                    //For Future
-                    //structure = new RotationalShell();
                 }
                 else
                 {

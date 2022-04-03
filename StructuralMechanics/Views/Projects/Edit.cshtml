@@ -16,7 +16,7 @@
     <div class="form-row">
         <div class="form-item">
             <label asp-for="ProjectId"></label>
-            <input disabled asp-for="ProjectId" />
+            <input readonly asp-for="ProjectId" />
         </div>
     </div>
     <div class="form-row">
@@ -27,7 +27,7 @@
         </div>
         <div class="form-item">
             <label asp-for="StructureType"></label>
-            <input disabled asp-for="StructureType"/>
+            <input readonly asp-for="StructureType" value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.StructureType)" />
         </div>
     </div>
     @if (Model.StructureType == StructureType.ThinWalledStructure)
@@ -35,7 +35,7 @@
         <div id="thinWalledStructure" class="form-row">
             <div class="form-item">
                 <label asp-for="ThinWalledStructureType"></label>
-                <select id="thinWalledStructureTypes" asp-for="ThinWalledStructureType" asp-items="Html.GetEnumSelectList<ThinWalledStructureType>()">
+                <select asp-for="ThinWalledStructureType" asp-items="Html.GetEnumSelectList<ThinWalledStructureType>()">
                 </select>
                 <span asp-validation-for="ThinWalledStructureType" class="error-message"></span>
             </div>

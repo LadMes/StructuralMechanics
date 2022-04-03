@@ -14,6 +14,7 @@ namespace StructuralMechanics.ViewModels
         [Required]
         [Display(Name = "Structure Type")]
         public StructureType StructureType { get; set; }
+        [Display(Name = "Thin-Walled Structure Type")]
         public ThinWalledStructureType? ThinWalledStructureType { get; set; }
     }
 }
