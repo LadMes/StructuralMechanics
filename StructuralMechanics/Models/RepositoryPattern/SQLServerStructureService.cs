@@ -58,6 +58,11 @@
             return null;
         }
 
+        public Structure GetStructureByStructureId(int structureId)
+        {
+            return context.Structures.Find(structureId);
+        }
+
         public Structure UpdateStructure(Structure structure)
         {
             if (structure is ThinWalledStructure thinWalledStructure)

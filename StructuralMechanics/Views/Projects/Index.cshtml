@@ -25,7 +25,7 @@
                     Structure Type: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(project.StructureType)
                 </div>
                 <div class="project-card-buttons">
-                    <a class="btn btn-primary" asp-controller="Structure" asp-action="Overview" asp-route-structureId="@project.StructureId">Continue</a>
+                    <a class="btn btn-primary" asp-controller="Overview" asp-action="Index" asp-route-structureId="@project.StructureId">Continue</a>
                     <a class="btn btn-primary" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.ProjectId">Edit</a>
                     <form method="post" asp-action="Delete" asp-controller="Projects" asp-route-projectId="@project.ProjectId">
                             <button class="btn btn-danger">Delete</button>

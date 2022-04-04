@@ -40,6 +40,17 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                              name: "structure",
+                              pattern: "Structure/{structureId}/{controller=Overview}/{action=Index}/{id?}");
+                    endpoints.MapControllerRoute(
+                              name: "default",
+                              pattern: "{controller=Home}/{action=Index}/{id?}");
+                });
+                 
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
