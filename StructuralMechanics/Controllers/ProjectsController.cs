@@ -139,7 +139,7 @@ namespace StructuralMechanics.Controllers
                 ViewBag.ErrorMessage = "Project is not found";
                 return View("NotFound");
             }
-            else if (project.ApplicationUser.Id != user.Id)
+            else if (project.ApplicationUserId != user.Id)
             {
                 ViewBag.ErrorMessage = "The current user doesn't have access to this project";
                 return View("NotFound");
@@ -175,7 +175,7 @@ namespace StructuralMechanics.Controllers
                 }
                 
                 var project = projectService.GetProjectById(model.ProjectId);
-                if (project.ApplicationUser.Id != user.Id)
+                if (project.ApplicationUserId != user.Id)
                 {
                     ViewBag.ErrorMessage = "The current user doesn't have access to this project";
                     return View("NotFound");
@@ -238,7 +238,7 @@ namespace StructuralMechanics.Controllers
             }
 
             var project = projectService.GetProjectById(projectId);
-            if (project.ApplicationUser.Id != user.Id)
+            if (project.ApplicationUserId != user.Id)
             {
                 ViewBag.ErrorMessage = "The current user doesn't have access to this project";
                 return View("NotFound");

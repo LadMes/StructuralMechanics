@@ -11,6 +11,7 @@ namespace StructuralMechanics.Models
 
 
         //Navigation Properties
+        public string ApplicationUserId { get; set; }
         [Required]
         public ApplicationUser ApplicationUser { get; set; }  
         [Required]

@@ -13,9 +13,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                                                             }).AddEntityFrameworkStores<AppDbContext>()
                                                               .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
-//builder.Services.AddAuthorization();
 builder.Services.AddScoped<IProjectService, SQLServerProjectService>();
 builder.Services.AddScoped<IStructureService, SQLServerStructureService>();
+builder.Services.AddScoped<IGeometryObjectService, SQLServerGeometryObjectService>();
 
 
 
@@ -42,9 +42,9 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
                 {
-                    endpoints.MapControllerRoute(
-                              name: "structure",
-                              pattern: "Structure/{structureId}/{controller=Overview}/{action=Index}/{id?}");
+                    //endpoints.MapControllerRoute(
+                    //          name: "structure",
+                    //          pattern: "Project/{projectId}/{controller=Structure}/{action=Overview}/{id?}");
                     endpoints.MapControllerRoute(
                               name: "default",
                               pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -27,7 +27,7 @@ namespace StructuralMechanics.Models
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUser>().HasMany(au => au.Projects).WithOne(p => p.ApplicationUser).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ApplicationUser>().HasMany(au => au.Projects).WithOne(p => p.ApplicationUser).HasForeignKey(p => p.ApplicationUserId).OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Project>().HasKey("Id").IsClustered(true);
             builder.Entity<Project>().HasOne(p => p.Structure).WithOne(s => s.Project)
