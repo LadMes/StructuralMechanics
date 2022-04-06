@@ -64,9 +64,9 @@ namespace StructuralMechanics.Models
             return $"Point(mm) ({this.X}; {this.Y})";
         }
 
-        public int CompareTo(Point other)
+        public int CompareTo(Point? other)
         {
-            return this.X.CompareTo(other.X);
+            return this.X.CompareTo(other?.X);
         }
     }
 
