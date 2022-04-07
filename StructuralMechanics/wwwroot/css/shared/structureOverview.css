@@ -1,0 +1,10 @@
+﻿.structure-overview {
+    display: flex;
+    flex-direction: column;
+}
+
+.overall-information {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

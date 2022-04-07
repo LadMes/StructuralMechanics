@@ -41,49 +41,7 @@ namespace StructuralMechanics.Controllers
             var geometryObjects = geometryObjectService.GetGeometryObjectsByStructureId(structure.Id);
             var vectors = vectorPhysicalQuantityService.GetVectorPhysicalQuantitiesByStructureId(structure.Id);
 
-            //To-do: check below
-            return View(GetThinWalledStructureOverviewViewModel(geometryObjects, vectors));
-        }
-
-        // To-do tommorow: this is constructor for structure type view model, so move code where it belongs and modify accordingly
-        // (initially there was different idea for the method but ended up with constructor which is right way to do the thing I've imaged)
-        private ThinWalledStructureOverviewViewModel GetThinWalledStructureOverviewViewModel(List<GeometryObject>? geometryObjects,
-                                                              List<VectorPhysicalQuantity>? vectors)
-        {
-            if (geometryObjects == null && vectors == null)
-            {
-               return new ThinWalledStructureOverviewViewModel();
-            }
-
-            int pointsCount = geometryObjects?.Where(go => go.GeometryType == GeometryType.Point).Count() ?? 0;
-            int horizontalLinesCount = geometryObjects?.Where(go => go.GeometryType == GeometryType.HorizontalLine).Count() ?? 0;
-            int verticalLinesCount = geometryObjects?.Where(go => go.GeometryType == GeometryType.VerticalLine).Count() ?? 0;
-            int slopeLinesCount = geometryObjects?.Where(go => go.GeometryType == GeometryType.SlopeLine).Count() ?? 0;
-            int arcsCount = geometryObjects?.Where(go => go.GeometryType == GeometryType.Arc).Count() ?? 0;
-
-            int forcesCount = vectors?.Where(v => v.VectorType == VectorType.ShearForce).Count() ?? 0;
-
-            int strengthMembersCount = geometryObjects?.Where(go => go.GeometryType == GeometryType.StrengthMember).Count() ?? 0;
-            int momentsCount = vectors?.Where(v => v.VectorType == VectorType.Moment).Count() ?? 0;
-
-            var viewModel = new ThinWalledStructureOverviewViewModel()
-            {
-                GeometryObjectCount = pointsCount + horizontalLinesCount + verticalLinesCount
-                                        + slopeLinesCount + arcsCount + strengthMembersCount,
-                VectorPhysicalQuantitiesCount = forcesCount + momentsCount,
-
-                PointsCount = pointsCount,
-                HorizontalLinesCount = horizontalLinesCount,
-                VerticalLinesCount = verticalLinesCount,
-                SlopeLinesCount = slopeLinesCount,
-                ArcsCount = arcsCount,
-                StrengthMembersCount = strengthMembersCount,
-
-                ForcesCount = forcesCount,
-                MomentsCount = momentsCount,
-            };
-
-            return viewModel;
+            return View(new ThinWalledStructureOverviewViewModel(geometryObjects, vectors));
         }
     }
 }

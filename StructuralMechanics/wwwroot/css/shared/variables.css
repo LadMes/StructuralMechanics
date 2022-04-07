@@ -5,7 +5,6 @@
     --height-header: 7%;
     --height-inner-container: calc(100% - var(--height-header) - var(--height-footer));
     --color-base-hue: 123;
-    /*--color-danger-hue-offset: 47;*/
     --color-danger-hue: 16;
     --color-background: #f2f2f2;
     --color-text: black;
