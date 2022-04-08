@@ -33,18 +33,21 @@ body {
     margin: 0;
     display: flex;
     flex-flow: column;
-    height: 98%;
+    align-items: stretch;
+    height: 100%;
 }
 
 .header {
     background-color: var(--color-header-background);
-    height: var(--height-header);
+    display: flex;
+    flex-shrink: 0;
 }
 
 .inner-container {
     display: flex;
-    height: var(--height-inner-container);
     margin: 0 10rem;
+    flex-grow: 1;
+    flex-shrink: 0;
 }
 
 .sidebar-inner-container {
@@ -58,8 +61,8 @@ body {
 }
 
 .footer {
-    height: var(--height-footer);
     text-align: center;
+    flex-shrink: 0;
 }
 
 .info-message {

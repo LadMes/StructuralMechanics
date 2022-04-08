@@ -1,9 +1,6 @@
 ﻿:root {
     --width-sidebar-inner-container: 15%;
     --width-middle-inner-container: calc(100% - var(--width-sidebar-inner-container) * 2);
-    --height-footer: 5%;
-    --height-header: 7%;
-    --height-inner-container: calc(100% - var(--height-header) - var(--height-footer));
     --color-base-hue: 123;
     --color-danger-hue: 16;
     --color-background: #f2f2f2;

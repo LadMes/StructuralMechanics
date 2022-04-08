@@ -10,10 +10,10 @@
 <body>
     <div class="container">
         <header class="header">
+            <div class="header-image">
+                <a asp-controller="Home" asp-action="Index"><img src="~/images/bridge.png" /></a>
+            </div>
             <nav class="header-nav">
-                <div class="header-nav-image">
-                    <a asp-controller="Home" asp-action="Index"><img src="~/images/bridge.png" /></a>
-                </div>
                 @if (!signInManager.IsSignedIn(User))
                 {
                     <ul>

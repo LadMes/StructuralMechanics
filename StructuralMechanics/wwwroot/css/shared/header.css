@@ -7,24 +7,22 @@
 .header-nav {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    /*margin-bottom: 5rem;*/
+    justify-content: flex-end;
+    width: 100%;
 }
 
-.header-nav-image {
+.header-image {
     width: 62px;
     height: 100%;
     margin: 0 0 0 2rem;
 }
 
-.header-nav-image a {
+.header-image a {
     display: inline-block;
     height: 100%;
 }
 
-.header-nav-image a img {
+.header-image a img {
     width: 100%;
     height: 100%;
 }
@@ -55,13 +53,12 @@
 
 .header-nav li form {
     height: 100%;
-    padding: 1rem;
     cursor: pointer;
 }
 
 .header-nav li form button {
     height: 100%;
-    padding: 0;
+    padding: 1rem;
     border: none;
     background: none;
     color: var(--color-header-text);
