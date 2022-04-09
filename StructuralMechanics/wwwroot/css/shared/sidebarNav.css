@@ -2,6 +2,7 @@
     --sidebar-nav-link-font-weight: 300;
     --color-sidebar-background: #262626;
     --color-sidebar-text: black;
+    --color-sidebar-button-hover: white;
 }
 
 .sidebar-nav {
@@ -12,11 +13,11 @@
     border-right-width: 1px;
     border-right-style: solid;
     border-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)) 1 100%;
-    /*margin-bottom: 5rem;*/
 }
 
 .sidebar-nav ul {
     display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -40,4 +41,33 @@
 .sidebar-nav li a:hover {
     background-color: var(--color-header-background);
     color: white;
+}
+
+.sidebar-nav li button {
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    background: none;
+    color: var(--color-sidebar-text);
+    font-family: 'Gotham Rounded';
+    font-weight: var(--sidebar-nav-link-font-weight);
+    font-size: inherit;
+    cursor: pointer;
+    text-align: start;
+}
+
+.sidebar-nav li button:hover {
+    background-color: var(--color-header-background);
+    color: var(--color-sidebar-button-hover);
+}
+
+.sidebar-hidden-menu {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+}
+
+.sidebar-hidden-menu li a{
+    padding: 1rem 0 1rem 1.5rem;
 }
