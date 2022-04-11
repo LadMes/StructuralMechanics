@@ -5,27 +5,25 @@
 }
 
 @section SidebarNavigation {
-    <div class="sidebar-nav">
-        <ul>
-            <li><a asp-controller="Projects" asp-action="Create">Create Project</a></li>
-        </ul>
-    </div>
+    <ul>
+        <li><a asp-controller="Projects" asp-action="Create">Create Project</a></li>
+    </ul>
 }
 
 @if (Model.Any())
 {
-    <div class="projects"> 
+    <div class="info-cards"> 
         @foreach (var project in Model)
         {
-            <div class="project-card">
-                <div class="project-card-project-name">
+            <div class="info-card">
+                <div class="info-card-text">
                     Project Name: @project.ProjectName
                 </div>
-                <div class="project-card-structure-type">
+                <div class="info-card-text">
                     Structure Type: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(project.StructureType)
                 </div>
-                <div class="project-card-buttons">
-                    <a class="btn btn-primary" asp-controller="@project.StructureType" asp-action="Overview" asp-route-structureId="@project.ProjectId">Continue</a>
+                <div class="info-card-buttons">
+                    <a class="btn btn-primary" asp-controller="@project.StructureType" asp-action="Overview" asp-route-projectId="@project.ProjectId">Continue</a>
                     <a class="btn btn-primary" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.ProjectId">Edit</a>
                     <form method="post" asp-action="Delete" asp-controller="Projects" asp-route-projectId="@project.ProjectId">
                             <button class="btn btn-danger">Delete</button>

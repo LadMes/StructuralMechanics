@@ -40,7 +40,9 @@
             <div class="sidebar-inner-container">
                 @if (IsSectionDefined("SidebarNavigation"))
                 {
-                    @RenderSection("SidebarNavigation")
+                    <div class="sidebar-nav">
+                        @RenderSection("SidebarNavigation")
+                    </div>
                 }
             </div>
             <div class="middle-inner-container">

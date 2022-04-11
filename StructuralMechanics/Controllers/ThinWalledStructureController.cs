@@ -30,7 +30,8 @@ namespace StructuralMechanics.Controllers
                 ViewBag.ErrorMessage = "User does not have access to this project";
                 return View("NotFound");
             }
-            ViewBag.ProjectName = project.ProjectName;
+            ViewBag.ProjectName = $"Project: {project.ProjectName}";
+            ViewBag.ProjectId = projectId;
 
             var structure = structureService.GetStructureByProjectId(projectId);
             if (structure == null)

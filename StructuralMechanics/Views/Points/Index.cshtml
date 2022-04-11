@@ -1,0 +1,42 @@
+﻿@model List<Point>
+
+@{
+    ViewBag.Title = ViewBag.ProjectName;
+}
+
+@section SidebarNavigation {
+    <ul>
+        <li><a asp-controller="Points" asp-action="Create">Create point</a></li>
+        <li><a asp-controller="ThinWalledStructure" asp-action="Overview" asp-route-projectId="@ViewBag.ProjectId">Back</a></li>
+    </ul>
+}
+
+@if (Model.Any())
+{
+    <div class="info-cards"> 
+        @foreach (var point in Model)
+        {
+            <div class="info-card">
+                <div class="info-card-text">
+                    Position: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(point.PointPosition);
+                </div>
+                <div class="info-card-text">
+                    Coordinates: (@point.X, @point.Y)
+                </div>
+                <div class="info-card-buttons"> 
+                    <a class="btn btn-primary" asp-controller="Points" asp-action="Edit" asp-route-projectId="@ViewBag.ProjectId">Edit</a>
+                    <form method="post" asp-controller="Points" asp-action="Delete" asp-route-projectId="@ViewBag.ProjectId">
+                            <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="info-message">
+        <h1>There's no points! Create one.</h1>
+        <a class="btn btn-primary" asp-controller="Points" asp-action="Create">Create</a>
+    </div>   
+}

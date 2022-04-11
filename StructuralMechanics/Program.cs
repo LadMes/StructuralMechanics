@@ -17,6 +17,7 @@ builder.Services.AddScoped<IProjectService, SQLServerProjectService>();
 builder.Services.AddScoped<IStructureService, SQLServerStructureService>();
 builder.Services.AddScoped<IGeometryObjectService, SQLServerGeometryObjectService>();
 builder.Services.AddScoped<IVectorPhysicalQuantityService, SQLServerVectorPhysicalQuantityService>();
+builder.Services.AddScoped<IPointsService, SQLServerPointsService>();
 
 
 

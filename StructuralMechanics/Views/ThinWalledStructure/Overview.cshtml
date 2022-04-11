@@ -5,36 +5,34 @@
 }
 
 @section SidebarNavigation {
-    <div class="sidebar-nav">
-        <ul>
-            <li id="btnAddMenu"><button onclick="showHiddenMenu('addMenu', 'btnAddMenu')">Add</button></li>
-            <li id="addMenu" style="display: none;">
-                <ul class="sidebar-hidden-menu">
-                    <li><a asp-controller="Points" asp-action="Create">Point</a></li>
-                    <li><a asp-controller="SimpleShapes" asp-action="Create">Simple Shape</a></li>
-                    <li><a asp-controller="StrengthMembers" asp-action="Create">Strength Member</a></li>
-                    <li><a asp-controller="VectorPhysicalQuantities" asp-action="Create"></a></li>
-                </ul>
-            </li>
-            <li id="btnShowMenu"><button onclick="showHiddenMenu('showMenu', 'btnShowMenu')">Show</button></li>
-            <li id="showMenu" style="display: none;">
-                <ul class="sidebar-hidden-menu">
-                    <li><a asp-controller="Points" asp-action="Index">Points</a></li>
-                    <li><a asp-controller="SimpleShapes" asp-action="Index">Simple Shapes</a></li>
-                    <li><a asp-controller="StrengthMembers" asp-action="Index">Strength Members</a></li>
-                    <li><a asp-controller="VectorPhysicalQuantities" asp-action="Index"></a></li>
-                </ul>
-            </li>
-            <li><button disabled>Solve</button></li>
-        </ul>
-    </div>
+    <ul>
+        <li id="btnAddMenu"><button onclick="showHiddenMenu('addMenu', 'btnAddMenu')">Add</button></li>
+        <li id="addMenu" style="display: none;">
+            <ul class="sidebar-hidden-menu">
+                <li><a asp-controller="Points" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Point</a></li>
+                <li><a asp-controller="SimpleShapes" asp-action="Create">Simple Shape</a></li>
+                <li><a asp-controller="StrengthMembers" asp-action="Create">Strength Member</a></li>
+                <li><a asp-controller="VectorPhysicalQuantities" asp-action="Create">Vector Quantity</a></li>
+            </ul>
+        </li>
+        <li id="btnShowMenu"><button onclick="showHiddenMenu('showMenu', 'btnShowMenu')">Show</button></li>
+        <li id="showMenu" style="display: none;">
+            <ul class="sidebar-hidden-menu">
+                <li><a asp-controller="Points" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Points</a></li>
+                <li><a asp-controller="SimpleShapes" asp-action="Index">Simple Shapes</a></li>
+                <li><a asp-controller="StrengthMembers" asp-action="Index">Strength Members</a></li>
+                <li><a asp-controller="VectorPhysicalQuantities" asp-action="Index">Vector Quantities</a></li>
+            </ul>
+        </li>
+        <li><button disabled>Solve</button></li>
+    </ul>
 }
 
 <div class="structure-overview">
     <div class="display-construction">
         <h1 class="info-message">Structure Display: to be implemented...(Not a priority)</h1>
     </div>
-    <hr class="main-hr"/>
+    <hr class="main-hr" />
     <div class="overall-information">
         <div class="overall-information-first-column">
             <h3>Geometry object count: @Model.GeometryObjectCount</h3>
