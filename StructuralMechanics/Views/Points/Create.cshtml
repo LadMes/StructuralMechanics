@@ -1,0 +1,31 @@
+﻿@model CreatePointViewModel
+
+@{
+    ViewBag.Title = "Create Point";
+}
+
+@section SidebarNavigation {
+    <ul>
+        <li><a asp-controller="@ViewBag.StructureType" asp-action="Overview" asp-route-projectId="@ViewBag.ProjectId">Back</a></li>
+    </ul>
+}
+
+<form method="post" asp-controller="Points" asp-action="Create">
+    <div class="form-row">
+        <div class="form-item">
+            <label asp-for="X"></label>
+            <input asp-for="X" />
+            <span asp-validation-for="X" class="error-message"></span>
+        </div>
+        <div class="form-item">
+            <label asp-for="Y"></label>
+            <input asp-for="Y" />
+            <span asp-validation-for="Y" class="error-message"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div asp-validation-summary="All" class="error-message"></div>
+    </div>
+    <hr class="main-hr" />
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

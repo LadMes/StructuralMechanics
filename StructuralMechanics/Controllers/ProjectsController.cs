@@ -116,7 +116,7 @@ namespace StructuralMechanics.Controllers
                 };
 
                 projectService.AddProject(project);
-                return new RedirectResult(url: $"~/Project/{project.Id}/ThinWalledStructure", false, false);
+                return new RedirectResult(url: $"~/Project/{project.Id}/{structure.StructureType}", false, false);
             }
 
             return View(model);

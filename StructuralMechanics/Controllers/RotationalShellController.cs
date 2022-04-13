@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace StructuralMechanics.Controllers
 {
     // For Future
-    [Route("Project/{projectId}/RotationalShell")]
+    [Route("Project/{projectId}/[Controller]")]
     public class RotationalShellController : StructureController
     {
         public RotationalShellController(UserManager<ApplicationUser> userManager,

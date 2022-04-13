@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace StructuralMechanics.Controllers
 {
     // For Future
-    [Route("Project/{projectId}/CirclePlate/")]
+    [Route("Project/{projectId}/[Controller]")]
     public class CirclePlateController : StructureController
     {
         public CirclePlateController(UserManager<ApplicationUser> userManager,

@@ -10,18 +10,18 @@
         <li id="addMenu" style="display: none;">
             <ul class="sidebar-hidden-menu">
                 <li><a asp-controller="Points" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Point</a></li>
-                <li><a asp-controller="SimpleShapes" asp-action="Create">Simple Shape</a></li>
-                <li><a asp-controller="StrengthMembers" asp-action="Create">Strength Member</a></li>
-                <li><a asp-controller="VectorPhysicalQuantities" asp-action="Create">Vector Quantity</a></li>
+                <li><a asp-controller="SimpleShapes" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Simple Shape</a></li>
+                <li><a asp-controller="StrengthMembers" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Strength Member</a></li>
+                <li><a asp-controller="VectorPhysicalQuantities" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Vector Quantity</a></li>
             </ul>
         </li>
         <li id="btnShowMenu"><button onclick="showHiddenMenu('showMenu', 'btnShowMenu')">Show</button></li>
         <li id="showMenu" style="display: none;">
             <ul class="sidebar-hidden-menu">
                 <li><a asp-controller="Points" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Points</a></li>
-                <li><a asp-controller="SimpleShapes" asp-action="Index">Simple Shapes</a></li>
-                <li><a asp-controller="StrengthMembers" asp-action="Index">Strength Members</a></li>
-                <li><a asp-controller="VectorPhysicalQuantities" asp-action="Index">Vector Quantities</a></li>
+                <li><a asp-controller="SimpleShapes" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Simple Shapes</a></li>
+                <li><a asp-controller="StrengthMembers" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Strength Members</a></li>
+                <li><a asp-controller="VectorPhysicalQuantities" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Vector Quantities</a></li>
             </ul>
         </li>
         <li><button disabled>Solve</button></li>

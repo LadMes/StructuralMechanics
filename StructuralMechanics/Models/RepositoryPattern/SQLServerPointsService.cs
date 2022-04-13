@@ -9,6 +9,13 @@
             this.context = context;
         }
 
+        public Point AddPoint(Point point)
+        {
+            context.GeometryObjects.Add(point);
+            context.SaveChanges();
+            return point;
+        }
+
         public List<Point> GetPointsByStructureId(int structureId)
         {
             return context.Points.Where(p => p.StructureId == structureId).ToList();

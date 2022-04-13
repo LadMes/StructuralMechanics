@@ -4,7 +4,7 @@ using StructuralMechanics.ViewModels;
 
 namespace StructuralMechanics.Controllers
 {
-    [Route("Project/{projectId}/ThinWalledStructure")]
+    [Route("Project/{projectId}/[Controller]")]
     public class ThinWalledStructureController : StructureController
     {
         public ThinWalledStructureController(UserManager<ApplicationUser> userManager,
