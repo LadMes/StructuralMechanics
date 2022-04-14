@@ -9,6 +9,13 @@
             this.context = context;
         }
 
+        public GeometryObject AddGeometryObject(GeometryObject geometryObject)
+        {
+            context.GeometryObjects.Add(geometryObject);
+            context.SaveChanges();
+            return geometryObject;
+        }
+
         public List<GeometryObject>? GetGeometryObjectsByStructureId(int structureId)
         {
             return context.GeometryObjects.Where(go => go.StructureId == structureId).ToList();

@@ -7,10 +7,11 @@ namespace StructuralMechanics.Utilities
     {
         public static string GetDisplayName(Enum value)
         {
-            return value.GetType()?
-           .GetMember(value.ToString())?.First()?
-           .GetCustomAttribute<DisplayAttribute>()?
-           .Name;
+            var name = value.GetType()?
+                            .GetMember(value.ToString())?.First()?
+                            .GetCustomAttribute<DisplayAttribute>()?
+                            .Name;
+            return name != null ? name : "";
         }
     }
 }

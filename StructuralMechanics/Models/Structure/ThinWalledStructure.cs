@@ -25,15 +25,7 @@ namespace StructuralMechanics.Models
         {
             this.SecondMomentOfAreaOfStructure = 0;
             
-            //foreach (var simpleShape in SimpleShapes)
-            //{
-            //    this.SecondMomentOfAreaOfStructure += simpleShape.SecondMomentOfArea * 2;
-            //}
-
-            //foreach (var strengthMember in StrengthMembers)
-            //{
-            //    this.SecondMomentOfAreaOfStructure += strengthMember.SecondMomentOfArea * 2;
-            //}
+            //To be implemented
         }
 
         public void CalculateFullShearForce()

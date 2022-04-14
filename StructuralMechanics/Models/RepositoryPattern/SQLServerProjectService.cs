@@ -1,6 +1,4 @@
-﻿using StructuralMechanics.ViewModels;
-
-namespace StructuralMechanics.Models
+﻿namespace StructuralMechanics.Models
 {
     public class SQLServerProjectService : IProjectService
     {
@@ -18,22 +16,14 @@ namespace StructuralMechanics.Models
             return project;
         }
 
-        public Project DeleteProjectById(string projectId)
+        public Project DeleteProject(Project project)
         {
-            Project project = context.Projects.Find(projectId);
-
-            if (project != null)
-            {
-                //var structure = structureService.GetStructureByProjectId(projectId);
-                //structureService.DeleteStructureById(structure.Id);
-                context.Projects.Remove(project);
-                context.SaveChanges();
-            }
-            
+            context.Projects.Remove(project);
+            context.SaveChanges(); 
             return project;
         }
 
-        public Project GetProjectById(string projectId)
+        public Project? GetProjectById(string projectId)
         {
             return context.Projects.Find(projectId);
         }
@@ -46,11 +36,8 @@ namespace StructuralMechanics.Models
         public Project UpdateProject(Project project)
         {
             var projectToUpdate = context.Projects.Attach(project);
-
             projectToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
             context.SaveChanges();
-
             return project;
         }
     }

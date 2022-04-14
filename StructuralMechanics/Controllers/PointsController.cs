@@ -11,16 +11,19 @@ namespace StructuralMechanics.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IProjectService projectService;
         private readonly IStructureService structureService;
+        private readonly IGeometryObjectService geometryObjectService;
         private readonly IPointsService pointsService;
 
         public PointsController(UserManager<ApplicationUser> userManager,
                                    IProjectService projectService,
                                    IStructureService structureService,
+                                   IGeometryObjectService geometryObjectService,
                                    IPointsService pointsService)
         {
             this.userManager = userManager;
             this.projectService = projectService;
             this.structureService = structureService;
+            this.geometryObjectService = geometryObjectService;
             this.pointsService = pointsService;
         }
 
@@ -101,9 +104,9 @@ namespace StructuralMechanics.Controllers
 
                 point.Structure = structure;
 
-                pointsService.AddPoint(point);
+                geometryObjectService.AddGeometryObject(point);
 
-                return new RedirectResult(url: $"~/Project/{project.Id}/Points", false, false);
+                return new RedirectResult(url: $"~/Project/{project.Id}/Points/Index", false, false);
             }
 
             return View(model);

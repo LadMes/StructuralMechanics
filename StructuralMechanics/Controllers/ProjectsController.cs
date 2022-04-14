@@ -145,6 +145,11 @@ namespace StructuralMechanics.Controllers
             }
 
             var structure = structureService.GetStructureByProjectId(projectId);
+            if (structure == null)
+            {
+                ViewBag.ErrorMessage = "Structure is not found";
+                return View("NotFound");
+            }
 
             EditProjectViewModel model = new EditProjectViewModel()
             {
@@ -152,7 +157,7 @@ namespace StructuralMechanics.Controllers
                 ProjectName = project.ProjectName,
                 StructureType = structure.StructureType,
                 ThinWalledStructureType = (structure.StructureType == StructureType.ThinWalledStructure) 
-                                            ? ((ThinWalledStructure)structureService.GetStructureByProjectId(projectId)).ThinWalledStructureType 
+                                            ? ((ThinWalledStructure)structure).ThinWalledStructureType 
                                             : null
             };
 
@@ -174,13 +179,23 @@ namespace StructuralMechanics.Controllers
                 }
                 
                 var project = projectService.GetProjectById(model.ProjectId);
-                if (project.ApplicationUserId != user.Id)
+                if (project == null)
+                {
+                    ViewBag.ErrorMessage = "Project is not found";
+                    return View("NotFound");
+                }
+                else if (project.ApplicationUserId != user.Id)
                 {
                     ViewBag.ErrorMessage = "The current user doesn't have access to this project";
                     return View("NotFound");
                 }
 
-                Structure structure = structureService.GetStructureByProjectId(model.ProjectId);
+                var structure = structureService.GetStructureByProjectId(model.ProjectId);
+                if (structure == null)
+                {
+                    ViewBag.ErrorMessage = "Structure is not found";
+                    return View("NotFound");
+                }
 
                 if (model.StructureType == StructureType.ThinWalledStructure)
                 {
@@ -216,6 +231,7 @@ namespace StructuralMechanics.Controllers
                 }
 
                 project.ProjectName = model.ProjectName;
+                // If we don't update structure info there's no need for calling update structure
                 structureService.UpdateStructure(structure);
                 projectService.UpdateProject(project);
                 return RedirectToAction("Index");
@@ -237,16 +253,26 @@ namespace StructuralMechanics.Controllers
             }
 
             var project = projectService.GetProjectById(projectId);
-            if (project.ApplicationUserId != user.Id)
+            if (project == null)
+            {
+                ViewBag.ErrorMessage = "Project is not found";
+                return View("NotFound");
+            }
+            else if (project.ApplicationUserId != user.Id)
             {
                 ViewBag.ErrorMessage = "The current user doesn't have access to this project";
                 return View("NotFound");
             }
 
             var structure = structureService.GetStructureByProjectId(projectId);
+            if (structure == null)
+            {
+                ViewBag.ErrorMessage = "Structure is not found";
+                return View("NotFound");
+            }
 
-            structureService.DeleteStructureById(structure.Id);
-            projectService.DeleteProjectById(project.Id);
+            structureService.DeleteStructure(structure);
+            projectService.DeleteProject(project);
 
             return RedirectToAction("Index", "Projects");
         }

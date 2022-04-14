@@ -25,12 +25,14 @@
         </div>
         <div class="form-item">
             <label asp-for="StructureType"></label>
-            <input readonly asp-for="StructureType" value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.StructureType)" />
+            <input readonly asp-for="StructureType" 
+                            value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.StructureType)"
+                            name="@Model.StructureType"/>
         </div>
     </div>
     @if (Model.StructureType == StructureType.ThinWalledStructure)
     {
-        <div id="thinWalledStructure" class="form-row">
+        <div class="form-row">
             <div class="form-item">
                 <label asp-for="ThinWalledStructureType"></label>
                 <select asp-for="ThinWalledStructureType" asp-items="Html.GetEnumSelectList<ThinWalledStructureType>()">
