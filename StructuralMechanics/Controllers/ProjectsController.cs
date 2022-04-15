@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Utilities;
 using StructuralMechanics.ViewModels;
 
 namespace StructuralMechanics.Controllers
@@ -31,21 +32,7 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            var projects = projectService.GetProjects(user.Id).Select(p => new { p.Id, p.ProjectName });
-            var structures = structureService.GetAllStructures().Select(s => new { s.Id, s.ProjectId, s.StructureType });
-
-            var query = projects.Join(structures,
-                                      project => project.Id,
-                                      structure => structure.ProjectId,
-                                      (project, structure) => new ProjectsViewModel
-                                      {
-                                          ProjectName = project.ProjectName,
-                                          ProjectId = project.Id,
-                                          StructureId = structure.Id,
-                                          StructureType = structure.StructureType
-                                      }).Take(10);
-
-            return View(query);
+            return View(ProjectsQuery.Query(user, projectService, structureService));
         }
 
         [HttpGet]
@@ -66,44 +53,11 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                Structure structure;
+                (bool isStructureValid, string errorMessage, Structure? structure) = ModelValidation.IsStructureValid(model);
 
-                if (model.StructureType == StructureType.ThinWalledStructure)
+                if (!isStructureValid)
                 {
-                    if (model.ThinWalledStructureType == null)
-                    {
-                        ModelState.AddModelError(string.Empty, "Select Thin-walled Structure Type");
-                        return View(model);
-                    }
-                    else if (model.ThinWalledStructureType == ThinWalledStructureType.OneTimeClosed)
-                    {
-                        ModelState.AddModelError(string.Empty, "One-time closed Thin-walled Structure type is not supported right now");
-                        return View(model);
-                    }
-                    else
-                    {
-                        structure = new ThinWalledStructure(model.ThinWalledStructureType.Value);
-                    }
-                }
-                else if (model.StructureType == StructureType.CirclePlate)
-                {
-                    ModelState.AddModelError(string.Empty, "Others types aren't supported right now");
-                    return View(model);
-
-                    //For Future
-                    //structure = new CirclePlate();
-                }
-                else if (model.StructureType == StructureType.RotationalShell)
-                {
-                    ModelState.AddModelError(string.Empty, "Others types aren't supported right now");
-                    return View(model);
-
-                    //For Future
-                    //structure = new RotationalShell();
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Select Structure Type");
+                    ModelState.AddModelError(string.Empty, errorMessage);
                     return View(model);
                 }
 
@@ -112,11 +66,11 @@ namespace StructuralMechanics.Controllers
                     Id = Guid.NewGuid().ToString(),
                     ApplicationUser = user,
                     ProjectName = model.ProjectName,
-                    Structure = structure,
+                    Structure = structure!
                 };
 
                 projectService.AddProject(project);
-                return new RedirectResult(url: $"~/Project/{project.Id}/{structure.StructureType}", false, false);
+                return new RedirectResult(url: $"~/Project/{project.Id}/{structure!.StructureType}", false, false);
             }
 
             return View(model);
@@ -197,36 +151,10 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                if (model.StructureType == StructureType.ThinWalledStructure)
+                (bool isStructureValid, string errorMessage, structure) = ModelValidation.IsStructureValid(model, structure);
+                if (!isStructureValid)
                 {
-                    if (model.ThinWalledStructureType == null)
-                    {
-                        ModelState.AddModelError(string.Empty, "Select Thin-walled Structure Type");
-                        return View(model);
-                    }
-                    else if (model.ThinWalledStructureType == ThinWalledStructureType.OneTimeClosed)
-                    {
-                        ModelState.AddModelError(string.Empty, "One-time closed Thin-walled Structure type is not supported right now");
-                        return View(model);
-                    }
-                    else
-                    {
-                        ((ThinWalledStructure)structure).ThinWalledStructureType = model.ThinWalledStructureType.Value;
-                    }
-                }
-                else if (model.StructureType == StructureType.CirclePlate)
-                {
-                    ModelState.AddModelError(string.Empty, "Others types aren't supported right now");
-                    return View(model);
-                }
-                else if (model.StructureType == StructureType.RotationalShell)
-                {
-                    ModelState.AddModelError(string.Empty, "Others types aren't supported right now");
-                    return View(model);
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Select Structure Type");
+                    ModelState.AddModelError(string.Empty, errorMessage);
                     return View(model);
                 }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Models;
+using StructuralMechanics.Utilities;
 using StructuralMechanics.ViewModels;
 
 namespace StructuralMechanics.Controllers
@@ -27,20 +28,7 @@ namespace StructuralMechanics.Controllers
 
             if (user != null)
             {
-                var projects = projectService.GetProjects(user.Id).Select(p => new { p.Id, p.ProjectName });
-                var structures = structureService.GetAllStructures().Select(s => new {s.Id, s.ProjectId, s.StructureType});
-
-                var query = projects.Join(structures,
-                                          project => project.Id,
-                                          structure => structure.ProjectId,
-                                          (project, structure) => new ProjectsViewModel()
-                                          {
-                                              ProjectId = project.Id,
-                                              ProjectName = project.ProjectName,
-                                              StructureType = structure.StructureType,
-                                              StructureId = structure.Id,
-                                          }).Take(10);
-                return View(query);
+                return View(ProjectsQuery.Query(user, projectService, structureService));
             }
 
             return View();
