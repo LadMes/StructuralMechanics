@@ -6,11 +6,8 @@ using StructuralMechanics.ViewModels;
 namespace StructuralMechanics.Controllers
 { 
     [Authorize]
-    public abstract class StructureController : Controller
+    public abstract class StructureController : BaseController
     {
-        private protected readonly UserManager<ApplicationUser> userManager;
-        private protected readonly IProjectService projectService;
-        private protected readonly IStructureService structureService;
         private protected readonly IGeometryObjectService geometryObjectService;
         private protected readonly IVectorPhysicalQuantityService vectorPhysicalQuantityService;
 
@@ -18,11 +15,8 @@ namespace StructuralMechanics.Controllers
                                    IProjectService projectService, 
                                    IStructureService structureService, 
                                    IGeometryObjectService geometryObjectService,
-                                   IVectorPhysicalQuantityService vectorPhysicalQuantityService)
+                                   IVectorPhysicalQuantityService vectorPhysicalQuantityService) : base(userManager, projectService, structureService)
         {
-            this.userManager = userManager;
-            this.projectService = projectService;
-            this.structureService = structureService;
             this.geometryObjectService = geometryObjectService;
             this.vectorPhysicalQuantityService = vectorPhysicalQuantityService;
         }

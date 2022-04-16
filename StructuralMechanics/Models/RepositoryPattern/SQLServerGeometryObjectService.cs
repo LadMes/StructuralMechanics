@@ -1,6 +1,6 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public class SQLServerGeometryObjectService : IGeometryObjectService
+    internal class SQLServerGeometryObjectService : IGeometryObjectService
     {
         private readonly AppDbContext context;
 

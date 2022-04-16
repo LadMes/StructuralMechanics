@@ -1,6 +1,6 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public class SQLServerStructureService : IStructureService
+    internal class SQLServerStructureService : IStructureService
     {
         private readonly AppDbContext context;
 

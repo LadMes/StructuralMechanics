@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using StructuralMechanics.Models;
+using StructuralMechanics.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,13 +13,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                                                             }).AddEntityFrameworkStores<AppDbContext>()
                                                               .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IProjectService, SQLServerProjectService>();
-builder.Services.AddScoped<IStructureService, SQLServerStructureService>();
-builder.Services.AddScoped<IGeometryObjectService, SQLServerGeometryObjectService>();
-builder.Services.AddScoped<IVectorPhysicalQuantityService, SQLServerVectorPhysicalQuantityService>();
-builder.Services.AddScoped<IPointsService, SQLServerPointsService>();
-
-
+builder.Services.AddProjectServices();
+builder.Services.AddModelServices();
 
 var app = builder.Build();
 

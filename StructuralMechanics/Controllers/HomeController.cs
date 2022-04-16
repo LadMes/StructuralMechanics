@@ -6,19 +6,12 @@ using StructuralMechanics.ViewModels;
 
 namespace StructuralMechanics.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IProjectService projectService;
-        private readonly IStructureService structureService;
-
         public HomeController(UserManager<ApplicationUser> userManager,
                               IProjectService projectService, 
-                              IStructureService structureService)
+                              IStructureService structureService) : base(userManager, projectService, structureService)
         {
-            this.userManager = userManager;
-            this.projectService = projectService;
-            this.structureService = structureService;
         }
 
         [HttpGet]

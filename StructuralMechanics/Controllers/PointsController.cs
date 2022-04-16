@@ -6,11 +6,8 @@ using StructuralMechanics.ViewModels;
 namespace StructuralMechanics.Controllers
 {
     [Route("Project/{projectId}/[Controller]/[action]")]
-    public class PointsController : Controller
+    public class PointsController : BaseController
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IProjectService projectService;
-        private readonly IStructureService structureService;
         private readonly IGeometryObjectService geometryObjectService;
         private readonly IPointsService pointsService;
 
@@ -18,11 +15,8 @@ namespace StructuralMechanics.Controllers
                                    IProjectService projectService,
                                    IStructureService structureService,
                                    IGeometryObjectService geometryObjectService,
-                                   IPointsService pointsService)
+                                   IPointsService pointsService) : base(userManager, projectService, structureService)
         {
-            this.userManager = userManager;
-            this.projectService = projectService;
-            this.structureService = structureService;
             this.geometryObjectService = geometryObjectService;
             this.pointsService = pointsService;
         }
@@ -30,30 +24,18 @@ namespace StructuralMechanics.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string projectId)
         {
-            var user = await userManager.GetUserAsync(User);
-            if (user == null)
+            await SetProjectRelatedData(projectId);
+            if (!IsReady)
             {
-                ViewBag.ErrorMessage = "User is not found";
+                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            var project = projectService.GetProjectById(projectId);
-            if (project == null || project.ApplicationUserId != user.Id)
-            {
-                ViewBag.ErrorMessage = "User does not have access to this project";
-                return View("NotFound");
-            }
-            ViewBag.ProjectName = $"Project: {project.ProjectName}";
+
+            ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
             ViewBag.ProjectId = projectId;
+            ViewBag.StructureType = Structure!.StructureType;
 
-            var structure = structureService.GetStructureByProjectId(projectId);
-            if (structure == null)
-            {
-                ViewBag.ErrorMessage = "Structure is not found";
-                return View("NotFound");
-            }
-            ViewBag.StructureType = structure.StructureType;
-
-            var points = pointsService.GetPointsByStructureId(structure.Id);
+            var points = pointsService.GetPointsByStructureId(Structure!.Id);
             return View(points);
         }
 
@@ -82,31 +64,18 @@ namespace StructuralMechanics.Controllers
                     ModelState.AddModelError(string.Empty, "A point should have positive coordinates");
                     return View(model);
                 }
-                var user = await userManager.GetUserAsync(User);
-                if (user == null)
+                await SetProjectRelatedData(projectId);
+                if (!IsReady)
                 {
-                    ViewBag.ErrorMessage = "User is not found";
-                    return View("NotFound");
-                }
-                var project = projectService.GetProjectById(projectId);
-                if (project == null || project.ApplicationUserId != user.Id)
-                {
-                    ViewBag.ErrorMessage = "User does not have access to this project";
+                    ViewBag.ErrorMessage = ErrorMessage;
                     return View("NotFound");
                 }
 
-                var structure = structureService.GetStructureByProjectId(projectId);
-                if (structure == null)
-                {
-                    ViewBag.ErrorMessage = "Structure is not found";
-                    return View("NotFound");
-                }
-
-                point.Structure = structure;
+                point.Structure = Structure!;
 
                 geometryObjectService.AddGeometryObject(point);
 
-                return new RedirectResult(url: $"~/Project/{project.Id}/Points/Index", false, false);
+                return new RedirectResult(url: $"~/Project/{Project!.Id}/Points/Index", false, false);
             }
 
             return View(model);

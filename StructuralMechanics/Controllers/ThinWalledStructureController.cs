@@ -15,32 +15,19 @@ namespace StructuralMechanics.Controllers
                                             : base(userManager, projectService, structureService, 
                                                    geometryObjectService, vectorPhysicalQuantityService) { }
 
-        // Mb there's a way to move check code somewhere, repeated code
         public override async Task<IActionResult> Overview(string projectId)
         {
-            var user = await userManager.GetUserAsync(User);
-            if (user == null)
+            await SetProjectRelatedData(projectId);
+            if (!IsReady)
             {
-                ViewBag.ErrorMessage = "User is not found";
+                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            var project = projectService.GetProjectById(projectId);
-            if (project == null || project.ApplicationUserId != user.Id)
-            {
-                ViewBag.ErrorMessage = "User does not have access to this project";
-                return View("NotFound");
-            }
-            ViewBag.ProjectName = $"Project: {project.ProjectName}";
-            ViewBag.ProjectId = projectId;
 
-            var structure = structureService.GetStructureByProjectId(projectId);
-            if (structure == null)
-            {
-                ViewBag.ErrorMessage = "Structure is not found";
-                return View("NotFound");
-            }
-            var geometryObjects = geometryObjectService.GetGeometryObjectsByStructureId(structure.Id);
-            var vectors = vectorPhysicalQuantityService.GetVectorPhysicalQuantitiesByStructureId(structure.Id);
+            ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
+            ViewBag.ProjectId = projectId;
+            var geometryObjects = geometryObjectService.GetGeometryObjectsByStructureId(Structure!.Id);
+            var vectors = vectorPhysicalQuantityService.GetVectorPhysicalQuantitiesByStructureId(Structure!.Id);
 
             return View(new ThinWalledStructureOverviewViewModel(geometryObjects, vectors));
         }

@@ -7,18 +7,12 @@ using StructuralMechanics.ViewModels;
 namespace StructuralMechanics.Controllers
 {
     [Authorize]
-    public class ProjectsController : Controller
+    public class ProjectsController : BaseController
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IProjectService projectService;
-        private readonly IStructureService structureService;
-
-        public ProjectsController(UserManager<ApplicationUser> userManager, IProjectService projectService, 
-                                    IStructureService structureService)
+        public ProjectsController(UserManager<ApplicationUser> userManager, 
+                                  IProjectService projectService, 
+                                  IStructureService structureService) : base(userManager, projectService, structureService)
         {
-            this.userManager = userManager;
-            this.projectService = projectService;
-            this.structureService = structureService;
         }
 
         [HttpGet]
@@ -85,33 +79,21 @@ namespace StructuralMechanics.Controllers
                 ViewBag.ErrorMessage = "ID must be specified";
                 return View("NotFound");
             }
-            var user = await userManager.GetUserAsync(User);
-            var project = projectService.GetProjectById(projectId);
-            if (project == null)
-            {
-                ViewBag.ErrorMessage = "Project is not found";
-                return View("NotFound");
-            }
-            else if (project.ApplicationUserId != user.Id)
-            {
-                ViewBag.ErrorMessage = "The current user doesn't have access to this project";
-                return View("NotFound");
-            }
 
-            var structure = structureService.GetStructureByProjectId(projectId);
-            if (structure == null)
+            await SetProjectRelatedData(projectId);
+            if (!IsReady)
             {
-                ViewBag.ErrorMessage = "Structure is not found";
+                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 
             EditProjectViewModel model = new EditProjectViewModel()
             {
                 ProjectId = projectId,
-                ProjectName = project.ProjectName,
-                StructureType = structure.StructureType,
-                ThinWalledStructureType = (structure.StructureType == StructureType.ThinWalledStructure) 
-                                            ? ((ThinWalledStructure)structure).ThinWalledStructureType 
+                ProjectName = Project!.ProjectName,
+                StructureType = Structure!.StructureType,
+                ThinWalledStructureType = (Structure.StructureType == StructureType.ThinWalledStructure) 
+                                            ? ((ThinWalledStructure)Structure).ThinWalledStructureType 
                                             : null
             };
 
@@ -124,44 +106,24 @@ namespace StructuralMechanics.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.GetUserAsync(User);
-
-                if (user == null)
+                await SetProjectRelatedData(model.ProjectId);
+                if (!IsReady)
                 {
-                    ViewBag.ErrorMessage = "User is not found";
-                    return View("NotFound");
-                }
-                
-                var project = projectService.GetProjectById(model.ProjectId);
-                if (project == null)
-                {
-                    ViewBag.ErrorMessage = "Project is not found";
-                    return View("NotFound");
-                }
-                else if (project.ApplicationUserId != user.Id)
-                {
-                    ViewBag.ErrorMessage = "The current user doesn't have access to this project";
+                    ViewBag.ErrorMessage = ErrorMessage;
                     return View("NotFound");
                 }
 
-                var structure = structureService.GetStructureByProjectId(model.ProjectId);
-                if (structure == null)
-                {
-                    ViewBag.ErrorMessage = "Structure is not found";
-                    return View("NotFound");
-                }
-
-                (bool isStructureValid, string errorMessage, structure) = ModelValidation.IsStructureValid(model, structure);
+                (bool isStructureValid, string errorMessage, Structure structure) = ModelValidation.IsStructureValid(model, Structure!);
                 if (!isStructureValid)
                 {
                     ModelState.AddModelError(string.Empty, errorMessage);
                     return View(model);
                 }
 
-                project.ProjectName = model.ProjectName;
+                Project!.ProjectName = model.ProjectName;
                 // If we don't update structure info there's no need for calling update structure
                 structureService.UpdateStructure(structure);
-                projectService.UpdateProject(project);
+                projectService.UpdateProject(Project);
                 return RedirectToAction("Index");
             }
 
@@ -172,35 +134,15 @@ namespace StructuralMechanics.Controllers
         [Route("Delete/{projectId}")]
         public async Task<IActionResult> Delete(string projectId)
         {
-            var user = await userManager.GetUserAsync(User);
-
-            if (user == null)
+            await SetProjectRelatedData(projectId);
+            if (!IsReady)
             {
-                ViewBag.ErrorMessage = "User is not found";
+                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 
-            var project = projectService.GetProjectById(projectId);
-            if (project == null)
-            {
-                ViewBag.ErrorMessage = "Project is not found";
-                return View("NotFound");
-            }
-            else if (project.ApplicationUserId != user.Id)
-            {
-                ViewBag.ErrorMessage = "The current user doesn't have access to this project";
-                return View("NotFound");
-            }
-
-            var structure = structureService.GetStructureByProjectId(projectId);
-            if (structure == null)
-            {
-                ViewBag.ErrorMessage = "Structure is not found";
-                return View("NotFound");
-            }
-
-            structureService.DeleteStructure(structure);
-            projectService.DeleteProject(project);
+            structureService.DeleteStructure(Structure!);
+            projectService.DeleteProject(Project!);
 
             return RedirectToAction("Index", "Projects");
         }

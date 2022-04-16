@@ -1,6 +1,6 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public class SQLServerPointsService : IPointsService
+    internal class SQLServerPointsService : IPointsService
     {
         private readonly AppDbContext context;
 
