@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Areas.Project.ViewModels;
+using StructuralMechanics.Controllers;
 using StructuralMechanics.Utilities;
-using StructuralMechanics.ViewModels;
 
-namespace StructuralMechanics.Controllers
+namespace StructuralMechanics.Areas.Project.Controllers
 {
-    [Route("Project/{projectId}/[Controller]/[action]")]
     public class PointsController : BaseController
     {
         private readonly IGeometryObjectService geometryObjectService;
@@ -54,14 +54,14 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string projectId, CreatePointViewModel model)
+        public async Task<IActionResult> Create(string projectId, PointViewModel model)
         {
             if (ModelState.IsValid)
             {
                 Point point = new Point(model.X, model.Y);
                 if (!point.IsPointValid())
                 {
-                    ModelState.AddModelError(string.Empty, "A point should have positive coordinates");
+                    ModelState.AddModelError(string.Empty, "The point must have positive coordinates");
                     return View(model);
                 }
                 await SetProjectRelatedData(projectId);
@@ -75,7 +75,7 @@ namespace StructuralMechanics.Controllers
 
                 geometryObjectService.AddGeometryObject(point);
 
-                return new RedirectResult(url: $"~/Project/{Project!.Id}/Points/Index", false, false);
+                return RedirectToAction("Index", "Points");
             }
 
             return View(model);

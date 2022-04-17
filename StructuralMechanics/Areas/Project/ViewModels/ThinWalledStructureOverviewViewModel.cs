@@ -1,4 +1,4 @@
-﻿namespace StructuralMechanics.ViewModels
+﻿namespace StructuralMechanics.Areas.Project.ViewModels
 {
     public class ThinWalledStructureOverviewViewModel : StructureOverviewViewModel
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using StructuralMechanics.ViewModels;
+using StructuralMechanics.Controllers;
 
-namespace StructuralMechanics.Controllers
+namespace StructuralMechanics.Areas.Project.Controllers
 { 
     [Authorize]
     public abstract class StructureController : BaseController

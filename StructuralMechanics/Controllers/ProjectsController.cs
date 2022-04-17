@@ -64,7 +64,7 @@ namespace StructuralMechanics.Controllers
                 };
 
                 projectService.AddProject(project);
-                return new RedirectResult(url: $"~/Project/{project.Id}/{structure!.StructureType}", false, false);
+                return RedirectToAction("Overview", $"{structure!.StructureType}", new { projectId = $"{project.Id}", area = "Project" });
             }
 
             return View(model);

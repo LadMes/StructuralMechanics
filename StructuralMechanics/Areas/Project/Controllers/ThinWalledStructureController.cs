@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Areas.Project.ViewModels;
 
-namespace StructuralMechanics.Controllers
+namespace StructuralMechanics.Areas.Project.Controllers
 {
-    // For Future
-    [Route("Project/{projectId}/[Controller]")]
-    public class CirclePlateController : StructureController
+    public class ThinWalledStructureController : StructureController
     {
-        public CirclePlateController(UserManager<ApplicationUser> userManager,
+        public ThinWalledStructureController(UserManager<ApplicationUser> userManager,
                                              IProjectService projectService,
                                              IStructureService structureService,
                                              IGeometryObjectService geometryObjectService,
-                                             IVectorPhysicalQuantityService vectorPhysicalQuantityService)
-                                            : base(userManager, projectService, structureService,
+                                             IVectorPhysicalQuantityService vectorPhysicalQuantityService) 
+                                            : base(userManager, projectService, structureService, 
                                                    geometryObjectService, vectorPhysicalQuantityService) { }
+
         public override async Task<IActionResult> Overview(string projectId)
         {
             await SetProjectRelatedData(projectId);
@@ -28,7 +28,7 @@ namespace StructuralMechanics.Controllers
             var geometryObjects = geometryObjectService.GetGeometryObjectsByStructureId(Structure!.Id);
             var vectors = vectorPhysicalQuantityService.GetVectorPhysicalQuantitiesByStructureId(Structure!.Id);
 
-            return View();
+            return View(new ThinWalledStructureOverviewViewModel(geometryObjects, vectors));
         }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace StructuralMechanics.Controllers
 {
     public abstract class BaseController : Controller
     {
         private protected readonly UserManager<ApplicationUser> userManager;
-        private protected IProjectService projectService;
-        private protected IStructureService structureService;
+        private protected readonly IProjectService projectService;
+        private protected readonly IStructureService structureService;
 
         private protected ApplicationUser? ApplicationUser { get; private set; }
         private protected Project? Project { get; set; }

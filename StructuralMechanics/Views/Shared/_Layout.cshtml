@@ -11,22 +11,22 @@
     <div class="container">
         <header class="header">
             <div class="header-image">
-                <a asp-controller="Home" asp-action="Index"><img src="~/images/bridge.png" /></a>
+                <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/bridge.png" /></a>
             </div>
             <nav class="header-nav">
                 @if (!signInManager.IsSignedIn(User))
                 {
                     <ul>
-                        <li><a asp-controller="Account" asp-action="Login">Sign In</a></li>
-                        <li><a asp-controller="Account" asp-action="Register">Sign Up</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Sign In</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Register">Sign Up</a></li>
                     </ul>
                 }
                 else
                 {
                     <ul>
-                        <li><a asp-controller="Projects" asp-action="Index">My Projects</a></li>
+                        <li><a asp-area="" asp-controller="Projects" asp-action="Index">My Projects</a></li>
                         <li>
-                            <form method="post" asp-controller="Account" asp-action="Logout">
+                            <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
                                     <button type="submit">
                                             Sign out
                                     </button>

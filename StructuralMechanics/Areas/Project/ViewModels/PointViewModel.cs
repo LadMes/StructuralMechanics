@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StructuralMechanics.ViewModels
+namespace StructuralMechanics.Areas.Project.ViewModels
 {
-    public class CreatePointViewModel
+    public class PointViewModel
     {
         [Required]
         [Display(Name = "Coord. X:")]

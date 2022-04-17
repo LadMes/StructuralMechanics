@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace StructuralMechanics.Controllers
+namespace StructuralMechanics.Areas.Project.Controllers
 {
     // For Future
-    [Route("Project/{projectId}/[Controller]")]
-    public class RotationalShellController : StructureController
+    public class CirclePlateController : StructureController
     {
-        public RotationalShellController(UserManager<ApplicationUser> userManager,
+        public CirclePlateController(UserManager<ApplicationUser> userManager,
                                              IProjectService projectService,
                                              IStructureService structureService,
                                              IGeometryObjectService geometryObjectService,

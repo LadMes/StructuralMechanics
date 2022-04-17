@@ -23,8 +23,13 @@
                     Structure Type: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(project.StructureType)
                 </div>
                 <div class="info-card-buttons">
-                    <a class="btn btn-primary" asp-controller="@project.StructureType" asp-action="Overview" asp-route-projectId="@project.ProjectId">Continue</a>
-                    <a class="btn btn-primary" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.ProjectId">Edit</a>
+                    <a class="btn btn-primary" asp-area="Project"
+                                               asp-controller="@project.StructureType" 
+                                               asp-action="Overview" 
+                                               asp-route-projectId="@project.ProjectId">Continue</a>
+                    <a class="btn btn-primary" asp-controller="Projects" 
+                                               asp-action="Edit" 
+                                               asp-route-projectId="@project.ProjectId">Edit</a>
                     <form method="post" asp-action="Delete" asp-controller="Projects" asp-route-projectId="@project.ProjectId">
                             <button class="btn btn-danger">Delete</button>
                     </form>

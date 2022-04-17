@@ -1,20 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using StructuralMechanics.ViewModels;
 
-namespace StructuralMechanics.Controllers
+namespace StructuralMechanics.Areas.Project.Controllers
 {
-    [Route("Project/{projectId}/[Controller]")]
-    public class ThinWalledStructureController : StructureController
+    // For Future
+    public class RotationalShellController : StructureController
     {
-        public ThinWalledStructureController(UserManager<ApplicationUser> userManager,
+        public RotationalShellController(UserManager<ApplicationUser> userManager,
                                              IProjectService projectService,
                                              IStructureService structureService,
                                              IGeometryObjectService geometryObjectService,
-                                             IVectorPhysicalQuantityService vectorPhysicalQuantityService) 
-                                            : base(userManager, projectService, structureService, 
+                                             IVectorPhysicalQuantityService vectorPhysicalQuantityService)
+                                            : base(userManager, projectService, structureService,
                                                    geometryObjectService, vectorPhysicalQuantityService) { }
-
         public override async Task<IActionResult> Overview(string projectId)
         {
             await SetProjectRelatedData(projectId);
@@ -29,7 +27,7 @@ namespace StructuralMechanics.Controllers
             var geometryObjects = geometryObjectService.GetGeometryObjectsByStructureId(Structure!.Id);
             var vectors = vectorPhysicalQuantityService.GetVectorPhysicalQuantitiesByStructureId(Structure!.Id);
 
-            return View(new ThinWalledStructureOverviewViewModel(geometryObjects, vectors));
+            return View();
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using StructuralMechanics.Models;
 using StructuralMechanics.Utilities;
-using StructuralMechanics.ViewModels;
 
 namespace StructuralMechanics.Controllers
 {

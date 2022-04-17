@@ -21,8 +21,6 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    //Do not use status code pages for development
-    app.UseStatusCodePagesWithReExecute("/Error/{0}");
 }
 else
 {
@@ -37,16 +35,10 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-                {
-                    //endpoints.MapControllerRoute(
-                    //          name: "structure",
-                    //          pattern: "Project/{projectId}/{controller=Structure}/{action=Overview}/{id?}");
-                    endpoints.MapControllerRoute(
-                              name: "default",
-                              pattern: "{controller=Home}/{action=Index}/{id?}");
-                });
-                 
+app.MapAreaControllerRoute(
+    name: "AreaProject",
+    areaName: "Project",
+    pattern: "Project/{projectId}/{controller}/{action}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
