@@ -24,8 +24,14 @@
                     Coordinates: (@point.X, @point.Y)
                 </div>
                 <div class="info-card-buttons"> 
-                    <a class="btn btn-primary" asp-controller="Points" asp-action="Edit" asp-route-projectId="@ViewBag.ProjectId">Edit</a>
-                    <form method="post" asp-controller="Points" asp-action="Delete" asp-route-projectId="@ViewBag.ProjectId">
+                    <a class="btn btn-primary" asp-controller="Points" 
+                                               asp-action="Edit" 
+                                               asp-route-projectId="@ViewBag.ProjectId"
+                                               asp-route-pointId="@point.Id">Edit</a>
+                    <form method="post" asp-controller="Points" 
+                                        asp-action="Delete" 
+                                        asp-route-projectId="@ViewBag.ProjectId"
+                                        asp-route-pointId="@point.Id">
                             <button class="btn btn-danger">Delete</button>
                     </form>
                 </div>

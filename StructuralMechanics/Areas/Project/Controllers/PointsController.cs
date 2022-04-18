@@ -80,5 +80,27 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string projectId, int pointId)
+        {
+            await SetProjectRelatedData(projectId);
+            if (!IsReady)
+            {
+                ViewBag.ErrorMessage = ErrorMessage;
+                return View("NotFound");
+            }
+            ViewBag.ProjectId = projectId;
+            ViewBag.StructureType = Structure!.StructureType;
+
+            var point = pointsService.GetPointById(pointId);
+            if (point == null)
+            {
+                ViewBag.ErrorMessage = "The point is not found";
+                return View("NotFound");
+            }
+
+            return View(new PointViewModel() { X = point.X, Y = point.Y });
+        }
     }
 }
