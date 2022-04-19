@@ -5,18 +5,17 @@ namespace StructuralMechanics.Models
     public abstract class SimpleShape : GeneralGeometryProperties
     {
         [Required]
-        public double Thickness { get; set; }
+        public double Thickness { get; protected set; }
         [Required]
         public double Length { get; protected set; }
 
         //Navigation Properties
         public int FirstPointId { get; set; }
         [Required]
-        public Point FirstPoint { get; set; }
+        public Point FirstPoint { get; protected set; }
         public int SecondPointId { get; set; }
         [Required]
-        public Point SecondPoint { get; set; }
-        
+        public Point SecondPoint { get; protected set; }
 
         public SimpleShape(Point firstPoint, Point secondPoint, double thickness)
         {
@@ -33,6 +32,14 @@ namespace StructuralMechanics.Models
         protected SimpleShape(double thickness)
         {
             this.Thickness = thickness;
+        }
+
+        public void OnPointChaged()
+        {
+            this.ChangePointsOrder(FirstPoint, SecondPoint);
+            this.CalculateLength();
+            this.CalculateFirstMomentOfArea();
+            this.CalculateSecondMomentOfArea();
         }
 
         protected abstract void ChangePointsOrder(Point firstPoint, Point secondPoint);

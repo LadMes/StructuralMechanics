@@ -93,10 +93,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
             ViewBag.ProjectId = projectId;
             ViewBag.StructureType = Structure!.StructureType;
 
-            var point = pointsService.GetPointById(pointId);
+            var point = pointsService.GetPoint(pointId, Structure.Id);
             if (point == null)
             {
-                ViewBag.ErrorMessage = "The point is not found";
+                ViewBag.ErrorMessage = "The point is not found or the current user doesn't have access to this point";
                 return View("NotFound");
             }
 

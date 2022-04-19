@@ -9,9 +9,15 @@
             this.context = context;
         }
 
-        public Point? GetPointById(int pointId)
+        public Point? GetPoint(int pointId, int structureId)
         {
-            return context.Points.Find(pointId);
+            var point = context.Points.Find(pointId);
+            if (point == null)
+                return null;
+            else if (point.StructureId != structureId)
+                return null;
+            else 
+                return point;
         }
 
         public List<Point> GetPointsByStructureId(int structureId)

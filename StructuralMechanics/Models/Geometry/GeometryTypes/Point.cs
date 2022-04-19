@@ -5,12 +5,15 @@ namespace StructuralMechanics.Models
     public class Point : GeometryObject, IComparable<Point>
     {
         [Required]
-        public double X { get; set; }
+        public double X { get; private set; }
         [Required]
-        public double Y { get; set; }
+        public double Y { get; private set; }
         [Required]
         public PointPositionInCoordGrid PointPosition { get; private set; }
 
+        public delegate void PointHandler();
+
+        public event PointHandler PointChanged = delegate { };
 
         public Point(double x, double y)
         {
@@ -18,7 +21,14 @@ namespace StructuralMechanics.Models
             this.Y = y;
             this.GeometryType = GeometryType.Point;
             AssignPointPositionProperty();
-        }   
+        }
+
+        public void EditPoint(double x, double y)
+        {
+            X = x;
+            Y = y;
+            PointChanged();
+        }
 
         private void AssignPointPositionProperty()
         {

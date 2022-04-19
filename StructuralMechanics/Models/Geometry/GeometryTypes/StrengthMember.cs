@@ -5,14 +5,14 @@ namespace StructuralMechanics.Models
     public class StrengthMember : GeneralGeometryProperties
     {
         [Required]
-        public double ReductionCoefficient { get; set; }
+        public double ReductionCoefficient { get; private set; }
         [Required]
-        public double Area { get; set; }
+        public double Area { get; private set; }
 
         //Navigation Properties
         public int LocationId { get; set; }
         [Required]
-        public Point Location { get; set; }
+        public Point Location { get; private set; }
 
 
         public StrengthMember(double reductionCoefficient, double area, Point location)
@@ -31,6 +31,12 @@ namespace StructuralMechanics.Models
             this.ReductionCoefficient = reductionCoefficient;
             this.Area = area;
             this.GeometryType = GeometryType.StrengthMember;
+        }
+
+        public void OnPointChanged()
+        {
+            CalculateFirstMomentOfArea();
+            CalculateSecondMomentOfArea();
         }
 
         private void CalculateFirstMomentOfArea()
