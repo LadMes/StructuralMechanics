@@ -12,6 +12,7 @@
             serviceCollection.AddScoped<IGeometryObjectService, SQLServerGeometryObjectService>();
             serviceCollection.AddScoped<IVectorPhysicalQuantityService, SQLServerVectorPhysicalQuantityService>();
             serviceCollection.AddScoped<IPointsService, SQLServerPointsService>();
+            serviceCollection.AddScoped<ISimpleShapesService, SQLServerSimpleShapesService>();
         }
     }
 }

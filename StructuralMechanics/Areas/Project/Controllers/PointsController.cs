@@ -40,16 +40,17 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(string projectId)
+        public async Task<IActionResult> Create(string projectId)
         {
-            ViewBag.ProjectId = projectId;
-            var structure = structureService.GetStructureByProjectId(projectId);
-            if (structure == null)
+            await SetProjectRelatedData(projectId);
+            if (!IsReady)
             {
-                ViewBag.ErrorMessage = "Structure is not found";
+                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            ViewBag.StructureType = structure.StructureType;
+            ViewBag.ProjectId = projectId;
+            ViewBag.StructureType = Structure!.StructureType;
+
             return View();
         }
 
@@ -102,5 +103,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             return View(new PointViewModel() { X = point.X, Y = point.Y });
         }
+
+        //HttpPost for Edit and Delete will be added after completing the Create action for Simple Shapes and Strength Members
     }
 }

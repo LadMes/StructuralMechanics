@@ -11,9 +11,7 @@ namespace StructuralMechanics.Models
         [Required]
         public PointPositionInCoordGrid PointPosition { get; private set; }
 
-        public delegate void PointHandler();
-
-        public event PointHandler PointChanged = delegate { };
+        public event Action PointChanged = delegate { };
 
         public Point(double x, double y)
         {

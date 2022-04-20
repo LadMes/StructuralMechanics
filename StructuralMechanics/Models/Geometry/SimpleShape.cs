@@ -34,7 +34,7 @@ namespace StructuralMechanics.Models
             this.Thickness = thickness;
         }
 
-        public void OnPointChaged()
+        public void OnPointChanged()
         {
             this.ChangePointsOrder(FirstPoint, SecondPoint);
             this.CalculateLength();

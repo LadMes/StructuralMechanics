@@ -12,9 +12,7 @@
         public Point? GetPoint(int pointId, int structureId)
         {
             var point = context.Points.Find(pointId);
-            if (point == null)
-                return null;
-            else if (point.StructureId != structureId)
+            if (point == null || point.StructureId != structureId)
                 return null;
             else 
                 return point;
