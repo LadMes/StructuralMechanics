@@ -24,8 +24,7 @@
             <select asp-for="FirstPoint">
                 @foreach (var point in Model.Points)
                 {
-                    //Value is a problem
-                    <option value="@point">@point.ToString()</option>
+                    <option value="@point.Id">@point.ToString()</option>
                 }
             </select>
             <span asp-validation-for="FirstPoint" class="error-message"></span>
@@ -35,8 +34,7 @@
             <select asp-for="FirstPoint">
                 @foreach (var point in Model.Points)
                 {
-                    //Value is a problem
-                    <option value="@point">@point.ToString()</option>
+                    <option value="@point.Id">@point.ToString()</option>
                 }
             </select>
             <span asp-validation-for="SecondPoint" class="error-message"></span>

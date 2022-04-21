@@ -4,18 +4,6 @@ namespace StructuralMechanics.Utilities
 {
     public static class ModelValidation
     {
-        public static bool IsPointValid(this Point point)
-        {
-            if (point.X < 0 || point.Y < 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
         public static (bool check, string errorMessage, Structure? structure) IsStructureValid(CreateProjectViewModel model)
         {
             string errorMessage = "";

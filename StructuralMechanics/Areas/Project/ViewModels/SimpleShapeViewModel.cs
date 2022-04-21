@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using StructuralMechanics.Utilities;
+using System.ComponentModel.DataAnnotations;
 
 namespace StructuralMechanics.Areas.Project.ViewModels
 {
@@ -8,6 +9,7 @@ namespace StructuralMechanics.Areas.Project.ViewModels
         [Display(Name = "Shape Type")]
         public GeometryType GeometryType { get; set; }
         [Required]
+        [NotBelowZero(ErrorMessage = "Thickness must be positive")]
         public double Thickness { get; set; }
         [Required]
         [Display(Name = "First Point")]

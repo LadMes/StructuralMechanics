@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
-using StructuralMechanics.Utilities;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
@@ -59,12 +58,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                Point point = new Point(model.X, model.Y);
-                if (!point.IsPointValid())
-                {
-                    ModelState.AddModelError(string.Empty, "The point must have positive coordinates");
-                    return View(model);
-                }
                 await SetProjectRelatedData(projectId);
                 if (!IsReady)
                 {
@@ -72,6 +65,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
                     return View("NotFound");
                 }
 
+                Point point = new Point(model.X, model.Y);
                 point.Structure = Structure!;
 
                 geometryObjectService.AddGeometryObject(point);
