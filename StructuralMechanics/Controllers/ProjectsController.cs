@@ -47,7 +47,7 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                (bool isStructureValid, string errorMessage, Structure? structure) = ModelValidation.IsStructureValid(model);
+                (bool isStructureValid, string errorMessage, Structure? structure) = StructureValidation.IsValid(model);
 
                 if (!isStructureValid)
                 {
@@ -113,7 +113,7 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                (bool isStructureValid, string errorMessage, Structure structure) = ModelValidation.IsStructureValid(model, Structure!);
+                (bool isStructureValid, string errorMessage, Structure structure) = StructureValidation.IsValid(model, Structure!);
                 if (!isStructureValid)
                 {
                     ModelState.AddModelError(string.Empty, errorMessage);

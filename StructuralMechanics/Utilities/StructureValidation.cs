@@ -2,9 +2,9 @@
 
 namespace StructuralMechanics.Utilities
 {
-    public static class ModelValidation
+    public static class StructureValidation
     {
-        public static (bool check, string errorMessage, Structure? structure) IsStructureValid(CreateProjectViewModel model)
+        public static (bool check, string errorMessage, Structure? structure) IsValid(CreateProjectViewModel model)
         {
             string errorMessage = "";
             bool check = false;
@@ -43,7 +43,7 @@ namespace StructuralMechanics.Utilities
             return (check, errorMessage, structure);
         }
 
-        public static (bool check, string errorMessage, Structure structure) IsStructureValid(EditProjectViewModel model, Structure structure)
+        public static (bool check, string errorMessage, Structure structure) IsValid(EditProjectViewModel model, Structure structure)
         {
             string errorMessage = "";
             bool check = false;

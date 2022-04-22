@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Areas.Project.Utilities;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
 
@@ -7,15 +8,18 @@ namespace StructuralMechanics.Areas.Project.Controllers
 {
     public class SimpleShapesController : BaseController
     {
+        private readonly IGeometryObjectService geometryObjectService;
         private readonly IPointsService pointsService;
         private readonly ISimpleShapesService simpleShapesService;
 
         public SimpleShapesController(UserManager<ApplicationUser> userManager, 
                                       IProjectService projectService, 
                                       IStructureService structureService,
+                                      IGeometryObjectService geometryObjectService,
                                       IPointsService pointsService,
                                       ISimpleShapesService simpleShapesService) : base(userManager, projectService, structureService)
         {
+            this.geometryObjectService = geometryObjectService;
             this.pointsService = pointsService;
             this.simpleShapesService = simpleShapesService;
         }
@@ -53,6 +57,44 @@ namespace StructuralMechanics.Areas.Project.Controllers
             var points = pointsService.GetPointsByStructureId(Structure!.Id);
 
             return View(new SimpleShapeViewModel { Points = points });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string projectId, SimpleShapeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await SetProjectRelatedData(projectId);
+                if (!IsReady)
+                {
+                    ViewBag.ErrorMessage = ErrorMessage;
+                    return View("NotFound");
+                }
+                //ViewBag.ProjectId = projectId;
+                //ViewBag.StructureType = Structure!.StructureType;
+
+                var firstPoint = pointsService.GetPoint(model.FirstPointId, Structure!.Id);
+                var secondPoint = pointsService.GetPoint(model.SecondPointId, Structure!.Id);
+                if (firstPoint == null || secondPoint == null)
+                {
+                    ViewBag.ErrorMessage = "The point is not found or the current user doesn't have access to this point";
+                    return View("NotFound");
+                }
+                model.FirstPoint = firstPoint;
+                model.SecondPoint = secondPoint;
+                (bool isValid, SimpleShape simpleShape) = SimpleShapeHelper.GetSimpleShapeObjectByType(model);
+                if (!isValid)
+                {
+                    ModelState.AddModelError(string.Empty, "Choose Geometry Type");
+                    return View(model);
+                }
+
+                simpleShape.StructureId = Structure!.Id;
+                geometryObjectService.AddGeometryObject(simpleShape!);
+                return RedirectToAction("Index", "SimpleShapes");
+            }
+            
+            return View(model);
         }
     }
 }

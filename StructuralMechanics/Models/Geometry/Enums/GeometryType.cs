@@ -4,6 +4,7 @@ namespace StructuralMechanics.Models
 {
     public enum GeometryType
     {
+        [Display(Name = "Point")]
         Point,
         [Display(Name = "Horizontal Line")]
         HorizontalLine,
@@ -11,6 +12,7 @@ namespace StructuralMechanics.Models
         VerticalLine,
         [Display(Name = "Slope Line")]
         SlopeLine,
+        [Display(Name = "Arc")]
         Arc,
         [Display(Name = "Strength Member")]
         StrengthMember

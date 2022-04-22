@@ -49,26 +49,30 @@ namespace StructuralMechanics.Models
             builder.Entity<GeneralGeometryProperties>().ToTable("GeneralGeometryProperties");
 
             builder.Entity<SimpleShape>().ToTable("SimpleShapes");
-            builder.Entity<SimpleShape>().HasOne(ss => ss.FirstPoint).WithOne().HasForeignKey<SimpleShape>(ss => ss.FirstPointId)
+            builder.Entity<SimpleShape>().HasOne(ss => ss.FirstPoint).WithMany().HasForeignKey(ss => ss.FirstPointId)
                                                                                .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<SimpleShape>().HasOne(ss => ss.SecondPoint).WithOne().HasForeignKey<SimpleShape>(ss => ss.SecondPointId)
+            builder.Entity<SimpleShape>().HasOne(ss => ss.SecondPoint).WithMany().HasForeignKey(ss => ss.SecondPointId)
                                                                                 .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<SimpleShape>().Navigation(ss => ss.FirstPoint).AutoInclude();
+            builder.Entity<SimpleShape>().Navigation(ss => ss.SecondPoint).AutoInclude();
 
             builder.Entity<Arc>().ToTable("Arcs");
             builder.Entity<HorizontalLine>().ToTable("HorizontalLines");
             builder.Entity<Point>().ToTable("Points");
             builder.Entity<SlopeLine>().ToTable("SlopeLines");
             builder.Entity<StrengthMember>().ToTable("StrengthMembers");
-            builder.Entity<StrengthMember>().HasOne(sm => sm.Location).WithOne().HasForeignKey<StrengthMember>(sm => sm.LocationId)
+            builder.Entity<StrengthMember>().HasOne(sm => sm.Location).WithMany().HasForeignKey(sm => sm.LocationId)
                                                                                 .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<StrengthMember>().Navigation(sm => sm.Location).AutoInclude();
             builder.Entity<VerticalLine>().ToTable("VerticalLines");
 
             builder.Entity<VectorPhysicalQuantity>().ToTable("VectorPhysicalQuantities");
 
             builder.Entity<Moment>().ToTable("Moments");
             builder.Entity<ShearForce>().ToTable("ShearForces");
-            builder.Entity<ShearForce>().HasOne(sf => sf.Location).WithOne().HasForeignKey<ShearForce>(sf => sf.LocationId)
+            builder.Entity<ShearForce>().HasOne(sf => sf.Location).WithMany().HasForeignKey(sf => sf.LocationId)
                                                                             .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<ShearForce>().Navigation(sf => sf.Location).AutoInclude();
         }
     }
 }

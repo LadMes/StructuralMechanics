@@ -29,12 +29,12 @@
 
         protected override void CalculateFirstMomentOfArea()
         {
-            this.FirstMomentOfArea = (Math.Pow(this.FirstPoint.Y, 2) * this.Thickness) / 2;
+            this.FirstMomentOfArea = (Math.Pow(this.SecondPoint.Y, 2) * this.Thickness) / 2;
         }
 
         protected override void CalculateSecondMomentOfArea()
         {
-            this.SecondMomentOfArea = (Math.Pow(this.FirstPoint.Y, 3) * this.Thickness) / 3;
+            this.SecondMomentOfArea = (Math.Pow(this.SecondPoint.Y, 3) * this.Thickness) / 3;
         }
     }
 }

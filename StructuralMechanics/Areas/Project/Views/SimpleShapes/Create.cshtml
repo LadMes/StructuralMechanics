@@ -20,24 +20,24 @@
 <form method="post" asp-controller="SimpleShapes" asp-action="Create">
     <div class="form-row">
         <div class="form-item">
-            <label asp-for="FirstPoint"></label>
-            <select asp-for="FirstPoint">
+            <label asp-for="FirstPointId"></label>
+            <select asp-for="FirstPointId">
                 @foreach (var point in Model.Points)
                 {
                     <option value="@point.Id">@point.ToString()</option>
                 }
             </select>
-            <span asp-validation-for="FirstPoint" class="error-message"></span>
+            <span asp-validation-for="FirstPointId" class="error-message"></span>
         </div>
         <div class="form-item">
-            <label asp-for="SecondPoint"></label>
-            <select asp-for="FirstPoint">
+            <label asp-for="SecondPointId"></label>
+            <select asp-for="SecondPointId">
                 @foreach (var point in Model.Points)
                 {
                     <option value="@point.Id">@point.ToString()</option>
                 }
             </select>
-            <span asp-validation-for="SecondPoint" class="error-message"></span>
+            <span asp-validation-for="SecondPointId" class="error-message"></span>
         </div>
     </div>
     <div class="form-row">

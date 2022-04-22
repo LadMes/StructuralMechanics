@@ -29,7 +29,7 @@ namespace StructuralMechanics.Models
                 this.SecondPoint = firstPoint;    
             }
 
-            if (firstPoint.Y > secondPoint.Y)
+            if (FirstPoint.Y > SecondPoint.Y)
                 this.ArcQuadrant = ArcQuadrant.FirstQuadrant;
             else
                 this.ArcQuadrant = ArcQuadrant.SecondQuadrant;
