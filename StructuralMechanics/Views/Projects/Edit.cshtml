@@ -1,4 +1,4 @@
-﻿@model EditProjectViewModel
+﻿@model ProjectViewModel
 
 @{
     ViewBag.Title = "Edit Project";
@@ -11,36 +11,7 @@
 }
 
 <form method="post" asp-controller="Projects" asp-action="Edit">
-    <div class="form-row">
-        <div class="form-item">
-            <label asp-for="ProjectId"></label>
-            <input readonly asp-for="ProjectId" />
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-item">
-            <label asp-for="ProjectName"></label>
-            <input asp-for="ProjectName" />
-            <span asp-validation-for="ProjectName" class="error-message"></span>
-        </div>
-        <div class="form-item">
-            <label asp-for="StructureType"></label>
-            <input readonly asp-for="StructureType" 
-                            value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.StructureType)"
-                            name="@Model.StructureType"/>
-        </div>
-    </div>
-    @if (Model.StructureType == StructureType.ThinWalledStructure)
-    {
-        <div class="form-row">
-            <div class="form-item">
-                <label asp-for="ThinWalledStructureType"></label>
-                <select asp-for="ThinWalledStructureType" asp-items="Html.GetEnumSelectList<ThinWalledStructureType>()">
-                </select>
-                <span asp-validation-for="ThinWalledStructureType" class="error-message"></span>
-            </div>
-        </div>
-    }
+    <partial name="_FormFields" />
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>
     </div>

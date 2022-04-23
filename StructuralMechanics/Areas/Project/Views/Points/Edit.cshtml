@@ -18,18 +18,7 @@
 }
 
 <form method="post" asp-controller="Points" asp-action="Edit">
-    <div class="form-row">
-        <div class="form-item">
-            <label asp-for="X"></label>
-            <input asp-for="X" />
-            <span asp-validation-for="X" class="error-message"></span>
-        </div>
-        <div class="form-item">
-            <label asp-for="Y"></label>
-            <input asp-for="Y" />
-            <span asp-validation-for="Y" class="error-message"></span>
-        </div>
-    </div>
+    <partial name="_FormFields" />
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>
     </div>

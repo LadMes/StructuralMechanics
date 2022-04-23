@@ -36,7 +36,7 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProjectViewModel model)
+        public async Task<IActionResult> Create(ProjectViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -51,6 +51,7 @@ namespace StructuralMechanics.Controllers
 
                 if (!isStructureValid)
                 {
+                    model.StructureType = null;
                     ModelState.AddModelError(string.Empty, errorMessage);
                     return View(model);
                 }
@@ -87,9 +88,8 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            EditProjectViewModel model = new EditProjectViewModel()
+            ProjectViewModel model = new ProjectViewModel()
             {
-                ProjectId = projectId,
                 ProjectName = Project!.ProjectName,
                 StructureType = Structure!.StructureType,
                 ThinWalledStructureType = (Structure.StructureType == StructureType.ThinWalledStructure) 
@@ -102,11 +102,11 @@ namespace StructuralMechanics.Controllers
 
         [HttpPost]
         [Route("Edit/{projectId}")]
-        public async Task<IActionResult> Edit(EditProjectViewModel model)
+        public async Task<IActionResult> Edit(string projectId, ProjectViewModel model)
         {
             if (ModelState.IsValid)
             {
-                await SetProjectRelatedData(model.ProjectId);
+                await SetProjectRelatedData(projectId);
                 if (!IsReady)
                 {
                     ViewBag.ErrorMessage = ErrorMessage;

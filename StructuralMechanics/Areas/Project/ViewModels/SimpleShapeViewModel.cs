@@ -7,7 +7,7 @@ namespace StructuralMechanics.Areas.Project.ViewModels
     {
         [Required]
         [Display(Name = "Shape Type")]
-        public GeometryType GeometryType { get; set; }
+        public GeometryType? GeometryType { get; set; }
         [Required]
         [NotBelowZero(ErrorMessage = "Thickness must be positive")]
         public double Thickness { get; set; }

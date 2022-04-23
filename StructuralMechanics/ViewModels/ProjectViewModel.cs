@@ -2,18 +2,15 @@
 
 namespace StructuralMechanics.ViewModels
 {
-    public class EditProjectViewModel
+    public class ProjectViewModel
     {
-        [Display(Name = "Project Id")]
-        public string ProjectId { get; set; }
         [Required]
         [MaxLength(50, ErrorMessage = "Name cannot exceed 50 characters")]
         [Display(Name = "Project Name")]
-        public string ProjectName { get; set; }
-
+        public string ProjectName { get; set; } = "";
         [Required]
         [Display(Name = "Structure Type")]
-        public StructureType StructureType { get; set; }
+        public StructureType? StructureType { get; set; } = null;
         [Display(Name = "Thin-Walled Structure Type")]
         public ThinWalledStructureType? ThinWalledStructureType { get; set; }
     }

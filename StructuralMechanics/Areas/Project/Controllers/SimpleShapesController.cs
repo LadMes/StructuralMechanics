@@ -70,8 +70,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
                     ViewBag.ErrorMessage = ErrorMessage;
                     return View("NotFound");
                 }
-                //ViewBag.ProjectId = projectId;
-                //ViewBag.StructureType = Structure!.StructureType;
 
                 var firstPoint = pointsService.GetPoint(model.FirstPointId, Structure!.Id);
                 var secondPoint = pointsService.GetPoint(model.SecondPointId, Structure!.Id);
@@ -94,6 +92,41 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 return RedirectToAction("Index", "SimpleShapes");
             }
             
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string projectId, int simpleShapeId)
+        {
+            await SetProjectRelatedData(projectId);
+            if (!IsReady)
+            {
+                ViewBag.ErrorMessage = ErrorMessage;
+                return View("NotFound");
+            }
+            ViewBag.ProjectId = projectId;
+            ViewBag.StructureType = Structure!.StructureType;
+
+            var simpleShape = simpleShapesService.GetSimpleShape(simpleShapeId, Structure!.Id);
+            if (simpleShape == null)
+            {
+                ViewBag.ErrorMessage = "The shape is not found or the current user doesn't have access to this shape";
+                return View("NotFound");
+            }
+
+            var points = pointsService.GetPointsByStructureId(Structure!.Id);
+
+            SimpleShapeViewModel model = new SimpleShapeViewModel()
+            {
+                GeometryType = simpleShape.GeometryType,
+                FirstPoint = simpleShape.FirstPoint,
+                SecondPoint = simpleShape.SecondPoint,
+                Thickness = simpleShape.Thickness,
+                FirstPointId = simpleShape.FirstPointId,
+                SecondPointId = simpleShape.SecondPointId,
+                Points = points
+            };
+
             return View(model);
         }
     }

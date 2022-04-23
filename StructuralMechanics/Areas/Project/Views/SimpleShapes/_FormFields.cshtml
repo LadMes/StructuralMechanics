@@ -1,0 +1,58 @@
+﻿@model SimpleShapeViewModel
+
+<div class="form-row">
+        <div class="form-item">
+            <label asp-for="FirstPointId"></label>
+            <select asp-for="FirstPointId">
+            @foreach (var point in Model.Points)
+            {
+                @*if (point.Id == Model.FirstPointId)
+                {
+                    <option selected value="@point.Id">@point.ToString()</option>
+                }
+                else
+                {
+                    <option value="@point.Id">@point.ToString()</option>
+                }*@
+                <option value="@point.Id">@point.ToString()</option>
+            }
+            </select>
+            <span asp-validation-for="FirstPointId" class="error-message"></span>
+        </div>
+        <div class="form-item">
+            <label asp-for="SecondPointId"></label>
+            <select asp-for="SecondPointId">
+            @foreach (var point in Model.Points)
+            {
+                <option value="@point.Id">@point.ToString()</option>
+            }
+            </select>
+            <span asp-validation-for="SecondPointId" class="error-message"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-item">
+            <label asp-for="GeometryType"></label>
+            @if (Model.GeometryType == null)
+            {
+                <select asp-for="GeometryType">
+                    <option value="@Convert.ToInt32(GeometryType.Arc)">Arc</option>
+                    <option value="@Convert.ToInt32(GeometryType.HorizontalLine)">Horizontal Line</option>
+                    <option value="@Convert.ToInt32(GeometryType.SlopeLine)">Slope Line</option>
+                    <option value="@Convert.ToInt32(GeometryType.VerticalLine)">Vertical Line</option>
+                </select>
+            }
+            else
+            {
+                <input readonly asp-for="GeometryType" 
+                                value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.GeometryType)"
+                                name="@Model.GeometryType" />
+            }
+            <span asp-validation-for="GeometryType" class="error-message"></span>
+        </div>
+        <div class=form-item>
+            <label asp-for="Thickness"></label>
+            <input asp-for="Thickness"/>
+            <span asp-validation-for="Thickness" class="error-message"></span>
+        </div>
+    </div>

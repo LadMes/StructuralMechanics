@@ -40,11 +40,11 @@
                     Second Moment of Area: @simpleShape.SecondMomentOfArea
                 </div>
                 <div class="info-card-buttons"> 
-                    <a class="btn btn-primary" asp-controller="Points" 
+                    <a class="btn btn-primary" asp-controller="SimpleShapes" 
                                                asp-action="Edit" 
                                                asp-route-projectId="@ViewBag.ProjectId"
                                                asp-route-simpleShapeId="@simpleShape.Id">Edit</a>
-                    <form method="post" asp-controller="Points" 
+                    <form method="post" asp-controller="SimpleShapes" 
                                         asp-action="Delete" 
                                         asp-route-projectId="@ViewBag.ProjectId"
                                         asp-route-simpleShapeId="@simpleShape.Id">
