@@ -47,7 +47,7 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                (bool isStructureValid, string errorMessage, Structure? structure) = StructureValidation.IsValid(model);
+                (bool isStructureValid, string errorMessage, Structure? structure) = StructureCreator.GetStructureObject(model);
 
                 if (!isStructureValid)
                 {
@@ -87,6 +87,7 @@ namespace StructuralMechanics.Controllers
                 ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
+            ViewBag.ProjectId = projectId;
 
             ProjectViewModel model = new ProjectViewModel()
             {
@@ -113,7 +114,7 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                (bool isStructureValid, string errorMessage, Structure structure) = StructureValidation.IsValid(model, Structure!);
+                (bool isStructureValid, string errorMessage, Structure structure) = StructureUpdater.GetUpdatedStructureObject(model, Structure!);
                 if (!isStructureValid)
                 {
                     ModelState.AddModelError(string.Empty, errorMessage);

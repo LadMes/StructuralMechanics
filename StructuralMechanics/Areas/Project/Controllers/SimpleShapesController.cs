@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using StructuralMechanics.Areas.Project.Utilities;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
 
@@ -80,14 +79,14 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 }
                 model.FirstPoint = firstPoint;
                 model.SecondPoint = secondPoint;
-                (bool isValid, SimpleShape simpleShape) = SimpleShapeHelper.GetSimpleShapeObjectByType(model);
+                (bool isValid, SimpleShape? simpleShape) = SimpleShapeCreator.GetSimpleShapeObject(model);
                 if (!isValid)
                 {
                     ModelState.AddModelError(string.Empty, "Choose Geometry Type");
                     return View(model);
                 }
 
-                simpleShape.StructureId = Structure!.Id;
+                simpleShape!.StructureId = Structure!.Id;
                 geometryObjectService.AddGeometryObject(simpleShape!);
                 return RedirectToAction("Index", "SimpleShapes");
             }

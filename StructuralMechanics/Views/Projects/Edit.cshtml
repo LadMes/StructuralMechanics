@@ -10,7 +10,7 @@
     </ul>
 }
 
-<form method="post" asp-controller="Projects" asp-action="Edit">
+<form method="post" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@ViewBag.ProjectId">
     <partial name="_FormFields" />
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>
