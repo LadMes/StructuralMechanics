@@ -5,6 +5,7 @@ namespace StructuralMechanics.Areas.Project.ViewModels
 {
     public class SimpleShapeViewModel
     {
+        public int ShapeId { get; set; }
         [Required]
         [Display(Name = "Shape Type")]
         public GeometryType? GeometryType { get; set; }

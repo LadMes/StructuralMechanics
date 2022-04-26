@@ -117,6 +117,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             SimpleShapeViewModel model = new SimpleShapeViewModel()
             {
+                ShapeId = simpleShapeId,
                 GeometryType = simpleShape.GeometryType,
                 FirstPoint = simpleShape.FirstPoint,
                 SecondPoint = simpleShape.SecondPoint,
@@ -125,6 +126,27 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 SecondPointId = simpleShape.SecondPointId,
                 Points = points
             };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string projectId, SimpleShapeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await SetProjectRelatedData(projectId);
+                if (!IsReady)
+                {
+                    ViewBag.ErrorMessage = ErrorMessage;
+                    return View("NotFound");
+                }
+
+                var simpleShape = simpleShapesService.GetSimpleShape(model.ShapeId, Structure!.Id);
+                // To-do simplify proccess for updating Properties with private setters.
+
+
+            }
 
             return View(model);
         }

@@ -20,5 +20,13 @@
         {
             return context.GeometryObjects.Where(go => go.StructureId == structureId).ToList();
         }
+
+        public GeometryObject UpdateGeometryObject(GeometryObject geometryObject)
+        {
+            var geometryObjectToUpdate = context.GeometryObjects.Attach(geometryObject);
+            geometryObjectToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            context.SaveChanges();
+            return geometryObject;
+        }
     }
 }
