@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
+    [Authorize]
     public class PointsController : BaseController
     {
         private readonly IGeometryObjectService geometryObjectService;

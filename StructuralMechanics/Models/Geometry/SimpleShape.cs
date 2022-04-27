@@ -22,10 +22,7 @@ namespace StructuralMechanics.Models
             this.FirstPoint = firstPoint;
             this.SecondPoint = secondPoint;
             this.Thickness = thickness;
-            this.ChangePointsOrder(firstPoint, secondPoint);
-            this.CalculateLength();
-            this.CalculateFirstMomentOfArea();
-            this.CalculateSecondMomentOfArea();
+            CalculateSimpleShapeProperties();
         }
 
         //Constructor for EF Core
@@ -36,10 +33,23 @@ namespace StructuralMechanics.Models
 
         public void OnPointChanged()
         {
+            CalculateSimpleShapeProperties();
+        }
+
+        private void CalculateSimpleShapeProperties()
+        {
             this.ChangePointsOrder(FirstPoint, SecondPoint);
             this.CalculateLength();
             this.CalculateFirstMomentOfArea();
             this.CalculateSecondMomentOfArea();
+        }
+
+        public void EditSimpleShape(Point firstPoint, Point secondPoint, double thickness)
+        {
+            this.FirstPoint = firstPoint;
+            this.SecondPoint = secondPoint;
+            this.Thickness = thickness;
+            CalculateSimpleShapeProperties();
         }
 
         protected abstract void ChangePointsOrder(Point firstPoint, Point secondPoint);
@@ -49,31 +59,6 @@ namespace StructuralMechanics.Models
         protected abstract void CalculateFirstMomentOfArea();
 
         protected abstract void CalculateSecondMomentOfArea();
-
-        public void ChangeThickness(double thickness)
-        {
-            this.Thickness = thickness;
-            this.CalculateFirstMomentOfArea();
-            this.CalculateSecondMomentOfArea();
-        }
-
-        public void ChangeFirstPoint(Point firstPoint)
-        {
-            this.FirstPoint = firstPoint;
-            this.ChangePointsOrder(firstPoint, SecondPoint);
-            this.CalculateLength();
-            this.CalculateFirstMomentOfArea();
-            this.CalculateSecondMomentOfArea();
-        }
-
-        public void ChangeSecondPoint(Point secondPoint)
-        {
-            this.SecondPoint = secondPoint;
-            this.ChangePointsOrder(FirstPoint, secondPoint);
-            this.CalculateLength();
-            this.CalculateFirstMomentOfArea();
-            this.CalculateSecondMomentOfArea();
-        }
 
         public override bool Equals(object? obj)
         {

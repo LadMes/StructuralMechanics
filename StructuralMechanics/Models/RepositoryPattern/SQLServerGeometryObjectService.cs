@@ -16,6 +16,13 @@
             return geometryObject;
         }
 
+        public GeometryObject DeleteGeometryObject(GeometryObject geometryObject)
+        {
+            context.GeometryObjects.Remove(geometryObject);
+            context.SaveChanges();
+            return geometryObject;
+        }
+
         public List<GeometryObject>? GetGeometryObjectsByStructureId(int structureId)
         {
             return context.GeometryObjects.Where(go => go.StructureId == structureId).ToList();
