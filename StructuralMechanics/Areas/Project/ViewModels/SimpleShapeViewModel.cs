@@ -6,15 +6,19 @@ namespace StructuralMechanics.Areas.Project.ViewModels
     public class SimpleShapeViewModel
     {
         public int ShapeId { get; set; }
+
         [Required]
         [Display(Name = "Shape Type")]
         public GeometryType? GeometryType { get; set; }
+
         [Required]
-        [NotBelowZero(ErrorMessage = "Thickness must be positive")]
+        [AboveZero(ErrorMessage = "Thickness cannot be 0 or less")]
         public double Thickness { get; set; }
+
         [Required]
         [Display(Name = "First Point")]
         public int FirstPointId { get; set; }
+
         [Required]
         [Display(Name = "Second Point")]
         public int SecondPointId { get; set; }

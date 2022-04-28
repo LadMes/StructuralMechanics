@@ -17,7 +17,7 @@
     </ul>
 }
 
-<form method="post" asp-controller="SimpleShapes" asp-action="Edit">
+<form method="post" asp-controller="SimpleShapes" asp-action="Edit" asp-route-projectId="@ViewBag.ProjectId" asp-route-simpleShapeId="@Model.ShapeId">
     <input hidden asp-for="ShapeId"/>
     <partial name="_FormFields">
     <div class="form-row">

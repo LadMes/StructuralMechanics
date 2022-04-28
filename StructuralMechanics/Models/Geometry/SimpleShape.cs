@@ -19,9 +19,7 @@ namespace StructuralMechanics.Models
 
         public SimpleShape(Point firstPoint, Point secondPoint, double thickness)
         {
-            this.FirstPoint = firstPoint;
-            this.SecondPoint = secondPoint;
-            this.Thickness = thickness;
+            SetSimpleShapeProperties(firstPoint, secondPoint, thickness);
             CalculateSimpleShapeProperties();
         }
 
@@ -46,10 +44,15 @@ namespace StructuralMechanics.Models
 
         public void EditSimpleShape(Point firstPoint, Point secondPoint, double thickness)
         {
+            SetSimpleShapeProperties(firstPoint, secondPoint, thickness);
+            CalculateSimpleShapeProperties();
+        }
+
+        private void SetSimpleShapeProperties(Point firstPoint, Point secondPoint, double thickness)
+        {
             this.FirstPoint = firstPoint;
             this.SecondPoint = secondPoint;
             this.Thickness = thickness;
-            CalculateSimpleShapeProperties();
         }
 
         protected abstract void ChangePointsOrder(Point firstPoint, Point secondPoint);
