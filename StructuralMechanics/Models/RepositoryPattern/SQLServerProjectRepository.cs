@@ -1,10 +1,10 @@
 ﻿namespace StructuralMechanics.Models
 {
-    internal class SQLServerProjectService : IProjectService
+    internal class SQLServerProjectRepository : IProjectRepository
     {
         private readonly AppDbContext context;
 
-        public SQLServerProjectService(AppDbContext context)
+        public SQLServerProjectRepository(AppDbContext context)
         {
             this.context = context;
         }

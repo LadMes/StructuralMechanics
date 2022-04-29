@@ -7,8 +7,8 @@ namespace StructuralMechanics.Controllers
     public class HomeController : BaseController
     {
         public HomeController(UserManager<ApplicationUser> userManager,
-                              IProjectService projectService, 
-                              IStructureService structureService) : base(userManager, projectService, structureService)
+                              IProjectRepository projectService, 
+                              IStructureRepository structureService) : base(userManager, projectService, structureService)
         {
         }
 

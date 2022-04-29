@@ -1,4 +1,5 @@
-﻿using StructuralMechanics.Utilities;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using StructuralMechanics.Utilities;
 using System.ComponentModel.DataAnnotations;
 
 namespace StructuralMechanics.Areas.Project.ViewModels
@@ -24,8 +25,8 @@ namespace StructuralMechanics.Areas.Project.ViewModels
         public int SecondPointId { get; set; }
 
 
-        public List<Point> Points { get; set; } = new List<Point>();
-        public Point? FirstPoint { get; set; } = null;
-        public Point? SecondPoint { get; set; } = null;
+        public SelectList? Points { get; set; }
+        public Point? FirstPoint { get; set; }
+        public Point? SecondPoint { get; set; }
     }
 }

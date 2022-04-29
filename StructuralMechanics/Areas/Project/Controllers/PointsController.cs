@@ -9,14 +9,14 @@ namespace StructuralMechanics.Areas.Project.Controllers
     [Authorize]
     public class PointsController : BaseController
     {
-        private readonly IGeometryObjectService geometryObjectService;
-        private readonly IPointsService pointsService;
+        private readonly IGeometryObjectRepository geometryObjectService;
+        private readonly IPointsRepository pointsService;
 
         public PointsController(UserManager<ApplicationUser> userManager,
-                                   IProjectService projectService,
-                                   IStructureService structureService,
-                                   IGeometryObjectService geometryObjectService,
-                                   IPointsService pointsService) : base(userManager, projectService, structureService)
+                                   IProjectRepository projectService,
+                                   IStructureRepository structureService,
+                                   IGeometryObjectRepository geometryObjectService,
+                                   IPointsRepository pointsService) : base(userManager, projectService, structureService)
         {
             this.geometryObjectService = geometryObjectService;
             this.pointsService = pointsService;

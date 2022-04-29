@@ -1,6 +1,6 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public interface IGeometryObjectService
+    public interface IGeometryObjectRepository
     {
         List<GeometryObject>? GetGeometryObjectsByStructureId(int structureId);
         GeometryObject AddGeometryObject(GeometryObject geometryObject);

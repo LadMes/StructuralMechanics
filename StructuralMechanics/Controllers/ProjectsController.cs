@@ -10,8 +10,8 @@ namespace StructuralMechanics.Controllers
     public class ProjectsController : BaseController
     {
         public ProjectsController(UserManager<ApplicationUser> userManager, 
-                                  IProjectService projectService, 
-                                  IStructureService structureService) : base(userManager, projectService, structureService)
+                                  IProjectRepository projectService, 
+                                  IStructureRepository structureService) : base(userManager, projectService, structureService)
         {
         }
 
@@ -67,7 +67,7 @@ namespace StructuralMechanics.Controllers
                 projectService.AddProject(project);
                 return RedirectToAction("Overview", $"{structure!.StructureType}", new { projectId = $"{project.Id}", area = "Project" });
             }
-
+            model.StructureType = null;
             return View(model);
         }
 

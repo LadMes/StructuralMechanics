@@ -1,6 +1,6 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public interface IStructureService
+    public interface IStructureRepository
     {
         IEnumerable<Structure> GetAllStructures();
         Structure? GetStructureByStructureId(int structureId);

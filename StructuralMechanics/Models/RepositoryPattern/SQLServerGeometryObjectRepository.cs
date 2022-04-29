@@ -1,10 +1,10 @@
 ﻿namespace StructuralMechanics.Models
 {
-    internal class SQLServerGeometryObjectService : IGeometryObjectService
+    internal class SQLServerGeometryObjectRepository : IGeometryObjectRepository
     {
         private readonly AppDbContext context;
 
-        public SQLServerGeometryObjectService(AppDbContext context)
+        public SQLServerGeometryObjectRepository(AppDbContext context)
         {
             this.context = context;
         }

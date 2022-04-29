@@ -6,8 +6,8 @@ namespace StructuralMechanics.Controllers
     public abstract class BaseController : Controller
     {
         private protected readonly UserManager<ApplicationUser> userManager;
-        private protected readonly IProjectService projectService;
-        private protected readonly IStructureService structureService;
+        private protected readonly IProjectRepository projectService;
+        private protected readonly IStructureRepository structureService;
 
         private protected ApplicationUser? ApplicationUser { get; private set; }
         private protected Project? Project { get; set; }
@@ -16,8 +16,8 @@ namespace StructuralMechanics.Controllers
         private protected string ErrorMessage { get; private set; } = "";
 
         public BaseController(UserManager<ApplicationUser> userManager,
-                              IProjectService projectService,
-                              IStructureService structureService)
+                              IProjectRepository projectService,
+                              IStructureRepository structureService)
         {
             this.userManager = userManager;
             this.projectService = projectService;
@@ -37,6 +37,8 @@ namespace StructuralMechanics.Controllers
                     if (Structure != null)
                     {
                         IsReady = true;
+                        ViewBag.ProjectId = Project.Id;
+                        ViewBag.StructureType = Structure.StructureType;
                     }
                 }
             }

@@ -1,10 +1,10 @@
 ﻿namespace StructuralMechanics.Models
 {
-    internal class SQLServerVectorPhysicalQuantityService : IVectorPhysicalQuantityService
+    internal class SQLServerVectorPhysicalQuantityRepository : IVectorPhysicalQuantityRepository
     {
         private readonly AppDbContext context;
 
-        public SQLServerVectorPhysicalQuantityService(AppDbContext context)
+        public SQLServerVectorPhysicalQuantityRepository(AppDbContext context)
         {
             this.context = context;
         }

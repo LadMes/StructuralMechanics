@@ -7,10 +7,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
     public class ThinWalledStructureController : StructureController
     {
         public ThinWalledStructureController(UserManager<ApplicationUser> userManager,
-                                             IProjectService projectService,
-                                             IStructureService structureService,
-                                             IGeometryObjectService geometryObjectService,
-                                             IVectorPhysicalQuantityService vectorPhysicalQuantityService) 
+                                             IProjectRepository projectService,
+                                             IStructureRepository structureService,
+                                             IGeometryObjectRepository geometryObjectService,
+                                             IVectorPhysicalQuantityRepository vectorPhysicalQuantityService) 
                                             : base(userManager, projectService, structureService, 
                                                    geometryObjectService, vectorPhysicalQuantityService) { }
 

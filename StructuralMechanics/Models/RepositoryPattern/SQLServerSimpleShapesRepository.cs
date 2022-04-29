@@ -1,10 +1,10 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public class SQLServerSimpleShapesService : ISimpleShapesService
+    public class SQLServerSimpleShapesRepository : ISimpleShapesRepository
     {
         private readonly AppDbContext context;
 
-        public SQLServerSimpleShapesService(AppDbContext context)
+        public SQLServerSimpleShapesRepository(AppDbContext context)
         {
             this.context = context;
         }

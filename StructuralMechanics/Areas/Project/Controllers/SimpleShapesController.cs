@@ -9,16 +9,16 @@ namespace StructuralMechanics.Areas.Project.Controllers
     [Authorize]
     public class SimpleShapesController : BaseController
     {
-        private readonly IGeometryObjectService geometryObjectService;
-        private readonly IPointsService pointsService;
-        private readonly ISimpleShapesService simpleShapesService;
+        private readonly IGeometryObjectRepository geometryObjectService;
+        private readonly IPointsRepository pointsService;
+        private readonly ISimpleShapesRepository simpleShapesService;
 
         public SimpleShapesController(UserManager<ApplicationUser> userManager, 
-                                      IProjectService projectService, 
-                                      IStructureService structureService,
-                                      IGeometryObjectService geometryObjectService,
-                                      IPointsService pointsService,
-                                      ISimpleShapesService simpleShapesService) : base(userManager, projectService, structureService)
+                                      IProjectRepository projectService, 
+                                      IStructureRepository structureService,
+                                      IGeometryObjectRepository geometryObjectService,
+                                      IPointsRepository pointsService,
+                                      ISimpleShapesRepository simpleShapesService) : base(userManager, projectService, structureService)
         {
             this.geometryObjectService = geometryObjectService;
             this.pointsService = pointsService;
@@ -36,8 +36,8 @@ namespace StructuralMechanics.Areas.Project.Controllers
             }
 
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
-            ViewBag.ProjectId = projectId;
-            ViewBag.StructureType = Structure!.StructureType;
+            //ViewBag.ProjectId = projectId;
+            //ViewBag.StructureType = Structure!.StructureType;
 
             var simpleShapes = simpleShapesService.GetSimpleShapesByStructureId(Structure!.Id);
             return View(simpleShapes);
@@ -52,10 +52,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            ViewBag.ProjectId = projectId;
-            ViewBag.StructureType = Structure!.StructureType;
+            //ViewBag.ProjectId = projectId;
+            //ViewBag.StructureType = Structure!.StructureType;
 
-            var points = pointsService.GetPointsByStructureId(Structure!.Id);
+            var points = pointsService.GetPointsForSelectListByStructureId(Structure!.Id);
 
             return View(new SimpleShapeViewModel { Points = points });
         }
@@ -63,15 +63,16 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(string projectId, SimpleShapeViewModel model)
         {
+            await SetProjectRelatedData(projectId);
+            if (!IsReady)
+            {
+                ViewBag.ErrorMessage = ErrorMessage;
+                return View("NotFound");
+            }
+            var points = pointsService.GetPointsForSelectListByStructureId(Structure!.Id);
+            model.Points = points;
             if (ModelState.IsValid)
             {
-                await SetProjectRelatedData(projectId);
-                if (!IsReady)
-                {
-                    ViewBag.ErrorMessage = ErrorMessage;
-                    return View("NotFound");
-                }
-
                 var firstPoint = pointsService.GetPoint(model.FirstPointId, Structure!.Id);
                 var secondPoint = pointsService.GetPoint(model.SecondPointId, Structure!.Id);
                 if (firstPoint == null || secondPoint == null)
@@ -92,7 +93,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 geometryObjectService.AddGeometryObject(simpleShape!);
                 return RedirectToAction("Index", "SimpleShapes");
             }
-            
+            model.GeometryType = null;
             return View(model);
         }
 
@@ -115,7 +116,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 return View("NotFound");
             }
 
-            var points = pointsService.GetPointsByStructureId(Structure!.Id);
+            var points = pointsService.GetPointsForSelectListByStructureId(Structure!.Id);
 
             SimpleShapeViewModel model = new SimpleShapeViewModel()
             {
@@ -135,15 +136,16 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string projectId, SimpleShapeViewModel model)
         {
+            await SetProjectRelatedData(projectId);
+            if (!IsReady)
+            {
+                ViewBag.ErrorMessage = ErrorMessage;
+                return View("NotFound");
+            }
+            var points = pointsService.GetPointsForSelectListByStructureId(Structure!.Id);
+            model.Points = points;
             if (ModelState.IsValid)
             {
-                await SetProjectRelatedData(projectId);
-                if (!IsReady)
-                {
-                    ViewBag.ErrorMessage = ErrorMessage;
-                    return View("NotFound");
-                }
-
                 var simpleShape = simpleShapesService.GetSimpleShape(model.ShapeId, Structure!.Id);
                 if (simpleShape == null)
                 {

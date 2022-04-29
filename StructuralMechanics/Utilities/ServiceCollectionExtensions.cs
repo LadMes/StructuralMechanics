@@ -4,15 +4,15 @@
     {
         public static void AddProjectServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<IProjectService, SQLServerProjectService>();
-            serviceCollection.AddScoped<IStructureService, SQLServerStructureService>();
+            serviceCollection.AddScoped<IProjectRepository, SQLServerProjectRepository>();
+            serviceCollection.AddScoped<IStructureRepository, SQLServerStructureRepository>();
         }
         public static void AddModelServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<IGeometryObjectService, SQLServerGeometryObjectService>();
-            serviceCollection.AddScoped<IVectorPhysicalQuantityService, SQLServerVectorPhysicalQuantityService>();
-            serviceCollection.AddScoped<IPointsService, SQLServerPointsService>();
-            serviceCollection.AddScoped<ISimpleShapesService, SQLServerSimpleShapesService>();
+            serviceCollection.AddScoped<IGeometryObjectRepository, SQLServerGeometryObjectRepository>();
+            serviceCollection.AddScoped<IVectorPhysicalQuantityRepository, SQLServerVectorPhysicalQuantityRepository>();
+            serviceCollection.AddScoped<IPointsRepository, SQLServerPointsRepository>();
+            serviceCollection.AddScoped<ISimpleShapesRepository, SQLServerSimpleShapesRepository>();
         }
     }
 }
