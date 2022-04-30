@@ -211,7 +211,7 @@ namespace StructuralMechanics.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GeometryObjects",
+                name: "CrossSectionElements",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -302,7 +302,7 @@ namespace StructuralMechanics.Migrations
                     table.ForeignKey(
                         name: "FK_GeneralGeometryProperties_GeometryObjects_Id",
                         column: x => x.Id,
-                        principalTable: "GeometryObjects",
+                        principalTable: "CrossSectionElements",
                         principalColumn: "Id");
                 });
 
@@ -321,7 +321,7 @@ namespace StructuralMechanics.Migrations
                     table.ForeignKey(
                         name: "FK_Points_GeometryObjects_Id",
                         column: x => x.Id,
-                        principalTable: "GeometryObjects",
+                        principalTable: "CrossSectionElements",
                         principalColumn: "Id");
                 });
 
@@ -525,7 +525,7 @@ namespace StructuralMechanics.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeometryObjects_StructureId",
-                table: "GeometryObjects",
+                table: "CrossSectionElements",
                 column: "StructureId");
 
             migrationBuilder.CreateIndex(
@@ -636,7 +636,7 @@ namespace StructuralMechanics.Migrations
                 name: "Points");
 
             migrationBuilder.DropTable(
-                name: "GeometryObjects");
+                name: "CrossSectionElements");
 
             migrationBuilder.DropTable(
                 name: "Structures");

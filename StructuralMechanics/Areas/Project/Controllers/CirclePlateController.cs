@@ -9,7 +9,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         public CirclePlateController(UserManager<ApplicationUser> userManager,
                                              IProjectRepository projectService,
                                              IStructureRepository structureService,
-                                             IGeometryObjectRepository geometryObjectService,
+                                             ICrossSectionRepository geometryObjectService,
                                              IVectorPhysicalQuantityRepository vectorPhysicalQuantityService)
                                             : base(userManager, projectService, structureService,
                                                    geometryObjectService, vectorPhysicalQuantityService) { }
@@ -24,7 +24,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
             ViewBag.ProjectId = projectId;
-            var geometryObjects = geometryObjectService.GetGeometryObjectsByStructureId(Structure!.Id);
+            var geometryObjects = geometryObjectService.GetCrossSectionElementsByStructureId(Structure!.Id);
             var vectors = vectorPhysicalQuantityService.GetVectorPhysicalQuantitiesByStructureId(Structure!.Id);
 
             return View();

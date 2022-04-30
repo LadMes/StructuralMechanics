@@ -2,11 +2,9 @@
 
 namespace StructuralMechanics.Models
 {
-    public abstract class GeometryObject
+    public abstract class CrossSection
     {
         public int Id { get; set; }
-        [Required]
-        public GeometryType GeometryType { get; protected set; }
 
 
         //Navigation Properties

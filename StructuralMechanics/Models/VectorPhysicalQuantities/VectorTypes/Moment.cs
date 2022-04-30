@@ -4,12 +4,12 @@
     {
         public Moment(double magnitude, Direction direction) : base(magnitude, direction)
         {
-            this.VectorType = VectorType.Moment;
+            Type = VectorType.Moment;
         }
 
         public override bool Equals(object? obj)
         {
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
             {
                 return false;
             }
@@ -18,19 +18,19 @@
             {
                 Moment momentToCampare = (Moment)obj;
 
-                return this.Magnitude == momentToCampare.Magnitude;
+                return Magnitude == momentToCampare.Magnitude;
             }
         }
 
         public override int GetHashCode()
         {
-            return this.Magnitude.GetHashCode();
+            return Magnitude.GetHashCode();
         }
 
         public override string ToString()
         {
-            return $"M = {this.Magnitude}" +
-                    $"Moment direction: {this.Direction}";
+            return $"M = {Magnitude}" +
+                    $"Moment direction: {Direction}";
         }
     }
 }

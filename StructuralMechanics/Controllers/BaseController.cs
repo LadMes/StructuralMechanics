@@ -6,8 +6,8 @@ namespace StructuralMechanics.Controllers
     public abstract class BaseController : Controller
     {
         private protected readonly UserManager<ApplicationUser> userManager;
-        private protected readonly IProjectRepository projectService;
-        private protected readonly IStructureRepository structureService;
+        private protected readonly IProjectRepository projectRepository;
+        private protected readonly IStructureRepository structureRepository;
 
         private protected ApplicationUser? ApplicationUser { get; private set; }
         private protected Project? Project { get; set; }
@@ -20,8 +20,8 @@ namespace StructuralMechanics.Controllers
                               IStructureRepository structureService)
         {
             this.userManager = userManager;
-            this.projectService = projectService;
-            this.structureService = structureService;
+            this.projectRepository = projectService;
+            this.structureRepository = structureService;
         }
 
         [NonAction]
@@ -38,7 +38,7 @@ namespace StructuralMechanics.Controllers
                     {
                         IsReady = true;
                         ViewBag.ProjectId = Project.Id;
-                        ViewBag.StructureType = Structure.StructureType;
+                        ViewBag.StructureType = Structure.Type;
                     }
                 }
             }
@@ -55,7 +55,7 @@ namespace StructuralMechanics.Controllers
         [NonAction]
         private void FindProject(string userId, string projectId)
         {
-            Project = projectService.GetProjectById(projectId);
+            Project = projectRepository.GetProjectById(projectId);
             if (Project == null)
             {
                 ErrorMessage = "Project is not found";
@@ -68,7 +68,7 @@ namespace StructuralMechanics.Controllers
         [NonAction]
         private void FindStructure(string projectId)
         {
-            Structure = structureService.GetStructureByProjectId(projectId);
+            Structure = structureRepository.GetStructureByProjectId(projectId);
             if (Structure == null)
             {
                 ErrorMessage = "Structure is not found";

@@ -2,21 +2,21 @@
 {
     public abstract class StructureOverviewViewModel
     {
-        public StructureOverviewViewModel(List<GeometryObject>? geometryObjects, List<VectorPhysicalQuantity>? vectors)
+        public StructureOverviewViewModel(List<CrossSection>? geometryObjects, List<VectorPhysicalQuantity>? vectors)
         {
             if (geometryObjects != null)
             {
-                PointsCount = geometryObjects.Where(go => go.GeometryType == GeometryType.Point).Count();
-                HorizontalLinesCount = geometryObjects.Where(go => go.GeometryType == GeometryType.HorizontalLine).Count();
-                VerticalLinesCount = geometryObjects.Where(go => go.GeometryType == GeometryType.VerticalLine).Count();
-                SlopeLinesCount = geometryObjects.Where(go => go.GeometryType == GeometryType.SlopeLine).Count();
-                ArcsCount = geometryObjects.Where(go => go.GeometryType == GeometryType.Arc).Count();
+                PointsCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.Point).Count();
+                HorizontalLinesCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.HorizontalLine).Count();
+                VerticalLinesCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.VerticalLine).Count();
+                SlopeLinesCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.SlopeLine).Count();
+                ArcsCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.Arc).Count();
 
                 GeometryObjectCount = PointsCount + HorizontalLinesCount + VerticalLinesCount + ArcsCount;
             }
             if (vectors != null)
             {
-                ForcesCount = vectors.Where(v => v.VectorType == VectorType.ShearForce).Count();
+                ForcesCount = vectors.Where(v => v.Type == VectorType.ShearForce).Count();
                 VectorPhysicalQuantitiesCount = ForcesCount;
             }       
         }

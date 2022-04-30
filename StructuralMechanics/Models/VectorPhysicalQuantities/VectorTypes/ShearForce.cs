@@ -12,19 +12,16 @@ namespace StructuralMechanics.Models
 
         public ShearForce(double magnitude, Direction direction, Point location) : base(magnitude, direction)
         {
-            this.Location = location;
-            this.VectorType = VectorType.ShearForce;
+            Location = location;
+            Type = VectorType.ShearForce;
         }
 
         //Constructor for EF Core
-        private ShearForce(double magnitude, Direction direction) : base(magnitude, direction)
-        {
-            this.VectorType = VectorType.ShearForce;
-        }
+        private ShearForce(double magnitude, Direction direction) : base(magnitude, direction) => Type = VectorType.ShearForce;
 
         public override bool Equals(object? obj)
         {
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
             {
                 return false;
             }
@@ -33,20 +30,20 @@ namespace StructuralMechanics.Models
             {
                 ShearForce shearForceToCompare = (ShearForce)obj;
 
-                return (this.Magnitude == shearForceToCompare.Magnitude) && (this.Location.X == shearForceToCompare.Location.X);
+                return (Magnitude == shearForceToCompare.Magnitude) && (Location.X == shearForceToCompare.Location.X);
             }
         }
 
         public override int GetHashCode()
         {
-            return this.Magnitude.GetHashCode() ^ this.Location.X.GetHashCode();
+            return Magnitude.GetHashCode() ^ Location.X.GetHashCode();
         }
 
         public override string ToString()
         {
-            return $"Q = {this.Magnitude} N" +
-                $"The location from the coordinate origin (x coordinate): {this.Location.X} mm" +
-                $"Force direction: {this.Direction}";
+            return $"Q = {Magnitude} N" +
+                $"The location from the coordinate origin (x coordinate): {Location.X} mm" +
+                $"Force direction: {Direction}";
         }
     }
 }

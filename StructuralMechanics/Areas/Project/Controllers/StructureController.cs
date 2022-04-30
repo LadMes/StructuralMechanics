@@ -8,13 +8,13 @@ namespace StructuralMechanics.Areas.Project.Controllers
     [Authorize]
     public abstract class StructureController : BaseController
     {
-        private protected readonly IGeometryObjectRepository geometryObjectService;
+        private protected readonly ICrossSectionRepository geometryObjectService;
         private protected readonly IVectorPhysicalQuantityRepository vectorPhysicalQuantityService;
 
         public StructureController(UserManager<ApplicationUser> userManager, 
                                    IProjectRepository projectService, 
                                    IStructureRepository structureService, 
-                                   IGeometryObjectRepository geometryObjectService,
+                                   ICrossSectionRepository geometryObjectService,
                                    IVectorPhysicalQuantityRepository vectorPhysicalQuantityService) : base(userManager, projectService, structureService)
         {
             this.geometryObjectService = geometryObjectService;

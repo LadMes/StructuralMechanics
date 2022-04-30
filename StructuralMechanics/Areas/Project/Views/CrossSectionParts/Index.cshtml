@@ -1,4 +1,4 @@
-﻿@model List<SimpleShape>
+﻿@model List<CrossSectionPart>
 
 @{
     ViewBag.Title = ViewBag.ProjectName;
@@ -21,7 +21,7 @@
         {
             <div class="info-card">
                 <div class="info-card-text">
-                    Type: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(simpleShape.GeometryType)
+                    Type: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(simpleShape.Type)
                 </div>
                 <div class="info-card-text">
                     First Point Coordinates: (@simpleShape.FirstPoint.X, @simpleShape.FirstPoint.Y)

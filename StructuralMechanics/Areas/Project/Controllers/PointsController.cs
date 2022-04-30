@@ -9,14 +9,14 @@ namespace StructuralMechanics.Areas.Project.Controllers
     [Authorize]
     public class PointsController : BaseController
     {
-        private readonly IGeometryObjectRepository geometryObjectService;
-        private readonly IPointsRepository pointsService;
+        private readonly ICrossSectionRepository geometryObjectService;
+        private readonly IPointRepository pointsService;
 
         public PointsController(UserManager<ApplicationUser> userManager,
                                    IProjectRepository projectService,
                                    IStructureRepository structureService,
-                                   IGeometryObjectRepository geometryObjectService,
-                                   IPointsRepository pointsService) : base(userManager, projectService, structureService)
+                                   ICrossSectionRepository geometryObjectService,
+                                   IPointRepository pointsService) : base(userManager, projectService, structureService)
         {
             this.geometryObjectService = geometryObjectService;
             this.pointsService = pointsService;
@@ -34,7 +34,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
             ViewBag.ProjectId = projectId;
-            ViewBag.StructureType = Structure!.StructureType;
+            ViewBag.StructureType = Structure!.Type;
 
             var points = pointsService.GetPointsByStructureId(Structure!.Id);
             return View(points);
@@ -50,7 +50,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 return View("NotFound");
             }
             ViewBag.ProjectId = projectId;
-            ViewBag.StructureType = Structure!.StructureType;
+            ViewBag.StructureType = Structure!.Type;
 
             return View();
         }
@@ -70,7 +70,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 Point point = new Point(model.X, model.Y);
                 point.Structure = Structure!;
 
-                geometryObjectService.AddGeometryObject(point);
+                geometryObjectService.AddCrossSectionElement(point);
 
                 return RedirectToAction("Index", "Points");
             }
@@ -88,7 +88,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 return View("NotFound");
             }
             ViewBag.ProjectId = projectId;
-            ViewBag.StructureType = Structure!.StructureType;
+            ViewBag.StructureType = Structure!.Type;
 
             var point = pointsService.GetPoint(pointId, Structure.Id);
             if (point == null)

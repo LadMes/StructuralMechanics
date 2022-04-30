@@ -10,8 +10,8 @@ namespace StructuralMechanics.Controllers
     public class ProjectsController : BaseController
     {
         public ProjectsController(UserManager<ApplicationUser> userManager, 
-                                  IProjectRepository projectService, 
-                                  IStructureRepository structureService) : base(userManager, projectService, structureService)
+                                  IProjectRepository projectRepository, 
+                                  IStructureRepository structureService) : base(userManager, projectRepository, structureService)
         {
         }
 
@@ -26,7 +26,7 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            return View(ProjectsQuery.Query(user, projectService, structureService));
+            return View(ProjectsQuery.Query(user, projectRepository, structureRepository));
         }
 
         [HttpGet]
@@ -47,7 +47,7 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                (bool isStructureValid, string errorMessage, Structure? structure) = StructureCreator.GetStructureObject(model);
+                (bool isStructureValid, string errorMessage, Structure? structure) = StructureCreator.GetStructure(model);
 
                 if (!isStructureValid)
                 {
@@ -64,8 +64,8 @@ namespace StructuralMechanics.Controllers
                     Structure = structure!
                 };
 
-                projectService.AddProject(project);
-                return RedirectToAction("Overview", $"{structure!.StructureType}", new { projectId = $"{project.Id}", area = "Project" });
+                projectRepository.AddProject(project);
+                return RedirectToAction("Overview", $"{structure!.Type}", new { projectId = $"{project.Id}", area = "Project" });
             }
             model.StructureType = null;
             return View(model);
@@ -92,8 +92,8 @@ namespace StructuralMechanics.Controllers
             ProjectViewModel model = new ProjectViewModel()
             {
                 ProjectName = Project!.ProjectName,
-                StructureType = Structure!.StructureType,
-                ThinWalledStructureType = (Structure.StructureType == StructureType.ThinWalledStructure) 
+                StructureType = Structure!.Type,
+                ThinWalledStructureType = (Structure.Type == StructureType.ThinWalledStructure) 
                                             ? ((ThinWalledStructure)Structure).ThinWalledStructureType 
                                             : null
             };
@@ -114,7 +114,7 @@ namespace StructuralMechanics.Controllers
                     return View("NotFound");
                 }
 
-                (bool isStructureValid, string errorMessage, Structure structure) = StructureUpdater.GetUpdatedStructureObject(model, Structure!);
+                (bool isStructureValid, string errorMessage, Structure structure) = StructureUpdater.GetUpdatedStructure(model, Structure!);
                 if (!isStructureValid)
                 {
                     ModelState.AddModelError(string.Empty, errorMessage);
@@ -123,8 +123,8 @@ namespace StructuralMechanics.Controllers
 
                 Project!.ProjectName = model.ProjectName;
                 // If we don't update structure info there's no need for calling update structure
-                structureService.UpdateStructure(structure);
-                projectService.UpdateProject(Project);
+                structureRepository.UpdateStructure(structure);
+                projectRepository.UpdateProject(Project);
                 return RedirectToAction("Index");
             }
 
@@ -142,8 +142,8 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            structureService.DeleteStructure(Structure!);
-            projectService.DeleteProject(Project!);
+            structureRepository.DeleteStructure(Structure!);
+            projectRepository.DeleteProject(Project!);
 
             return RedirectToAction("Index", "Projects");
         }

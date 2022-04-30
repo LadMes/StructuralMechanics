@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StructuralMechanics.Areas.Project.ViewModels
 {
-    public class SimpleShapeViewModel
+    public class CrossSectionPartViewModel
     {
         public int ShapeId { get; set; }
 
         [Required]
-        [Display(Name = "Shape Type")]
-        public GeometryType? GeometryType { get; set; }
+        [Display(Name = "Cross-Section Part Type")]
+        public CrossSectionPartType? Type { get; set; }
 
         [Required]
         [AboveZero(ErrorMessage = "Thickness cannot be 0 or less")]

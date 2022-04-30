@@ -1,4 +1,4 @@
-﻿@model SimpleShapeViewModel
+﻿@model CrossSectionPartViewModel
 
 @{
     ViewBag.Title = "Create Shape";
@@ -17,11 +17,12 @@
     </ul>
 }
 
-<form method="post" asp-controller="SimpleShapes" asp-action="Create">
-    <partial name="_FormFields"/>
+<form method="post" asp-controller="SimpleShapes" asp-action="Edit" asp-route-projectId="@ViewBag.ProjectId" asp-route-simpleShapeId="@Model.ShapeId">
+    <input hidden asp-for="ShapeId"/>
+    <partial name="_FormFields">
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>
     </div>
     <hr class="main-hr" />
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Edit</button>
 </form>

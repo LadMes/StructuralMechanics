@@ -230,7 +230,7 @@ namespace StructuralMechanics.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("GeometryType")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.Property<int>("StructureId")
@@ -240,7 +240,7 @@ namespace StructuralMechanics.Migrations
 
                     b.HasIndex("StructureId");
 
-                    b.ToTable("GeometryObjects", (string)null);
+                    b.ToTable("CrossSectionElements", (string)null);
                 });
 
             modelBuilder.Entity("StructuralMechanics.Models.Project", b =>
@@ -278,7 +278,7 @@ namespace StructuralMechanics.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("StructureType")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -529,7 +529,7 @@ namespace StructuralMechanics.Migrations
             modelBuilder.Entity("StructuralMechanics.Models.GeometryObject", b =>
                 {
                     b.HasOne("StructuralMechanics.Models.Structure", "Structure")
-                        .WithMany("GeometryObjects")
+                        .WithMany("CrossSectionElements")
                         .HasForeignKey("StructureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -732,7 +732,7 @@ namespace StructuralMechanics.Migrations
 
             modelBuilder.Entity("StructuralMechanics.Models.Structure", b =>
                 {
-                    b.Navigation("GeometryObjects");
+                    b.Navigation("CrossSectionElements");
 
                     b.Navigation("VectorPhysicalQuantities");
                 });
