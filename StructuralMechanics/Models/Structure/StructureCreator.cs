@@ -4,14 +4,14 @@ namespace StructuralMechanics.Models
 {
     public static class StructureCreator
     {
-        private delegate (bool, string, Structure?) CreateStructureObject(ProjectViewModel model);
-        private static Dictionary<StructureType, CreateStructureObject> structureCreators = new Dictionary<StructureType, CreateStructureObject>()
+        private delegate (bool, string, Structure?) CreateStructure(ProjectViewModel model);
+        private readonly static Dictionary<StructureType, CreateStructure> structureCreators = new()
         {
-            { StructureType.ThinWalledStructure, CreateThinWalledStructureObject },
-            { StructureType.CirclePlate, CreateCirclePlateObject },
-            { StructureType.RotationalShell, CreateRotationalShellObject },
+            { StructureType.ThinWalledStructure, CreateThinWalledStructure },
+            { StructureType.CirclePlate, CreateCirclePlate },
+            { StructureType.RotationalShell, CreateRotationalShell },
         };
-        public static (bool, string, Structure?) GetStructureObject(ProjectViewModel model)
+        public static (bool, string, Structure?) GetStructure(ProjectViewModel model)
         {
             if (model != null && model.StructureType != null && Enum.IsDefined(typeof(StructureType), model.StructureType))
             {
@@ -24,11 +24,11 @@ namespace StructuralMechanics.Models
             }
         }
 
-        private static CreateStructureObject GetCreateMethod(StructureType structureType)
+        private static CreateStructure GetCreateMethod(StructureType type)
         {
-            return structureCreators[structureType];
+            return structureCreators[type];
         }
-        private static (bool, string, Structure?) CreateThinWalledStructureObject(ProjectViewModel model)
+        private static (bool, string, Structure?) CreateThinWalledStructure(ProjectViewModel model)
         {
             string errorMessage = "";
             if (model.ThinWalledStructureType == null)
@@ -42,12 +42,12 @@ namespace StructuralMechanics.Models
             return errorMessage == "" ? (true, errorMessage, new ThinWalledStructure(model.ThinWalledStructureType!.Value)) 
                                       : (false, errorMessage, null);
         }
-        private static (bool, string, Structure?) CreateCirclePlateObject(ProjectViewModel model)
+        private static (bool, string, Structure?) CreateCirclePlate(ProjectViewModel model)
         {
             string errorMessage = "Others types aren't supported right now";
             return (false, errorMessage, null);
         }
-        private static (bool, string, Structure?) CreateRotationalShellObject(ProjectViewModel model)
+        private static (bool, string, Structure?) CreateRotationalShell(ProjectViewModel model)
         {
             string errorMessage = "Others types aren't supported right now";
             return (false, errorMessage, null);

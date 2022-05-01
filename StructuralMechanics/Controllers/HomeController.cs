@@ -7,8 +7,8 @@ namespace StructuralMechanics.Controllers
     public class HomeController : BaseController
     {
         public HomeController(UserManager<ApplicationUser> userManager,
-                              IProjectRepository projectService, 
-                              IStructureRepository structureService) : base(userManager, projectService, structureService)
+                              IProjectRepository projectRepository, 
+                              IStructureRepository structureRepository) : base(userManager, projectRepository, structureRepository)
         {
         }
 
@@ -19,7 +19,7 @@ namespace StructuralMechanics.Controllers
 
             if (user != null)
             {
-                return View(ProjectsQuery.Query(user, projectService, structureService));
+                return View(ProjectsQuery.Query(user, projectRepository, structureRepository));
             }
 
             return View();

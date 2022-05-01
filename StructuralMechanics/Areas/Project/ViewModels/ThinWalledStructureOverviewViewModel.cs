@@ -2,18 +2,18 @@
 {
     public class ThinWalledStructureOverviewViewModel : StructureOverviewViewModel
     {
-        public ThinWalledStructureOverviewViewModel(List<GeometryObject>? geometryObjects, 
-                                                    List<VectorPhysicalQuantity>? vectors) : base(geometryObjects, vectors)
+        public ThinWalledStructureOverviewViewModel(List<CrossSectionElement>? crossSectionElements, 
+                                                    List<VectorPhysicalQuantity>? vectors) : base(crossSectionElements, vectors)
         {
-            if (geometryObjects != null)
+            if (crossSectionElements != null)
             {
-                StrengthMembersCount = geometryObjects.Where(go => go.GeometryType == GeometryType.StrengthMember).Count();
-                GeometryObjectCount += StrengthMembersCount;
+                StrengthMembersCount = crossSectionElements.Where(cse => cse.ElementType == CrossSectionElementType.StrengthMember).Count();
+                CrossSectionElementsCount += StrengthMembersCount;
             }
 
             if (vectors != null)
             {
-                MomentsCount = vectors.Where(v => v.VectorType == VectorType.Moment).Count();
+                MomentsCount = vectors.Where(v => v.Type == VectorType.Moment).Count();
                 VectorPhysicalQuantitiesCount += MomentsCount;
             } 
         }

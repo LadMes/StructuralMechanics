@@ -2,7 +2,7 @@
 
 namespace StructuralMechanics.Models
 {
-    public interface IPointsRepository
+    public interface IPointRepository
     {
         List<Point> GetPointsByStructureId(int structureId);
         Point? GetPoint(int pointId, int structureId);

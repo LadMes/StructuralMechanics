@@ -2,11 +2,11 @@
 
 namespace StructuralMechanics.Models
 {
-    internal class SQLServerPointsRepository : IPointsRepository
+    internal class SQLServerPointRepository : IPointRepository
     {
         private readonly AppDbContext context;
 
-        public SQLServerPointsRepository(AppDbContext context)
+        public SQLServerPointRepository(AppDbContext context)
         {
             this.context = context;
         }

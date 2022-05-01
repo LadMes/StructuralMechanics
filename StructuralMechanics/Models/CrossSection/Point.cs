@@ -2,7 +2,7 @@
 
 namespace StructuralMechanics.Models
 {
-    public class Point : GeometryObject, IComparable<Point>
+    public class Point : CrossSectionElement, IComparable<Point>
     {
         [Required]
         public double X { get; private set; }
@@ -15,42 +15,46 @@ namespace StructuralMechanics.Models
 
         public Point(double x, double y)
         {
-            this.X = x;
-            this.Y = y;
-            this.GeometryType = GeometryType.Point;
-            AssignPointPositionProperty();
+            ElementType = CrossSectionElementType.Point;
+            SetProperties(x, y);
         }
 
-        public void EditPoint(double x, double y)
+        public void Edit(double x, double y)
+        {
+            SetProperties(x, y);
+            PointChanged();
+        }
+
+        private void SetProperties(double x, double y)
         {
             X = x;
             Y = y;
-            PointChanged();
+            AssignPointPositionProperty();
         }
 
         private void AssignPointPositionProperty()
         {
-            if (this.X != 0 && this.Y != 0)
+            if (X != 0 && Y != 0)
             {
-                this.PointPosition = PointPositionInCoordGrid.PointIsNotOnCoordAxes;
+                PointPosition = PointPositionInCoordGrid.PointIsNotOnCoordAxes;
             }
-            else if (this.Y == 0 && this.X != 0)
+            else if (Y == 0 && X != 0)
             {
-                this.PointPosition = PointPositionInCoordGrid.PointIsOnXAxis;
+                PointPosition = PointPositionInCoordGrid.PointIsOnXAxis;
             }
-            else if (this.X == 0 && this.Y != 0)
+            else if (X == 0 && Y != 0)
             {
-                this.PointPosition = PointPositionInCoordGrid.PointIsOnYAxis;
+                PointPosition = PointPositionInCoordGrid.PointIsOnYAxis;
             }
             else
             {
-                this.PointPosition = PointPositionInCoordGrid.StartingPoint;
+                PointPosition = PointPositionInCoordGrid.StartingPoint;
             }
         }
 
         public override bool Equals(object? obj)
         {
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
             {
                 return false;
             }
@@ -58,23 +62,23 @@ namespace StructuralMechanics.Models
             {
                 Point pointToCompare = (Point)obj;
 
-                return (this.X == pointToCompare.X) && (this.Y == pointToCompare.Y);
+                return (X == pointToCompare.X) && (Y == pointToCompare.Y);
             }
         }
 
         public override int GetHashCode()
         {
-            return this.X.GetHashCode() ^ this.Y.GetHashCode();
+            return X.GetHashCode() ^ Y.GetHashCode();
         }
 
         public override string ToString()
         {
-            return $"Point(mm) ({this.X}; {this.Y})";
+            return $"Point(mm) ({X}; {Y})";
         }
 
         public int CompareTo(Point? other)
         {
-            return this.X.CompareTo(other?.X);
+            return X.CompareTo(other?.X);
         }
     }
 

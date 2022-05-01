@@ -1,40 +1,37 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public class HorizontalLine : SimpleShape
+    public class HorizontalLine : CrossSectionPart
     {
         public HorizontalLine(Point firstPoint, Point secondPoint, double thickness) : base(firstPoint, secondPoint, thickness)
         {
-            this.GeometryType = GeometryType.HorizontalLine;
+            Type = CrossSectionPartType.HorizontalLine;
         }
 
         //Constructor for EF Core
-        private HorizontalLine(double thickness) : base(thickness)
-        {
-            this.GeometryType = GeometryType.HorizontalLine;
-        }
+        private HorizontalLine(double thickness) : base(thickness) => Type = CrossSectionPartType.HorizontalLine;
 
         protected override void ChangePointsOrder(Point firstPoint, Point secondPoint)
         {
             if (firstPoint.X > secondPoint.X)
             {
-                this.FirstPoint = secondPoint;
-                this.SecondPoint = firstPoint;
+                FirstPoint = secondPoint;
+                SecondPoint = firstPoint;
             }
         }
 
         protected override void CalculateLength()
         {
-            this.Length = this.SecondPoint.X - this.FirstPoint.X;
+            Length = SecondPoint.X - FirstPoint.X;
         }
 
         protected override void CalculateFirstMomentOfArea()
         {
-            this.FirstMomentOfArea = this.FirstPoint.Y * this.Thickness * this.Length;
+            FirstMomentOfArea = FirstPoint.Y * Thickness * Length;
         }
 
         protected override void CalculateSecondMomentOfArea()
         {
-            this.SecondMomentOfArea = Math.Pow(this.FirstPoint.Y, 2) * this.Thickness * this.Length;
+            SecondMomentOfArea = Math.Pow(FirstPoint.Y, 2) * Thickness * Length;
         }
     }
 }

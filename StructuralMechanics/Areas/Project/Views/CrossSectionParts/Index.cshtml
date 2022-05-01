@@ -1,0 +1,64 @@
+﻿@model List<CrossSectionPart>
+
+@{
+    ViewBag.Title = ViewBag.ProjectName;
+}
+
+@section SidebarNavigation {
+    <ul>
+        <li><a asp-area="Project" 
+               asp-controller="CrossSectionParts" 
+               asp-action="Create" 
+               asp-route-projectId="@ViewBag.ProjectId">Create Cross-Section Part</a></li>
+        <li><a asp-area="Project" asp-controller="@ViewBag.StructureType" asp-action="Overview" asp-route-projectId="@ViewBag.ProjectId">Back</a></li>
+    </ul>
+}
+
+@if (Model.Any())
+{
+    <div class="info-cards"> 
+        @foreach (var crossSectionPart in Model)
+        {
+            <div class="info-card">
+                <div class="info-card-text">
+                    Type: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(crossSectionPart.Type)
+                </div>
+                <div class="info-card-text">
+                    First Point Coordinates: (@crossSectionPart.FirstPoint.X, @crossSectionPart.FirstPoint.Y)
+                    Second Point Coordinates: (@crossSectionPart.SecondPoint.X, @crossSectionPart.SecondPoint.Y)
+                </div>
+                <div class="info-card-text">
+                    Thickness: @crossSectionPart.Thickness
+                </div>
+                <div class="info-card-text">
+                    Length: @crossSectionPart.Length
+                </div>
+                <div class="info-card-text">
+                    First Moment of Area: @crossSectionPart.FirstMomentOfArea
+                </div>
+                <div class="info-card-text">
+                    Second Moment of Area: @crossSectionPart.SecondMomentOfArea
+                </div>
+                <div class="info-card-buttons"> 
+                    <a class="btn btn-primary" asp-controller="CrossSectionParts" 
+                                               asp-action="Edit" 
+                                               asp-route-projectId="@ViewBag.ProjectId"
+                                               asp-route-crossSectionPartId="@crossSectionPart.Id">Edit</a>
+                    <form method="post" asp-controller="CrossSectionParts" 
+                                        asp-action="Delete" 
+                                        asp-route-projectId="@ViewBag.ProjectId"
+                                        asp-route-crossSectionPartId="@crossSectionPart.Id">
+                            <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="info-message">
+        <h1>There's no cross-section parts! Create one.</h1>
+        <a class="btn btn-primary" asp-controller="CrossSectionParts" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Create</a>
+    </div>   
+}

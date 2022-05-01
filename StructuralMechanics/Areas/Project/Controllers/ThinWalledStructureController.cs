@@ -7,12 +7,12 @@ namespace StructuralMechanics.Areas.Project.Controllers
     public class ThinWalledStructureController : StructureController
     {
         public ThinWalledStructureController(UserManager<ApplicationUser> userManager,
-                                             IProjectRepository projectService,
-                                             IStructureRepository structureService,
-                                             IGeometryObjectRepository geometryObjectService,
-                                             IVectorPhysicalQuantityRepository vectorPhysicalQuantityService) 
-                                            : base(userManager, projectService, structureService, 
-                                                   geometryObjectService, vectorPhysicalQuantityService) { }
+                                             IProjectRepository projectRepository,
+                                             IStructureRepository structureRepository,
+                                             ICrossSectionElementRepository crossSectionElementRepository,
+                                             IVectorPhysicalQuantityRepository vectorPhysicalQuantityRepository) 
+                                            : base(userManager, projectRepository, structureRepository,
+                                                   crossSectionElementRepository, vectorPhysicalQuantityRepository) { }
 
         public override async Task<IActionResult> Overview(string projectId)
         {
@@ -24,11 +24,11 @@ namespace StructuralMechanics.Areas.Project.Controllers
             }
 
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
-            ViewBag.ProjectId = projectId;
-            var geometryObjects = geometryObjectService.GetGeometryObjectsByStructureId(Structure!.Id);
-            var vectors = vectorPhysicalQuantityService.GetVectorPhysicalQuantitiesByStructureId(Structure!.Id);
 
-            return View(new ThinWalledStructureOverviewViewModel(geometryObjects, vectors));
+            var crossSectionElements = crossSectionElementRepository.GetCrossSectionElementsByStructureId(Structure!.Id);
+            var vectors = vectorPhysicalQuantityRepository.GetVectorPhysicalQuantitiesByStructureId(Structure!.Id);
+
+            return View(new ThinWalledStructureOverviewViewModel(crossSectionElements, vectors));
         }
     }
 }

@@ -17,30 +17,30 @@ namespace StructuralMechanics.Models
 
         public ThinWalledStructure(ThinWalledStructureType thinWalledStructureType)
         {
-            this.StructureType = StructureType.ThinWalledStructure;
-            this.ThinWalledStructureType = thinWalledStructureType;
+            Type = StructureType.ThinWalledStructure;
+            ThinWalledStructureType = thinWalledStructureType;
         }
 
         public void CalculateSecondMomentOfAreaOfStructure()
         {
-            this.SecondMomentOfAreaOfStructure = 0;
+            SecondMomentOfAreaOfStructure = 0;
             
             //To be implemented
         }
 
         public void CalculateFullShearForce()
         {
-            this.FullShearForce = 0;
-            IEnumerable<VectorPhysicalQuantity> shearForceList = this.VectorPhysicalQuantities.Where(vpq => vpq.VectorType == VectorType.ShearForce);
+            FullShearForce = 0;
+            IEnumerable<VectorPhysicalQuantity> shearForceList = VectorPhysicalQuantities.Where(vpq => vpq.Type == VectorType.ShearForce);
             foreach (var shearForce in shearForceList)
             {
-                this.FullShearForce += shearForce.Magnitude;
+                FullShearForce += shearForce.Magnitude;
             }
         }
 
         public void CalculateMultiplicationCoefficientForT()
         {
-            this.MultiplicationCoefficientForShearFlow = this.FullShearForce / this.SecondMomentOfAreaOfStructure;
+            MultiplicationCoefficientForShearFlow = FullShearForce / SecondMomentOfAreaOfStructure;
         }
     }
 }

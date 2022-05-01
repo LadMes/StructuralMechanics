@@ -6,9 +6,9 @@ namespace StructuralMechanics.Models
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Project> Projects { get; set; }
-        public DbSet<GeometryObject> GeometryObjects { get; set; }
+        public DbSet<CrossSectionElement> CrossSectionElements { get; set; }
         public DbSet<Point> Points { get; set; }
-        public DbSet<SimpleShape> SimpleShapes { get; set; }
+        public DbSet<CrossSectionPart> CrossSectionParts { get; set; }
         public DbSet<StrengthMember> StrengthMembers { get; set; }
         public DbSet<VectorPhysicalQuantity> VectorPhysicalQuantities { get; set; }
         public DbSet<ShearForce> ShearForces { get; set; }
@@ -37,24 +37,24 @@ namespace StructuralMechanics.Models
                                                               .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Structure>().ToTable("Structures");
-            builder.Entity<Structure>().HasMany(s => s.GeometryObjects).WithOne(go => go.Structure)
-                                                                       .HasForeignKey(go => go.StructureId)
+            builder.Entity<Structure>().HasMany(s => s.CrossSectionElements).WithOne(cse => cse.Structure)
+                                                                       .HasForeignKey(cse => cse.StructureId)
                                                                        .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ThinWalledStructure>().ToTable("ThinWalledStructures");
             builder.Entity<CirclePlate>().ToTable("CirclePlates");
             builder.Entity<RotationalShell>().ToTable("RotationalShells");
 
-            builder.Entity<GeometryObject>().ToTable("GeometryObjects");
-            builder.Entity<GeneralGeometryProperties>().ToTable("GeneralGeometryProperties");
+            builder.Entity<CrossSectionElement>().ToTable("CrossSectionElements");
+            builder.Entity<AreaProperties>().ToTable("AreaProperties");
 
-            builder.Entity<SimpleShape>().ToTable("SimpleShapes");
-            builder.Entity<SimpleShape>().HasOne(ss => ss.FirstPoint).WithMany().HasForeignKey(ss => ss.FirstPointId)
+            builder.Entity<CrossSectionPart>().ToTable("CrossSectionParts");
+            builder.Entity<CrossSectionPart>().HasOne(csp => csp.FirstPoint).WithMany().HasForeignKey(csp => csp.FirstPointId)
                                                                                .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<SimpleShape>().HasOne(ss => ss.SecondPoint).WithMany().HasForeignKey(ss => ss.SecondPointId)
+            builder.Entity<CrossSectionPart>().HasOne(csp => csp.SecondPoint).WithMany().HasForeignKey(csp => csp.SecondPointId)
                                                                                 .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<SimpleShape>().Navigation(ss => ss.FirstPoint).AutoInclude();
-            builder.Entity<SimpleShape>().Navigation(ss => ss.SecondPoint).AutoInclude();
+            builder.Entity<CrossSectionPart>().Navigation(csp => csp.FirstPoint).AutoInclude();
+            builder.Entity<CrossSectionPart>().Navigation(csp => csp.SecondPoint).AutoInclude();
 
             builder.Entity<Arc>().ToTable("Arcs");
             builder.Entity<HorizontalLine>().ToTable("HorizontalLines");

@@ -17,11 +17,8 @@
         }
         else
         {
-            @*<input readonly asp-for="StructureType" 
-                            value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.StructureType)"
-                            name="@Model.StructureType"/>*@
-            <input readonly asp-for="StructureType" 
-                            value="@Model.StructureType" />
+            <input hidden asp-for="StructureType" value="@Model.StructureType" />
+            <input readonly value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.StructureType)" />
         }
         <span asp-validation-for="StructureType" class="error-message"></span>
     </div>

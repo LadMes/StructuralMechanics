@@ -5,13 +5,13 @@ namespace StructuralMechanics.Models
     public static class StructureUpdater
     {
         private delegate (bool, string, Structure) UpdateStructure(ProjectViewModel model, Structure structure);
-        private static Dictionary<StructureType, UpdateStructure> structureUpdaters = new Dictionary<StructureType, UpdateStructure>()
+        private readonly static Dictionary<StructureType, UpdateStructure> structureUpdaters = new()
         {
-            { StructureType.ThinWalledStructure, UpdateThinWalledStructureObject },
-            { StructureType.CirclePlate, UpdateCirclePlateObject },
-            { StructureType.RotationalShell, UpdateRotationalShellObject },
+            { StructureType.ThinWalledStructure, UpdateThinWalledStructure },
+            { StructureType.CirclePlate, UpdateCirclePlate },
+            { StructureType.RotationalShell, UpdateRotationalShell },
         };
-        public static (bool, string, Structure) GetUpdatedStructureObject(ProjectViewModel model, Structure structure)
+        public static (bool, string, Structure) GetUpdatedStructure(ProjectViewModel model, Structure structure)
         {
             if (model != null && model.StructureType != null && Enum.IsDefined(typeof(StructureType), model.StructureType))
             {
@@ -24,11 +24,11 @@ namespace StructuralMechanics.Models
             }    
         }
 
-        private static UpdateStructure GetUpdateMethod(StructureType structureType)
+        private static UpdateStructure GetUpdateMethod(StructureType type)
         {
-            return structureUpdaters[structureType];
+            return structureUpdaters[type];
         }
-        private static (bool, string, Structure) UpdateThinWalledStructureObject(ProjectViewModel model, Structure structure)
+        private static (bool, string, Structure) UpdateThinWalledStructure(ProjectViewModel model, Structure structure)
         {
             string errorMessage = "";
             if (model.ThinWalledStructureType == null)
@@ -43,12 +43,12 @@ namespace StructuralMechanics.Models
 
             return errorMessage == "" ? (true, errorMessage, structure) : (false, errorMessage, structure);
         }
-        private static (bool, string, Structure) UpdateCirclePlateObject(ProjectViewModel model, Structure structure)
+        private static (bool, string, Structure) UpdateCirclePlate(ProjectViewModel model, Structure structure)
         {
             string errorMessage = "Others types aren't supported right now";
             return (false, errorMessage, structure);
         }
-        private static (bool, string, Structure) UpdateRotationalShellObject(ProjectViewModel model, Structure structure)
+        private static (bool, string, Structure) UpdateRotationalShell(ProjectViewModel model, Structure structure)
         {
             string errorMessage = "Others types aren't supported right now";
             return (false, errorMessage, structure);

@@ -10,7 +10,7 @@
         <li id="addMenu" style="display: none;">
             <ul class="sidebar-hidden-menu">
                 <li><a asp-controller="Points" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Point</a></li>
-                <li><a asp-controller="SimpleShapes" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Simple Shape</a></li>
+                <li><a asp-controller="CrossSectionParts" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Cross-section part</a></li>
                 <li><a asp-controller="StrengthMembers" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Strength Member</a></li>
                 <li><a asp-controller="VectorPhysicalQuantities" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Vector Quantity</a></li>
             </ul>
@@ -19,7 +19,7 @@
         <li id="showMenu" style="display: none;">
             <ul class="sidebar-hidden-menu">
                 <li><a asp-controller="Points" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Points</a></li>
-                <li><a asp-controller="SimpleShapes" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Simple Shapes</a></li>
+                <li><a asp-controller="CrossSectionParts" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Cross-section parts</a></li>
                 <li><a asp-controller="StrengthMembers" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Strength Members</a></li>
                 <li><a asp-controller="VectorPhysicalQuantities" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Vector Quantities</a></li>
             </ul>
@@ -35,7 +35,7 @@
     <hr class="main-hr" />
     <div class="overall-information">
         <div class="overall-information-first-column">
-            <h3>Geometry object count: @Model.GeometryObjectCount</h3>
+            <h3>Cross-section elements count: @Model.CrossSectionElementsCount</h3>
             <h4>Points count: @Model.PointsCount</h4>
             <h4>Horizontal Lines count: @Model.HorizontalLinesCount</h4>
             <h4>Vertical Lines count: @Model.VerticalLinesCount</h4>

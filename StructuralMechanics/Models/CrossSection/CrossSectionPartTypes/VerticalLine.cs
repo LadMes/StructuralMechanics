@@ -1,40 +1,37 @@
 ﻿namespace StructuralMechanics.Models
 {
-    public class VerticalLine : SimpleShape
+    public class VerticalLine : CrossSectionPart
     {
         public VerticalLine(Point firstPoint, Point secondPoint, double thickness) : base(firstPoint, secondPoint, thickness)
         {
-            this.GeometryType = GeometryType.VerticalLine;
+            Type = CrossSectionPartType.VerticalLine;
         }
 
         //Constructor for EF Core
-        private VerticalLine(double thickness) : base(thickness)
-        {
-            this.GeometryType = GeometryType.VerticalLine;
-        }
+        private VerticalLine(double thickness) : base(thickness) => Type = CrossSectionPartType.VerticalLine;
 
         protected override void ChangePointsOrder(Point firstPoint, Point secondPoint)
         {
             if (firstPoint.Y > secondPoint.Y)
             {
-                this.FirstPoint = secondPoint;
-                this.SecondPoint = firstPoint;
+                FirstPoint = secondPoint;
+                SecondPoint = firstPoint;
             }
         }
 
         protected override void CalculateLength()
         {
-            this.Length = this.SecondPoint.Y - this.FirstPoint.Y;
+            Length = SecondPoint.Y - FirstPoint.Y;
         }
 
         protected override void CalculateFirstMomentOfArea()
         {
-            this.FirstMomentOfArea = (Math.Pow(this.SecondPoint.Y, 2) * this.Thickness) / 2;
+            FirstMomentOfArea = (Math.Pow(SecondPoint.Y, 2) * Thickness) / 2;
         }
 
         protected override void CalculateSecondMomentOfArea()
         {
-            this.SecondMomentOfArea = (Math.Pow(this.SecondPoint.Y, 3) * this.Thickness) / 3;
+            SecondMomentOfArea = (Math.Pow(SecondPoint.Y, 3) * Thickness) / 3;
         }
     }
 }

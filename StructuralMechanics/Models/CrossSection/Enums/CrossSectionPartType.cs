@@ -2,10 +2,8 @@
 
 namespace StructuralMechanics.Models
 {
-    public enum GeometryType
+    public enum CrossSectionPartType
     {
-        [Display(Name = "Point")]
-        Point,
         [Display(Name = "Horizontal Line")]
         HorizontalLine,
         [Display(Name = "Vertical Line")]
@@ -13,8 +11,6 @@ namespace StructuralMechanics.Models
         [Display(Name = "Slope Line")]
         SlopeLine,
         [Display(Name = "Arc")]
-        Arc,
-        [Display(Name = "Strength Member")]
-        StrengthMember
+        Arc
     }
 }
