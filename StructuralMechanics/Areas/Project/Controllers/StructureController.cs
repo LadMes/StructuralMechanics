@@ -8,17 +8,18 @@ namespace StructuralMechanics.Areas.Project.Controllers
     [Authorize]
     public abstract class StructureController : BaseController
     {
-        private protected readonly ICrossSectionRepository geometryObjectService;
-        private protected readonly IVectorPhysicalQuantityRepository vectorPhysicalQuantityService;
+        private protected readonly ICrossSectionElementRepository crossSectionElementRepository;
+        private protected readonly IVectorPhysicalQuantityRepository vectorPhysicalQuantityRepository;
 
         public StructureController(UserManager<ApplicationUser> userManager, 
-                                   IProjectRepository projectService, 
-                                   IStructureRepository structureService, 
-                                   ICrossSectionRepository geometryObjectService,
-                                   IVectorPhysicalQuantityRepository vectorPhysicalQuantityService) : base(userManager, projectService, structureService)
+                                   IProjectRepository projectRepository, 
+                                   IStructureRepository structureRepository, 
+                                   ICrossSectionElementRepository crossSectionElementRepository,
+                                   IVectorPhysicalQuantityRepository vectorPhysicalQuantityRepository) 
+                                   : base(userManager, projectRepository, structureRepository)
         {
-            this.geometryObjectService = geometryObjectService;
-            this.vectorPhysicalQuantityService = vectorPhysicalQuantityService;
+            this.crossSectionElementRepository = crossSectionElementRepository;
+            this.vectorPhysicalQuantityRepository = vectorPhysicalQuantityRepository;
         }
 
         public abstract Task<IActionResult> Overview(string projectId);

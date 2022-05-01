@@ -2,7 +2,7 @@
 
 namespace StructuralMechanics.Models
 {
-    public abstract class AreaProperties : CrossSection
+    public abstract class AreaProperties : CrossSectionElement
     {
         private double firstMomentOfArea;
         private double secondMomentOfArea;

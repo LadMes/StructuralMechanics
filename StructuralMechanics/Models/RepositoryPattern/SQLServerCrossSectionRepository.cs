@@ -1,6 +1,6 @@
 ﻿namespace StructuralMechanics.Models
 {
-    internal class SQLServerCrossSectionRepository : ICrossSectionRepository
+    internal class SQLServerCrossSectionRepository : ICrossSectionElementRepository
     {
         private readonly AppDbContext context;
 
@@ -9,26 +9,26 @@
             this.context = context;
         }
 
-        public CrossSection AddCrossSectionElement(CrossSection crossSectionElement)
+        public CrossSectionElement AddCrossSectionElement(CrossSectionElement crossSectionElement)
         {
             context.CrossSectionElements.Add(crossSectionElement);
             context.SaveChanges();
             return crossSectionElement;
         }
 
-        public CrossSection DeleteCrossSectionElement(CrossSection crossSectionElement)
+        public CrossSectionElement DeleteCrossSectionElement(CrossSectionElement crossSectionElement)
         {
             context.CrossSectionElements.Remove(crossSectionElement);
             context.SaveChanges();
             return crossSectionElement;
         }
 
-        public List<CrossSection>? GetCrossSectionElementsByStructureId(int structureId)
+        public List<CrossSectionElement>? GetCrossSectionElementsByStructureId(int structureId)
         {
-            return context.CrossSectionElements.Where(cs => cs.StructureId == structureId).ToList();
+            return context.CrossSectionElements.Where(cse => cse.StructureId == structureId).ToList();
         }
 
-        public CrossSection UpdateCrossSectionElement(CrossSection crossSectionElement)
+        public CrossSectionElement UpdateCrossSectionElement(CrossSectionElement crossSectionElement)
         {
             var crossSectionElementToUpdate = context.CrossSectionElements.Attach(crossSectionElement);
             crossSectionElementToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;

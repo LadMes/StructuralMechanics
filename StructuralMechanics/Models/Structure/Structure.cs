@@ -12,7 +12,7 @@ namespace StructuralMechanics.Models
         public string ProjectId { get; set; }
         [Required]
         public Project Project { get; set; }
-        public List<CrossSection>? CrossSectionElements { get; set; }
+        public List<CrossSectionElement>? CrossSectionElements { get; set; }
         public List<VectorPhysicalQuantity>? VectorPhysicalQuantities { get; set; }
 
 

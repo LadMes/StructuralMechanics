@@ -7,9 +7,9 @@
 @section SidebarNavigation {
     <ul>
         <li><a asp-area="Project" 
-               asp-controller="SimpleShapes" 
+               asp-controller="CrossSectionParts" 
                asp-action="Create" 
-               asp-route-projectId="@ViewBag.ProjectId">Create Simple Shape</a></li>
+               asp-route-projectId="@ViewBag.ProjectId">Create Cross-Section Part</a></li>
         <li><a asp-area="Project" asp-controller="@ViewBag.StructureType" asp-action="Overview" asp-route-projectId="@ViewBag.ProjectId">Back</a></li>
     </ul>
 }
@@ -17,37 +17,37 @@
 @if (Model.Any())
 {
     <div class="info-cards"> 
-        @foreach (var simpleShape in Model)
+        @foreach (var crossSectionPart in Model)
         {
             <div class="info-card">
                 <div class="info-card-text">
-                    Type: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(simpleShape.Type)
+                    Type: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(crossSectionPart.Type)
                 </div>
                 <div class="info-card-text">
-                    First Point Coordinates: (@simpleShape.FirstPoint.X, @simpleShape.FirstPoint.Y)
-                    Second Point Coordinates: (@simpleShape.SecondPoint.X, @simpleShape.SecondPoint.Y)
+                    First Point Coordinates: (@crossSectionPart.FirstPoint.X, @crossSectionPart.FirstPoint.Y)
+                    Second Point Coordinates: (@crossSectionPart.SecondPoint.X, @crossSectionPart.SecondPoint.Y)
                 </div>
                 <div class="info-card-text">
-                    Thickness: @simpleShape.Thickness
+                    Thickness: @crossSectionPart.Thickness
                 </div>
                 <div class="info-card-text">
-                    Length: @simpleShape.Length
+                    Length: @crossSectionPart.Length
                 </div>
                 <div class="info-card-text">
-                    First Moment of Area: @simpleShape.FirstMomentOfArea
+                    First Moment of Area: @crossSectionPart.FirstMomentOfArea
                 </div>
                 <div class="info-card-text">
-                    Second Moment of Area: @simpleShape.SecondMomentOfArea
+                    Second Moment of Area: @crossSectionPart.SecondMomentOfArea
                 </div>
                 <div class="info-card-buttons"> 
-                    <a class="btn btn-primary" asp-controller="SimpleShapes" 
+                    <a class="btn btn-primary" asp-controller="CrossSectionParts" 
                                                asp-action="Edit" 
                                                asp-route-projectId="@ViewBag.ProjectId"
-                                               asp-route-simpleShapeId="@simpleShape.Id">Edit</a>
-                    <form method="post" asp-controller="SimpleShapes" 
+                                               asp-route-crossSectionPartId="@crossSectionPart.Id">Edit</a>
+                    <form method="post" asp-controller="CrossSectionParts" 
                                         asp-action="Delete" 
                                         asp-route-projectId="@ViewBag.ProjectId"
-                                        asp-route-simpleShapeId="@simpleShape.Id">
+                                        asp-route-crossSectionPartId="@crossSectionPart.Id">
                             <button class="btn btn-danger">Delete</button>
                     </form>
                 </div>
@@ -58,7 +58,7 @@
 else
 {
     <div class="info-message">
-        <h1>There's no shapes! Create one.</h1>
-        <a class="btn btn-primary" asp-controller="SimpleShapes" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Create</a>
+        <h1>There's no cross-section parts! Create one.</h1>
+        <a class="btn btn-primary" asp-controller="CrossSectionParts" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Create</a>
     </div>   
 }

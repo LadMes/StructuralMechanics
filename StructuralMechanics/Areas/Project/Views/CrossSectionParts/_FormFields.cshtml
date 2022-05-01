@@ -4,20 +4,12 @@
     <div class="form-item">
         <label asp-for="FirstPointId"></label>
         <select asp-for="FirstPointId" asp-items="@Model.Points">
-            @*@foreach (var point in Model.Points)
-            {
-                <option value="@point.Id">@point.ToString()</option>
-            }*@
         </select>
         <span asp-validation-for="FirstPointId" class="error-message"></span>
     </div>
     <div class="form-item">
         <label asp-for="SecondPointId"></label>
         <select asp-for="SecondPointId" asp-items="@Model.Points">
-            @*@foreach (var point in Model.Points)
-            {
-                <option value="@point.Id">@point.ToString()</option>
-            }*@
         </select>
         <span asp-validation-for="SecondPointId" class="error-message"></span>
     </div>
@@ -27,11 +19,7 @@
         <label asp-for="Type"></label>
         @if (Model.Type == null)
         {
-            <select asp-for="Type">
-                <option value="@Convert.ToInt32(CrossSectionPartType.Arc)">Arc</option>
-                <option value="@Convert.ToInt32(CrossSectionPartType.HorizontalLine)">Horizontal Line</option>
-                <option value="@Convert.ToInt32(CrossSectionPartType.SlopeLine)">Slope Line</option>
-                <option value="@Convert.ToInt32(CrossSectionPartType.VerticalLine)">Vertical Line</option>
+            <select asp-for="Type" asp-items="Html.GetEnumSelectList<CrossSectionPartType>()">
             </select>
         }
         else
@@ -39,8 +27,9 @@
             @*<input readonly asp-for="GeometryType"
                value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.GeometryType)"
                name="@Model.GeometryType" />*@
-            <input readonly asp-for="Type"
-               value="@Model.Type" />
+            <input hidden asp-for="Type" value="@Model.Type" />
+            <input readonly
+               value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.Type)" />
         }
         <span asp-validation-for="Type" class="error-message"></span>
     </div>

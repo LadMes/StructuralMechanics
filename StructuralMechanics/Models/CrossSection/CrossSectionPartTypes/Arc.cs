@@ -6,7 +6,7 @@ namespace StructuralMechanics.Models
     {
         private double radius;
         [Required]
-        public double Radius { get { return radius; } private set { radius = Math.Round(radius, 2); } }
+        public double Radius { get { return radius; } private set { radius = Math.Round(value, 2); } }
         [Required]
         public ArcQuadrant ArcQuadrant { get; private set; }
 

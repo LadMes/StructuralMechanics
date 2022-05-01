@@ -7,12 +7,12 @@ namespace StructuralMechanics.Areas.Project.Controllers
     public class RotationalShellController : StructureController
     {
         public RotationalShellController(UserManager<ApplicationUser> userManager,
-                                             IProjectRepository projectService,
-                                             IStructureRepository structureService,
-                                             ICrossSectionRepository geometryObjectService,
-                                             IVectorPhysicalQuantityRepository vectorPhysicalQuantityService)
-                                            : base(userManager, projectService, structureService,
-                                                   geometryObjectService, vectorPhysicalQuantityService) { }
+                                             IProjectRepository projectRepository,
+                                             IStructureRepository structureRepository,
+                                             ICrossSectionElementRepository crossSectionElementRepository,
+                                             IVectorPhysicalQuantityRepository vectorPhysicalQuantityRepository)
+                                            : base(userManager, projectRepository, structureRepository,
+                                                   crossSectionElementRepository, vectorPhysicalQuantityRepository) { }
         public override async Task<IActionResult> Overview(string projectId)
         {
             await SetProjectRelatedData(projectId);
@@ -23,9 +23,9 @@ namespace StructuralMechanics.Areas.Project.Controllers
             }
 
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
-            ViewBag.ProjectId = projectId;
-            var geometryObjects = geometryObjectService.GetCrossSectionElementsByStructureId(Structure!.Id);
-            var vectors = vectorPhysicalQuantityService.GetVectorPhysicalQuantitiesByStructureId(Structure!.Id);
+
+            var crossSectionElements = crossSectionElementRepository.GetCrossSectionElementsByStructureId(Structure!.Id);
+            var vectors = vectorPhysicalQuantityRepository.GetVectorPhysicalQuantitiesByStructureId(Structure!.Id);
 
             return View();
         }

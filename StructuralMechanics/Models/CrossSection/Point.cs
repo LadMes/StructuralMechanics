@@ -2,7 +2,7 @@
 
 namespace StructuralMechanics.Models
 {
-    public class Point : CrossSection, IComparable<Point>
+    public class Point : CrossSectionElement, IComparable<Point>
     {
         [Required]
         public double X { get; private set; }
@@ -15,6 +15,7 @@ namespace StructuralMechanics.Models
 
         public Point(double x, double y)
         {
+            ElementType = CrossSectionElementType.Point;
             SetProperties(x, y);
         }
 

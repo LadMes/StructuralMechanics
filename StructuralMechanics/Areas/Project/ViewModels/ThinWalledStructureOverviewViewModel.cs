@@ -2,13 +2,13 @@
 {
     public class ThinWalledStructureOverviewViewModel : StructureOverviewViewModel
     {
-        public ThinWalledStructureOverviewViewModel(List<CrossSection>? geometryObjects, 
-                                                    List<VectorPhysicalQuantity>? vectors) : base(geometryObjects, vectors)
+        public ThinWalledStructureOverviewViewModel(List<CrossSectionElement>? crossSectionElements, 
+                                                    List<VectorPhysicalQuantity>? vectors) : base(crossSectionElements, vectors)
         {
-            if (geometryObjects != null)
+            if (crossSectionElements != null)
             {
-                StrengthMembersCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.StrengthMember).Count();
-                GeometryObjectCount += StrengthMembersCount;
+                StrengthMembersCount = crossSectionElements.Where(cse => cse.ElementType == CrossSectionElementType.StrengthMember).Count();
+                CrossSectionElementsCount += StrengthMembersCount;
             }
 
             if (vectors != null)

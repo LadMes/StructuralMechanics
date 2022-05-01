@@ -22,6 +22,7 @@ namespace StructuralMechanics.Models
 
         public CrossSectionPart(Point firstPoint, Point secondPoint, double thickness)
         {
+            ElementType = CrossSectionElementType.CrossSectionPart;
             SetProperties(firstPoint, secondPoint, thickness);
             CalculateLengthAndAreaProperties();
         }

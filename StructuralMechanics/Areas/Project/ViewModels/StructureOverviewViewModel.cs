@@ -2,17 +2,18 @@
 {
     public abstract class StructureOverviewViewModel
     {
-        public StructureOverviewViewModel(List<CrossSection>? geometryObjects, List<VectorPhysicalQuantity>? vectors)
+        public StructureOverviewViewModel(List<CrossSectionElement>? crossSectionElements, List<VectorPhysicalQuantity>? vectors)
         {
-            if (geometryObjects != null)
+            if (crossSectionElements != null)
             {
-                PointsCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.Point).Count();
-                HorizontalLinesCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.HorizontalLine).Count();
-                VerticalLinesCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.VerticalLine).Count();
-                SlopeLinesCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.SlopeLine).Count();
-                ArcsCount = geometryObjects.Where(go => go.GeometryType == CrossSectionPartType.Arc).Count();
+                var crossSectionPart = crossSectionElements.Where(cse => cse.ElementType == CrossSectionElementType.CrossSectionPart).Cast<CrossSectionPart>();
+                PointsCount = crossSectionElements.Where(cse => cse.ElementType == CrossSectionElementType.Point).Count();
+                HorizontalLinesCount = crossSectionPart.Where(csp => csp.Type == CrossSectionPartType.HorizontalLine).Count();
+                VerticalLinesCount = crossSectionPart.Where(csp => csp.Type == CrossSectionPartType.VerticalLine).Count();
+                SlopeLinesCount = crossSectionPart.Where(csp => csp.Type == CrossSectionPartType.SlopeLine).Count();
+                ArcsCount = crossSectionPart.Where(csp => csp.Type == CrossSectionPartType.Arc).Count();
 
-                GeometryObjectCount = PointsCount + HorizontalLinesCount + VerticalLinesCount + ArcsCount;
+                CrossSectionElementsCount = PointsCount + HorizontalLinesCount + VerticalLinesCount + ArcsCount;
             }
             if (vectors != null)
             {
@@ -21,7 +22,7 @@
             }       
         }
 
-        public int GeometryObjectCount { get; set; } = 0;
+        public int CrossSectionElementsCount { get; set; } = 0;
         public int VectorPhysicalQuantitiesCount { get; set; } = 0;
 
         public int PointsCount { get; set; } = 0;

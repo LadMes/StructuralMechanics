@@ -11,7 +11,7 @@ namespace StructuralMechanics.Utilities
                             .GetMember(value.ToString())?.First()?
                             .GetCustomAttribute<DisplayAttribute>()?
                             .Name;
-            return name != null ? name : "";
+            return name ?? "";
         }
     }
 }

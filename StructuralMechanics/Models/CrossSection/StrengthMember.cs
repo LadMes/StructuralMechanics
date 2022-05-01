@@ -17,6 +17,7 @@ namespace StructuralMechanics.Models
 
         public StrengthMember(double reductionCoefficient, double area, Point location)
         {
+            ElementType = CrossSectionElementType.StrengthMember;
             SetProperties(reductionCoefficient, area, location);
             CalculateFirstMomentOfArea();
             CalculateSecondMomentOfArea();

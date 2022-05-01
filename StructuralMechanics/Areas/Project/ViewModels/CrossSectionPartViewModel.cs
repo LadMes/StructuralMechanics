@@ -6,7 +6,7 @@ namespace StructuralMechanics.Areas.Project.ViewModels
 {
     public class CrossSectionPartViewModel
     {
-        public int ShapeId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Cross-Section Part Type")]

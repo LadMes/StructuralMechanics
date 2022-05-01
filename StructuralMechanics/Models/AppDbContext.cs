@@ -6,7 +6,7 @@ namespace StructuralMechanics.Models
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Project> Projects { get; set; }
-        public DbSet<CrossSection> CrossSectionElements { get; set; }
+        public DbSet<CrossSectionElement> CrossSectionElements { get; set; }
         public DbSet<Point> Points { get; set; }
         public DbSet<CrossSectionPart> CrossSectionParts { get; set; }
         public DbSet<StrengthMember> StrengthMembers { get; set; }
@@ -37,15 +37,15 @@ namespace StructuralMechanics.Models
                                                               .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Structure>().ToTable("Structures");
-            builder.Entity<Structure>().HasMany(s => s.CrossSectionElements).WithOne(cs => cs.Structure)
-                                                                       .HasForeignKey(cs => cs.StructureId)
+            builder.Entity<Structure>().HasMany(s => s.CrossSectionElements).WithOne(cse => cse.Structure)
+                                                                       .HasForeignKey(cse => cse.StructureId)
                                                                        .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ThinWalledStructure>().ToTable("ThinWalledStructures");
             builder.Entity<CirclePlate>().ToTable("CirclePlates");
             builder.Entity<RotationalShell>().ToTable("RotationalShells");
 
-            builder.Entity<CrossSection>().ToTable("CrossSectionElements");
+            builder.Entity<CrossSectionElement>().ToTable("CrossSectionElements");
             builder.Entity<AreaProperties>().ToTable("AreaProperties");
 
             builder.Entity<CrossSectionPart>().ToTable("CrossSectionParts");

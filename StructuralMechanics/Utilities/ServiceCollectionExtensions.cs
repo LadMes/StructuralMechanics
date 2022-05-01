@@ -9,7 +9,7 @@
         }
         public static void AddModelServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<ICrossSectionRepository, SQLServerCrossSectionRepository>();
+            serviceCollection.AddScoped<ICrossSectionElementRepository, SQLServerCrossSectionRepository>();
             serviceCollection.AddScoped<IVectorPhysicalQuantityRepository, SQLServerVectorPhysicalQuantityRepository>();
             serviceCollection.AddScoped<IPointRepository, SQLServerPointRepository>();
             serviceCollection.AddScoped<ICrossSectionPartRepository, SQLServerCrossSectionPartRepository>();

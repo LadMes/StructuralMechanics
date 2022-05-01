@@ -9,16 +9,17 @@
         <li><a asp-area="Project" 
                asp-controller="@ViewBag.StructureType" 
                asp-action="Overview" 
-               asp-route-projectId="@ViewBag.ProjectId">Back To Structure</a></li>
+               asp-route-projectId="@ViewBag.ProjectId">Back to Structure</a></li>
         <li><a asp-area="Project" 
-               asp-controller="SimpleShapes" 
+               asp-controller="CrossSectionParts" 
                asp-action="Index" 
-               asp-route-projectId="@ViewBag.ProjectId">Back To Shapes</a></li>
+               asp-route-projectId="@ViewBag.ProjectId">Back to Cross-Section Parts</a></li>
     </ul>
 }
 
-<form method="post" asp-controller="SimpleShapes" asp-action="Edit" asp-route-projectId="@ViewBag.ProjectId" asp-route-simpleShapeId="@Model.ShapeId">
-    <input hidden asp-for="ShapeId"/>
+<form method="post" asp-controller="CrossSectionParts" asp-action="Edit" asp-route-projectId="@ViewBag.ProjectId" 
+                                                                         asp-route-crossSectionPartId="@Model.Id">
+    <input hidden asp-for="Id"/>
     <partial name="_FormFields">
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>

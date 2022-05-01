@@ -16,16 +16,16 @@ namespace StructuralMechanics.Controllers
         private protected string ErrorMessage { get; private set; } = "";
 
         public BaseController(UserManager<ApplicationUser> userManager,
-                              IProjectRepository projectService,
-                              IStructureRepository structureService)
+                              IProjectRepository projectRepository,
+                              IStructureRepository structureRepository)
         {
             this.userManager = userManager;
-            this.projectRepository = projectService;
-            this.structureRepository = structureService;
+            this.projectRepository = projectRepository;
+            this.structureRepository = structureRepository;
         }
 
         [NonAction]
-        public async Task SetProjectRelatedData(string projectId)
+        protected async Task SetProjectRelatedData(string projectId)
         {
             await FindUser();
             if (ApplicationUser != null)
@@ -43,6 +43,7 @@ namespace StructuralMechanics.Controllers
                 }
             }
         }
+
         [NonAction]
         private async Task FindUser()
         {
@@ -52,6 +53,7 @@ namespace StructuralMechanics.Controllers
                 ErrorMessage = "User is not found";
             }
         }
+
         [NonAction]
         private void FindProject(string userId, string projectId)
         {
@@ -65,6 +67,7 @@ namespace StructuralMechanics.Controllers
                 ErrorMessage = "The current user doesn't have access to this project";
             }
         }
+
         [NonAction]
         private void FindStructure(string projectId)
         {

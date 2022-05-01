@@ -11,7 +11,7 @@ namespace StructuralMechanics.Controllers
     {
         public ProjectsController(UserManager<ApplicationUser> userManager, 
                                   IProjectRepository projectRepository, 
-                                  IStructureRepository structureService) : base(userManager, projectRepository, structureService)
+                                  IStructureRepository structureRepository) : base(userManager, projectRepository, structureRepository)
         {
         }
 
@@ -67,6 +67,7 @@ namespace StructuralMechanics.Controllers
                 projectRepository.AddProject(project);
                 return RedirectToAction("Overview", $"{structure!.Type}", new { projectId = $"{project.Id}", area = "Project" });
             }
+
             model.StructureType = null;
             return View(model);
         }
@@ -87,7 +88,6 @@ namespace StructuralMechanics.Controllers
                 ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            ViewBag.ProjectId = projectId;
 
             ProjectViewModel model = new ProjectViewModel()
             {

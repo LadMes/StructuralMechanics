@@ -17,7 +17,7 @@ namespace StructuralMechanics.Utilities
                                           ProjectName = project.ProjectName,
                                           ProjectId = project.Id,
                                           StructureId = structure.Id,
-                                          StructureType = structure.StructureType
+                                          StructureType = structure.Type
                                       }).Take(10);
             return query;
         }

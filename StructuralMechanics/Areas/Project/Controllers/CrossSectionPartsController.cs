@@ -9,20 +9,21 @@ namespace StructuralMechanics.Areas.Project.Controllers
     [Authorize]
     public class CrossSectionPartsController : BaseController
     {
-        private readonly ICrossSectionRepository geometryObjectService;
-        private readonly IPointRepository pointsService;
-        private readonly ICrossSectionPartRepository simpleShapesService;
+        private readonly ICrossSectionElementRepository crossSectionElementRepository;
+        private readonly IPointRepository pointRepository;
+        private readonly ICrossSectionPartRepository crossSectionPartRepository;
 
         public CrossSectionPartsController(UserManager<ApplicationUser> userManager, 
-                                      IProjectRepository projectService, 
-                                      IStructureRepository structureService,
-                                      ICrossSectionRepository geometryObjectService,
-                                      IPointRepository pointsService,
-                                      ICrossSectionPartRepository simpleShapesService) : base(userManager, projectService, structureService)
+                                           IProjectRepository projectRepository, 
+                                           IStructureRepository structureRepository,
+                                           ICrossSectionElementRepository crossSectionElementRepository,
+                                           IPointRepository pointRepository,
+                                           ICrossSectionPartRepository crossSectionPartRepository) 
+                                           : base(userManager, projectRepository, structureRepository)
         {
-            this.geometryObjectService = geometryObjectService;
-            this.pointsService = pointsService;
-            this.simpleShapesService = simpleShapesService;
+            this.crossSectionElementRepository = crossSectionElementRepository;
+            this.pointRepository = pointRepository;
+            this.crossSectionPartRepository = crossSectionPartRepository;
         }
 
         [HttpGet]
@@ -36,11 +37,9 @@ namespace StructuralMechanics.Areas.Project.Controllers
             }
 
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
-            //ViewBag.ProjectId = projectId;
-            //ViewBag.Type = Structure!.Type;
 
-            var simpleShapes = simpleShapesService.GetCrossSectionPartsByStructureId(Structure!.Id);
-            return View(simpleShapes);
+            var crossSectionParts = crossSectionPartRepository.GetCrossSectionPartsByStructureId(Structure!.Id);
+            return View(crossSectionParts);
         }
 
         [HttpGet]
@@ -52,10 +51,8 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            //ViewBag.ProjectId = projectId;
-            //ViewBag.Type = Structure!.Type;
 
-            var points = pointsService.GetPointsForSelectListByStructureId(Structure!.Id);
+            var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
 
             return View(new CrossSectionPartViewModel { Points = points });
         }
@@ -69,12 +66,13 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            var points = pointsService.GetPointsForSelectListByStructureId(Structure!.Id);
+            var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
             model.Points = points;
+
             if (ModelState.IsValid)
             {
-                var firstPoint = pointsService.GetPoint(model.FirstPointId, Structure!.Id);
-                var secondPoint = pointsService.GetPoint(model.SecondPointId, Structure!.Id);
+                var firstPoint = pointRepository.GetPoint(model.FirstPointId, Structure!.Id);
+                var secondPoint = pointRepository.GetPoint(model.SecondPointId, Structure!.Id);
                 if (firstPoint == null || secondPoint == null)
                 {
                     ViewBag.ErrorMessage = "The point is not found or the current user doesn't have access to this point";
@@ -82,23 +80,23 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 }
                 model.FirstPoint = firstPoint;
                 model.SecondPoint = secondPoint;
-                (bool isValid, CrossSectionPart? simpleShape) = CrossSectionPartCreator.GetSimpleShapeObject(model);
+                (bool isValid, CrossSectionPart? crossSectionPart) = CrossSectionPartCreator.GetSimpleShapeObject(model);
                 if (!isValid)
                 {
-                    ModelState.AddModelError(string.Empty, "Choose Geometry Type");
+                    ModelState.AddModelError(string.Empty, "Choose Cross-section Part Type");
                     return View(model);
                 }
 
-                simpleShape!.StructureId = Structure!.Id;
-                geometryObjectService.AddCrossSectionElement(simpleShape!);
-                return RedirectToAction("Index", "SimpleShapes");
+                crossSectionPart!.StructureId = Structure!.Id;
+                crossSectionElementRepository.AddCrossSectionElement(crossSectionPart!);
+                return RedirectToAction("Index", "CrossSectionParts");
             }
             model.Type = null;
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string projectId, int simpleShapeId)
+        public async Task<IActionResult> Edit(string projectId, int crossSectionPartId)
         {
             await SetProjectRelatedData(projectId);
             if (!IsReady)
@@ -106,27 +104,25 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            ViewBag.ProjectId = projectId;
-            ViewBag.StructureType = Structure!.Type;
 
-            var simpleShape = simpleShapesService.GetCrossSectionPart(simpleShapeId, Structure!.Id);
-            if (simpleShape == null)
+            var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(crossSectionPartId, Structure!.Id);
+            if (crossSectionPart == null)
             {
-                ViewBag.ErrorMessage = "The shape is not found or the current user doesn't have access to this shape";
+                ViewBag.ErrorMessage = "The cross-section part is not found or the current user doesn't have access to this element";
                 return View("NotFound");
             }
 
-            var points = pointsService.GetPointsForSelectListByStructureId(Structure!.Id);
+            var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
 
             CrossSectionPartViewModel model = new CrossSectionPartViewModel()
             {
-                ShapeId = simpleShapeId,
-                Type = simpleShape.Type,
-                FirstPoint = simpleShape.FirstPoint,
-                SecondPoint = simpleShape.SecondPoint,
-                Thickness = simpleShape.Thickness,
-                FirstPointId = simpleShape.FirstPointId,
-                SecondPointId = simpleShape.SecondPointId,
+                Id = crossSectionPartId,
+                Type = crossSectionPart.Type,
+                FirstPoint = crossSectionPart.FirstPoint,
+                SecondPoint = crossSectionPart.SecondPoint,
+                Thickness = crossSectionPart.Thickness,
+                FirstPointId = crossSectionPart.FirstPointId,
+                SecondPointId = crossSectionPart.SecondPointId,
                 Points = points
             };
 
@@ -142,19 +138,19 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            var points = pointsService.GetPointsForSelectListByStructureId(Structure!.Id);
+            var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
             model.Points = points;
             if (ModelState.IsValid)
             {
-                var simpleShape = simpleShapesService.GetCrossSectionPart(model.ShapeId, Structure!.Id);
-                if (simpleShape == null)
+                var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(model.Id, Structure!.Id);
+                if (crossSectionPart == null)
                 {
-                    ViewBag.ErrorMessage = "The shape is not found or the current user doesn't have access to this shape";
+                    ViewBag.ErrorMessage = "The cross-section part is not found or the current user doesn't have access to this element";
                     return View("NotFound");
                 }
 
-                var firstPoint = pointsService.GetPoint(model.FirstPointId, Structure!.Id);
-                var secondPoint = pointsService.GetPoint(model.SecondPointId, Structure!.Id);
+                var firstPoint = pointRepository.GetPoint(model.FirstPointId, Structure!.Id);
+                var secondPoint = pointRepository.GetPoint(model.SecondPointId, Structure!.Id);
                 if (firstPoint == null || secondPoint == null)
                 {
                     ViewBag.ErrorMessage = "The point is not found or the current user doesn't have access to this point";
@@ -163,18 +159,18 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 model.FirstPoint = firstPoint;
                 model.SecondPoint = secondPoint;
 
-                simpleShape.Edit(model.FirstPoint, model.SecondPoint, model.Thickness);
+                crossSectionPart.Edit(model.FirstPoint, model.SecondPoint, model.Thickness);
 
-                geometryObjectService.UpdateCrossSectionElement(simpleShape);
+                crossSectionElementRepository.UpdateCrossSectionElement(crossSectionPart);
 
-                return RedirectToAction("Index", "SimpleShapes");
+                return RedirectToAction("Index", "CrossSectionParts");
             }
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string projectId, int simpleShapeId)
+        public async Task<IActionResult> Delete(string projectId, int crossSectionPartId)
         {
             await SetProjectRelatedData(projectId);
             if (!IsReady)
@@ -182,16 +178,16 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
-            var simpleShape = simpleShapesService.GetCrossSectionPart(simpleShapeId, Structure!.Id);
-            if (simpleShape == null)
+            var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(crossSectionPartId, Structure!.Id);
+            if (crossSectionPart == null)
             {
-                ViewBag.ErrorMessage = "The shape is not found or the current user doesn't have access to this shape";
+                ViewBag.ErrorMessage = "The cross-section part is not found or the current user doesn't have access to this element";
                 return View("NotFound");
             }
 
-            geometryObjectService.DeleteCrossSectionElement(simpleShape);
+            crossSectionElementRepository.DeleteCrossSectionElement(crossSectionPart);
 
-            return RedirectToAction("Index", "SimpleShapes");
+            return RedirectToAction("Index", "CrossSectionParts");
         }
     }
 }
