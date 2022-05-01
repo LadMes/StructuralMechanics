@@ -24,12 +24,8 @@
         }
         else
         {
-            @*<input readonly asp-for="GeometryType"
-               value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.GeometryType)"
-               name="@Model.GeometryType" />*@
             <input hidden asp-for="Type" value="@Model.Type" />
-            <input readonly
-               value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.Type)" />
+            <input readonly value="@StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(Model.Type)" />
         }
         <span asp-validation-for="Type" class="error-message"></span>
     </div>
