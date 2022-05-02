@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
+using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
     [Authorize]
-    public class PointsController : BaseController
+    [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+    public class PointsController : BaseInformationController
     {
         private readonly ICrossSectionElementRepository crossSectionElementRepository;
         private readonly IPointRepository pointsRepository;
@@ -23,12 +25,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string projectId)
+        public IActionResult Index(string projectId)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 
@@ -39,12 +39,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(string projectId)
+        public IActionResult Create(string projectId)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 
@@ -52,17 +50,15 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string projectId, PointViewModel model)
+        public IActionResult Create(string projectId, PointViewModel model)
         {
+            if (!IsReady)
+            {
+                return View("NotFound");
+            }
+
             if (ModelState.IsValid)
             {
-                await SetProjectRelatedData(projectId);
-                if (!IsReady)
-                {
-                    ViewBag.ErrorMessage = ErrorMessage;
-                    return View("NotFound");
-                }
-
                 Point point = new Point(model.X, model.Y);
                 point.Structure = Structure!;
 
@@ -75,12 +71,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string projectId, int pointId)
+        public IActionResult Edit(string projectId, int pointId)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 

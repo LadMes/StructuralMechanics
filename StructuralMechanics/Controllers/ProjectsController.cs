@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Filters;
 using StructuralMechanics.Utilities;
 using StructuralMechanics.ViewModels;
 
 namespace StructuralMechanics.Controllers
 {
     [Authorize]
-    public class ProjectsController : BaseController
+    public class ProjectsController : BaseInformationController
     {
         public ProjectsController(UserManager<ApplicationUser> userManager, 
                                   IProjectRepository projectRepository, 
@@ -73,8 +74,9 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
         [Route("Edit/{projectId?}")]
-        public async Task<IActionResult> Edit(string? projectId)
+        public IActionResult Edit(string? projectId)
         {
             if (projectId == null)
             {
@@ -82,10 +84,8 @@ namespace StructuralMechanics.Controllers
                 return View("NotFound");
             }
 
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 
@@ -102,15 +102,14 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
         [Route("Edit/{projectId}")]
-        public async Task<IActionResult> Edit(string projectId, ProjectViewModel model)
+        public IActionResult Edit(string projectId, ProjectViewModel model)
         {
             if (ModelState.IsValid)
             {
-                await SetProjectRelatedData(projectId);
                 if (!IsReady)
                 {
-                    ViewBag.ErrorMessage = ErrorMessage;
                     return View("NotFound");
                 }
 
@@ -132,13 +131,12 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
         [Route("Delete/{projectId}")]
-        public async Task<IActionResult> Delete(string projectId)
+        public IActionResult Delete(string projectId)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 

@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
+using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
     [Authorize]
-    public class CrossSectionPartsController : BaseController
+    [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+    public class CrossSectionPartsController : BaseInformationController
     {
         private readonly ICrossSectionElementRepository crossSectionElementRepository;
         private readonly IPointRepository pointRepository;
@@ -27,12 +29,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string projectId)
+        public IActionResult Index(string projectId)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 
@@ -43,12 +43,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(string projectId)
+        public IActionResult Create(string projectId)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 
@@ -58,12 +56,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string projectId, CrossSectionPartViewModel model)
+        public IActionResult Create(string projectId, CrossSectionPartViewModel model)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
             var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
@@ -96,12 +92,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string projectId, int crossSectionPartId)
+        public IActionResult Edit(string projectId, int crossSectionPartId)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 
@@ -130,12 +124,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string projectId, CrossSectionPartViewModel model)
+        public IActionResult Edit(string projectId, CrossSectionPartViewModel model)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
             var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
@@ -170,12 +162,10 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string projectId, int crossSectionPartId)
+        public IActionResult Delete(string projectId, int crossSectionPartId)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
             var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(crossSectionPartId, Structure!.Id);

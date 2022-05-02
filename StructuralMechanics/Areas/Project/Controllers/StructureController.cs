@@ -6,7 +6,7 @@ using StructuralMechanics.Controllers;
 namespace StructuralMechanics.Areas.Project.Controllers
 { 
     [Authorize]
-    public abstract class StructureController : BaseController
+    public abstract class StructureController : BaseInformationController
     {
         private protected readonly ICrossSectionElementRepository crossSectionElementRepository;
         private protected readonly IVectorPhysicalQuantityRepository vectorPhysicalQuantityRepository;
@@ -22,6 +22,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
             this.vectorPhysicalQuantityRepository = vectorPhysicalQuantityRepository;
         }
 
-        public abstract Task<IActionResult> Overview(string projectId);
+        public abstract IActionResult Overview(string projectId);
     }
 }

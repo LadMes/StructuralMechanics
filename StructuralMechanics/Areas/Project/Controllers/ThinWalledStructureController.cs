@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Areas.Project.ViewModels;
+using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
@@ -14,12 +15,11 @@ namespace StructuralMechanics.Areas.Project.Controllers
                                             : base(userManager, projectRepository, structureRepository,
                                                    crossSectionElementRepository, vectorPhysicalQuantityRepository) { }
 
-        public override async Task<IActionResult> Overview(string projectId)
+        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        public override IActionResult Overview(string projectId)
         {
-            await SetProjectRelatedData(projectId);
             if (!IsReady)
             {
-                ViewBag.ErrorMessage = ErrorMessage;
                 return View("NotFound");
             }
 

@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Project\Utilities\" />
-    <Folder Include="Filters\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>

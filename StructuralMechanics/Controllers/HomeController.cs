@@ -4,7 +4,7 @@ using StructuralMechanics.Utilities;
 
 namespace StructuralMechanics.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : BaseInformationController
     {
         public HomeController(UserManager<ApplicationUser> userManager,
                               IProjectRepository projectRepository, 
