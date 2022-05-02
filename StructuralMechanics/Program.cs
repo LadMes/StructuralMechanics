@@ -4,7 +4,6 @@ using StructuralMechanics.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Services
 builder.Services.AddDbContextPool<AppDbContext>(options => 
                                                 options.UseSqlServer(builder.Configuration.GetConnectionString("StructuralMechanicsDbConnection")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

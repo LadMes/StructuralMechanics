@@ -12,7 +12,6 @@ namespace StructuralMechanics.Models
         [Required]
         public CrossSectionPartType Type { get; protected set; }
 
-        //Navigation Properties
         public int FirstPointId { get; set; }
         [Required]
         public Point FirstPoint { get; protected set; }
@@ -27,7 +26,7 @@ namespace StructuralMechanics.Models
             CalculateLengthAndAreaProperties();
         }
 
-        //Constructor for EF Core
+        //Constructor for EF Core 6.0.x: Currently it's not possible to pass navigation properties to constructors.
         protected CrossSectionPart(double thickness) => Thickness = thickness;
 
         public void OnPointChanged()

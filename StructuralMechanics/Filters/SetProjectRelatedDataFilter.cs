@@ -11,7 +11,7 @@ namespace StructuralMechanics.Filters
         private readonly IProjectRepository projectRepository;
         private readonly IStructureRepository structureRepository;
         private BaseInformationController BaseInformationController { get; set; }
-        private protected string ErrorMessage { get; private set; } = "";
+        private string ErrorMessage { get; set; } = "";
 
         public SetProjectRelatedDataFilter(UserManager<ApplicationUser> userManager,
                                                IProjectRepository projectRepository,

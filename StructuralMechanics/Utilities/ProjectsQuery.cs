@@ -4,7 +4,9 @@ namespace StructuralMechanics.Utilities
 {
     public static class ProjectsQuery
     {
-        public static IEnumerable<ProjectsViewModel> Query(ApplicationUser user, IProjectRepository projectService, IStructureRepository structureService)
+        public static IEnumerable<ProjectsViewModel> Query(ApplicationUser user, 
+                                                           IProjectRepository projectService, 
+                                                           IStructureRepository structureService)
         {
             var projects = projectService.GetProjects(user.Id).Select(p => new { p.Id, p.ProjectName });
             var structures = structureService.GetAllStructures().Select(s => new { s.Id, s.ProjectId, s.Type });

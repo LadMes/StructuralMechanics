@@ -10,7 +10,6 @@ namespace StructuralMechanics.Models
         public string ProjectName { get; set; }
 
 
-        //Navigation Properties
         public string ApplicationUserId { get; set; }
         [Required]
         public ApplicationUser ApplicationUser { get; set; }  

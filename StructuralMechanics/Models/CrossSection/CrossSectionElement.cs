@@ -9,7 +9,6 @@ namespace StructuralMechanics.Models
         public CrossSectionElementType ElementType { get; protected set; }
 
 
-        //Navigation Properties
         public int StructureId { get; set; }
         [Required]
         public Structure Structure { get; set; }

@@ -9,7 +9,7 @@ namespace StructuralMechanics.Models
         [Required]
         public double Area { get; private set; }
 
-        //Navigation Properties
+
         public int LocationId { get; set; }
         [Required]
         public Point Location { get; private set; }
@@ -23,7 +23,7 @@ namespace StructuralMechanics.Models
             CalculateSecondMomentOfArea();
         }
 
-        //Constructor for EF Core
+        //Constructor for EF Core 6.0.x: Currently it's not possible to pass navigation properties to constructors.
         private StrengthMember(double reductionCoefficient, double area)
         {
             ReductionCoefficient = reductionCoefficient;

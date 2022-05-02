@@ -6,7 +6,8 @@
         {
             if (crossSectionElements != null)
             {
-                var crossSectionPart = crossSectionElements.Where(cse => cse.ElementType == CrossSectionElementType.CrossSectionPart).Cast<CrossSectionPart>();
+                var crossSectionPart = crossSectionElements.Where(cse => cse.ElementType == CrossSectionElementType.CrossSectionPart)
+                                                           .Cast<CrossSectionPart>();
                 PointsCount = crossSectionElements.Where(cse => cse.ElementType == CrossSectionElementType.Point).Count();
                 HorizontalLinesCount = crossSectionPart.Where(csp => csp.Type == CrossSectionPartType.HorizontalLine).Count();
                 VerticalLinesCount = crossSectionPart.Where(csp => csp.Type == CrossSectionPartType.VerticalLine).Count();

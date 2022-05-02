@@ -7,7 +7,7 @@
             Type = CrossSectionPartType.HorizontalLine;
         }
 
-        //Constructor for EF Core
+        //Constructor for EF Core 6.0.x: Currently it's not possible to pass navigation properties to constructors.
         private HorizontalLine(double thickness) : base(thickness) => Type = CrossSectionPartType.HorizontalLine;
 
         protected override void ChangePointsOrder(Point firstPoint, Point secondPoint)

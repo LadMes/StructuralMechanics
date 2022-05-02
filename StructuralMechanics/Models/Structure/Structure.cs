@@ -17,6 +17,6 @@ namespace StructuralMechanics.Models
 
 
         //For future
-        //public List<Constraint> Constraints { get; set; }
+        //public List<Constraint>? Constraints { get; set; }
     }
 }

@@ -7,7 +7,7 @@
             Type = CrossSectionPartType.VerticalLine;
         }
 
-        //Constructor for EF Core
+        //Constructor for EF Core 6.0.x: Currently it's not possible to pass navigation properties to constructors.
         private VerticalLine(double thickness) : base(thickness) => Type = CrossSectionPartType.VerticalLine;
 
         protected override void ChangePointsOrder(Point firstPoint, Point secondPoint)
