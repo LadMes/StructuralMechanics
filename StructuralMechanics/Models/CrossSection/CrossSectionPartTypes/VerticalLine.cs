@@ -1,4 +1,4 @@
-﻿namespace StructuralMechanics.Models
+﻿namespace StructuralMechanics.Models.CrossSection
 {
     public class VerticalLine : CrossSectionPart
     {

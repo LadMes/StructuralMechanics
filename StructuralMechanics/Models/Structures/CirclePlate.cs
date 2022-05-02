@@ -1,4 +1,4 @@
-﻿namespace StructuralMechanics.Models
+﻿namespace StructuralMechanics.Models.Structures
 {
     public class CirclePlate : Structure
     {

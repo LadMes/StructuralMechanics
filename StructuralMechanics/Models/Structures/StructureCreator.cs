@@ -1,6 +1,6 @@
 ﻿using StructuralMechanics.ViewModels;
 
-namespace StructuralMechanics.Models
+namespace StructuralMechanics.Models.Structures
 {
     public static class StructureCreator
     {

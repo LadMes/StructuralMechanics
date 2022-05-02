@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StructuralMechanics.Models
+namespace StructuralMechanics.Models.Structures
 {
     public abstract class Structure
     {

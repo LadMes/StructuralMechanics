@@ -1,6 +1,6 @@
 ﻿using StructuralMechanics.Areas.Project.ViewModels;
 
-namespace StructuralMechanics.Models
+namespace StructuralMechanics.Models.CrossSection
 {
     public static class CrossSectionPartCreator
     {

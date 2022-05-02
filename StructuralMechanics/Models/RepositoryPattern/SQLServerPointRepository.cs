@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace StructuralMechanics.Models
+namespace StructuralMechanics.Models.RepositoryPattern
 {
     internal class SQLServerPointRepository : IPointRepository
     {

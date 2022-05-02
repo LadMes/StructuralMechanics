@@ -24,6 +24,10 @@
 
   <ItemGroup>
     <Using Include="StructuralMechanics.Models" />
+	<Using Include="StructuralMechanics.Models.CrossSection" />
+	<Using Include="StructuralMechanics.Models.RepositoryPattern" />
+	<Using Include="StructuralMechanics.Models.Structures" />
+	<Using Include="StructuralMechanics.Models.VectorPhysicalQuantities" />
   </ItemGroup>
 
 </Project>

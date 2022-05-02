@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using StructuralMechanics.Utilities;
+using StructuralMechanics.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace StructuralMechanics.Areas.Project.ViewModels

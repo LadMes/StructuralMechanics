@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StructuralMechanics.Models
+namespace StructuralMechanics.Models.Structures
 {
     /// <summary>
     /// Only for symmetric on y-axis structure, you need to build only half of a geometry

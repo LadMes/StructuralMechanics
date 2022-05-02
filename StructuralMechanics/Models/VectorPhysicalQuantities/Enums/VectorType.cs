@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StructuralMechanics.Models
+namespace StructuralMechanics.Models.VectorPhysicalQuantities
 {
     public enum VectorType
     {

@@ -1,4 +1,4 @@
-﻿namespace StructuralMechanics.Models
+﻿namespace StructuralMechanics.Models.RepositoryPattern
 {
     public interface ICrossSectionElementRepository
     {
