@@ -1,33 +1,27 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Filters;
 using StructuralMechanics.Utilities;
 using StructuralMechanics.ViewModels;
 
 namespace StructuralMechanics.Controllers
 {
-    [Authorize]
     public class ProjectsController : BaseInformationController
     {
-        public ProjectsController(UserManager<ApplicationUser> userManager, 
-                                  IProjectRepository projectRepository, 
-                                  IStructureRepository structureRepository) : base(userManager, projectRepository, structureRepository)
+        public ProjectsController(IProjectRepository projectRepository, 
+                                  IStructureRepository structureRepository) : base(projectRepository, structureRepository)
         {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        public IActionResult Index()
         {
-            var user = await userManager.GetUserAsync(User);
-
-            if (user == null)
+            if (ApplicationUser == null)
             {
-                ViewBag.ErrorMessage = "User is not found";
                 return View("NotFound");
             }
 
-            return View(ProjectsQuery.Query(user, projectRepository, structureRepository));
+            return View(ProjectsQuery.Query(ApplicationUser, projectRepository, structureRepository));
         }
 
         [HttpGet]
@@ -37,14 +31,13 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProjectViewModel model)
+        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        public IActionResult Create(ProjectViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.GetUserAsync(User);
-                if (user == null)
+                if (ApplicationUser == null)
                 {
-                    ViewBag.ErrorMessage = "User is not found";
                     return View("NotFound");
                 }
 
@@ -60,7 +53,7 @@ namespace StructuralMechanics.Controllers
                 Project project = new Project()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    ApplicationUser = user,
+                    ApplicationUser = ApplicationUser,
                     ProjectName = model.ProjectName,
                     Structure = structure!
                 };
@@ -75,15 +68,9 @@ namespace StructuralMechanics.Controllers
 
         [HttpGet]
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
-        [Route("Edit/{projectId?}")]
-        public IActionResult Edit(string? projectId)
+        [Route("Edit/{projectId}")]
+        public IActionResult Edit()
         {
-            if (projectId == null)
-            {
-                ViewBag.ErrorMessage = "ID must be specified";
-                return View("NotFound");
-            }
-
             if (!IsReady)
             {
                 return View("NotFound");
@@ -104,7 +91,7 @@ namespace StructuralMechanics.Controllers
         [HttpPost]
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
         [Route("Edit/{projectId}")]
-        public IActionResult Edit(string projectId, ProjectViewModel model)
+        public IActionResult Edit(ProjectViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -133,7 +120,7 @@ namespace StructuralMechanics.Controllers
         [HttpPost]
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
         [Route("Delete/{projectId}")]
-        public IActionResult Delete(string projectId)
+        public IActionResult Delete()
         {
             if (!IsReady)
             {

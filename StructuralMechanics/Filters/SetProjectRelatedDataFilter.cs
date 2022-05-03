@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using StructuralMechanics.Controllers;
 
@@ -25,14 +24,13 @@ namespace StructuralMechanics.Filters
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             BaseInformationController = (BaseInformationController)context.Controller;
-            string key = "projectId";
-            string projectId = context.ActionArguments.ContainsKey(key) ? context.ActionArguments[key]!.ToString()! : "";
+            string projectId = GetProjectId("projectId", context);
 
             await SetProjectRelatedData(projectId, context);
             await next();
         }
 
-        protected async Task SetProjectRelatedData(string projectId, ActionExecutingContext context)
+        private async Task SetProjectRelatedData(string projectId, ActionExecutingContext context)
         {
             await FindUser(context);
             if (BaseInformationController.ApplicationUser != null)
@@ -85,6 +83,16 @@ namespace StructuralMechanics.Filters
             {
                 ErrorMessage = "Structure is not found";
             }
+        }
+
+        private static string GetProjectId(string key, ActionExecutingContext context)
+        {
+            if (context.ActionArguments.ContainsKey(key))
+                return context.ActionArguments[key]!.ToString()!;
+            else if (context.RouteData.Values.ContainsKey(key))
+                return context.RouteData.Values[key]!.ToString()!;
+
+            return "";
         }
     }
 }

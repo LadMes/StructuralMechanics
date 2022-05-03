@@ -1,31 +1,27 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
 using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
-    [Authorize]
     [TypeFilter(typeof(SetProjectRelatedDataFilter))]
     public class PointsController : BaseInformationController
     {
         private readonly ICrossSectionElementRepository crossSectionElementRepository;
         private readonly IPointRepository pointsRepository;
 
-        public PointsController(UserManager<ApplicationUser> userManager,
-                                   IProjectRepository projectRepository,
-                                   IStructureRepository structureRepository,
-                                   ICrossSectionElementRepository crossSectionElementRepository,
-                                   IPointRepository pointsRepository) : base(userManager, projectRepository, structureRepository)
+        public PointsController(IProjectRepository projectRepository,
+                                IStructureRepository structureRepository,
+                                ICrossSectionElementRepository crossSectionElementRepository,
+                                IPointRepository pointsRepository) : base(projectRepository, structureRepository)
         {
             this.crossSectionElementRepository = crossSectionElementRepository;
             this.pointsRepository = pointsRepository;
         }
 
         [HttpGet]
-        public IActionResult Index(string projectId)
+        public IActionResult Index()
         {
             if (!IsReady)
             {
@@ -39,7 +35,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(string projectId)
+        public IActionResult Create()
         {
             if (!IsReady)
             {
@@ -50,7 +46,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string projectId, PointViewModel model)
+        public IActionResult Create(PointViewModel model)
         {
             if (!IsReady)
             {
@@ -71,7 +67,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(string projectId, int pointId)
+        public IActionResult Edit(int pointId)
         {
             if (!IsReady)
             {

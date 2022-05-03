@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
 using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
-    [Authorize]
     [TypeFilter(typeof(SetProjectRelatedDataFilter))]
     public class CrossSectionPartsController : BaseInformationController
     {
@@ -15,13 +12,12 @@ namespace StructuralMechanics.Areas.Project.Controllers
         private readonly IPointRepository pointRepository;
         private readonly ICrossSectionPartRepository crossSectionPartRepository;
 
-        public CrossSectionPartsController(UserManager<ApplicationUser> userManager, 
-                                           IProjectRepository projectRepository, 
+        public CrossSectionPartsController(IProjectRepository projectRepository, 
                                            IStructureRepository structureRepository,
                                            ICrossSectionElementRepository crossSectionElementRepository,
                                            IPointRepository pointRepository,
                                            ICrossSectionPartRepository crossSectionPartRepository) 
-                                           : base(userManager, projectRepository, structureRepository)
+                                           : base(projectRepository, structureRepository)
         {
             this.crossSectionElementRepository = crossSectionElementRepository;
             this.pointRepository = pointRepository;
@@ -29,7 +25,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string projectId)
+        public IActionResult Index()
         {
             if (!IsReady)
             {
@@ -43,7 +39,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(string projectId)
+        public IActionResult Create()
         {
             if (!IsReady)
             {
@@ -56,7 +52,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string projectId, CrossSectionPartViewModel model)
+        public IActionResult Create(CrossSectionPartViewModel model)
         {
             if (!IsReady)
             {
@@ -92,7 +88,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(string projectId, int crossSectionPartId)
+        public IActionResult Edit(int crossSectionPartId)
         {
             if (!IsReady)
             {
@@ -124,7 +120,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(string projectId, CrossSectionPartViewModel model)
+        public IActionResult Edit(CrossSectionPartViewModel model)
         {
             if (!IsReady)
             {
@@ -162,7 +158,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(string projectId, int crossSectionPartId)
+        public IActionResult Delete(int crossSectionPartId)
         {
             if (!IsReady)
             {

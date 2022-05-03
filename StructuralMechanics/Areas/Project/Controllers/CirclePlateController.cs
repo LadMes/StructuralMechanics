@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
@@ -7,16 +6,15 @@ namespace StructuralMechanics.Areas.Project.Controllers
     // For Future
     public class CirclePlateController : StructureController
     {
-        public CirclePlateController(UserManager<ApplicationUser> userManager,
-                                             IProjectRepository projectRepository,
-                                             IStructureRepository structureRepository,
-                                             ICrossSectionElementRepository crossSectionElementRepository,
-                                             IVectorPhysicalQuantityRepository vectorPhysicalQuantityRepository)
-                                            : base(userManager, projectRepository, structureRepository,
-                                                   crossSectionElementRepository, vectorPhysicalQuantityRepository) { }
+        public CirclePlateController(IProjectRepository projectRepository,
+                                     IStructureRepository structureRepository,
+                                     ICrossSectionElementRepository crossSectionElementRepository,
+                                     IVectorPhysicalQuantityRepository vectorPhysicalQuantityRepository)
+                                     : base(projectRepository, structureRepository,
+                                            crossSectionElementRepository, vectorPhysicalQuantityRepository) { }
 
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
-        public override IActionResult Overview(string projectId)
+        public override IActionResult Overview()
         {
             if (!IsReady)
             {

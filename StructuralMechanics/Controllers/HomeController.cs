@@ -1,25 +1,25 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Filters;
 using StructuralMechanics.Utilities;
 
 namespace StructuralMechanics.Controllers
 {
     public class HomeController : BaseInformationController
     {
-        public HomeController(UserManager<ApplicationUser> userManager,
-                              IProjectRepository projectRepository, 
-                              IStructureRepository structureRepository) : base(userManager, projectRepository, structureRepository)
+        public HomeController(IProjectRepository projectRepository, 
+                              IStructureRepository structureRepository) : base(projectRepository, structureRepository)
         {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        [AllowAnonymous]
+        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        public IActionResult Index()
         {
-            var user = await userManager.GetUserAsync(User);
-
-            if (user != null)
+            if (ApplicationUser != null)
             {
-                return View(ProjectsQuery.Query(user, projectRepository, structureRepository));
+                return View(ProjectsQuery.Query(ApplicationUser, projectRepository, structureRepository));
             }
 
             return View();
