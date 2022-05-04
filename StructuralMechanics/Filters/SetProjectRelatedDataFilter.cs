@@ -41,7 +41,7 @@ namespace StructuralMechanics.Filters
                     FindStructure(projectId);
                     if (BaseInformationController.Structure != null)
                     {
-                        BaseInformationController.IsReady = true;
+                        BaseInformationController.IsAllBaseInformationReady = true;
                         BaseInformationController.ViewBag.ProjectId = BaseInformationController.Project.Id;
                         BaseInformationController.ViewBag.StructureType = BaseInformationController.Structure.Type;
                     }

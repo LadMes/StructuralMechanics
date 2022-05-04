@@ -16,7 +16,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
         public override IActionResult Overview()
         {
-            if (!IsReady)
+            if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }

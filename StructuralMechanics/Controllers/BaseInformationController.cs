@@ -12,7 +12,7 @@ namespace StructuralMechanics.Controllers
         internal ApplicationUser? ApplicationUser { get; set; }
         internal Project? Project { get; set; }
         internal Structure? Structure { get; set; }
-        internal bool IsReady { get; set; } = false;
+        internal bool IsAllBaseInformationReady { get; set; } = false;
 
         public BaseInformationController(IProjectRepository projectRepository,
                                          IStructureRepository structureRepository)

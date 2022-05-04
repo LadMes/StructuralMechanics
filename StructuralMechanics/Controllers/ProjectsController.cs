@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Filters;
+using StructuralMechanics.Mappers;
 using StructuralMechanics.Utilities;
 using StructuralMechanics.ViewModels;
 
@@ -71,19 +72,12 @@ namespace StructuralMechanics.Controllers
         [Route("Edit/{projectId}")]
         public IActionResult Edit()
         {
-            if (!IsReady)
+            if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
 
-            ProjectViewModel model = new ProjectViewModel()
-            {
-                ProjectName = Project!.ProjectName,
-                StructureType = Structure!.Type,
-                ThinWalledStructureType = (Structure.Type == StructureType.ThinWalledStructure) 
-                                            ? ((ThinWalledStructure)Structure).ThinWalledStructureType 
-                                            : null
-            };
+            ProjectViewModel model = ProjectMapper.Map(Project!, Structure!);
 
             return View(model);
         }
@@ -95,7 +89,7 @@ namespace StructuralMechanics.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!IsReady)
+                if (!IsAllBaseInformationReady)
                 {
                     return View("NotFound");
                 }
@@ -122,7 +116,7 @@ namespace StructuralMechanics.Controllers
         [Route("Delete/{projectId}")]
         public IActionResult Delete()
         {
-            if (!IsReady)
+            if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }

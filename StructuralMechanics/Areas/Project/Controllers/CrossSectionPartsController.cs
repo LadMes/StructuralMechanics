@@ -27,7 +27,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (!IsReady)
+            if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
@@ -41,7 +41,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            if (!IsReady)
+            if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
@@ -54,7 +54,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpPost]
         public IActionResult Create(CrossSectionPartViewModel model)
         {
-            if (!IsReady)
+            if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
@@ -90,7 +90,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpGet]
         public IActionResult Edit(int crossSectionPartId)
         {
-            if (!IsReady)
+            if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
@@ -122,7 +122,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpPost]
         public IActionResult Edit(CrossSectionPartViewModel model)
         {
-            if (!IsReady)
+            if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
@@ -160,7 +160,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpPost]
         public IActionResult Delete(int crossSectionPartId)
         {
-            if (!IsReady)
+            if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
