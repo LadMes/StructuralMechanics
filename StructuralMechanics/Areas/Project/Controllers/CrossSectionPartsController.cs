@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Areas.Project.Mappers;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
 using StructuralMechanics.Filters;
@@ -104,17 +105,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
 
-            CrossSectionPartViewModel model = new CrossSectionPartViewModel()
-            {
-                Id = crossSectionPartId,
-                Type = crossSectionPart.Type,
-                FirstPoint = crossSectionPart.FirstPoint,
-                SecondPoint = crossSectionPart.SecondPoint,
-                Thickness = crossSectionPart.Thickness,
-                FirstPointId = crossSectionPart.FirstPointId,
-                SecondPointId = crossSectionPart.SecondPointId,
-                Points = points
-            };
+            CrossSectionPartViewModel model = CrossSectionPartMapper.Map(crossSectionPart, points);
 
             return View(model);
         }
@@ -128,6 +119,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
             }
             var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
             model.Points = points;
+
             if (ModelState.IsValid)
             {
                 var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(model.Id, Structure!.Id);
@@ -164,6 +156,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
             {
                 return View("NotFound");
             }
+
             var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(crossSectionPartId, Structure!.Id);
             if (crossSectionPart == null)
             {
