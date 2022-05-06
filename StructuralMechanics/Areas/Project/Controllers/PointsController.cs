@@ -67,14 +67,14 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int pointId)
+        public IActionResult Edit(int id)
         {
             if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
 
-            var point = pointsRepository.GetPoint(pointId, Structure!.Id);
+            var point = pointsRepository.GetPoint(id, Structure!.Id);
             if (point == null)
             {
                 ViewBag.ErrorMessage = "The point is not found or the current user doesn't have access to this point";

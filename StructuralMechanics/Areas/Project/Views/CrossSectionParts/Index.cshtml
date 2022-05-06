@@ -43,11 +43,11 @@
                     <a class="btn btn-primary" asp-controller="CrossSectionParts" 
                                                asp-action="Edit" 
                                                asp-route-projectId="@ViewBag.ProjectId"
-                                               asp-route-crossSectionPartId="@crossSectionPart.Id">Edit</a>
+                                               asp-route-id="@crossSectionPart.Id">Edit</a>
                     <form method="post" asp-controller="CrossSectionParts" 
                                         asp-action="Delete" 
                                         asp-route-projectId="@ViewBag.ProjectId"
-                                        asp-route-crossSectionPartId="@crossSectionPart.Id">
+                                        asp-route-id="@crossSectionPart.Id">
                             <button class="btn btn-danger">Delete</button>
                     </form>
                 </div>

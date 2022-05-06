@@ -27,11 +27,11 @@
                     <a class="btn btn-primary" asp-controller="Points" 
                                                asp-action="Edit" 
                                                asp-route-projectId="@ViewBag.ProjectId"
-                                               asp-route-pointId="@point.Id">Edit</a>
+                                               asp-route-id="@point.Id">Edit</a>
                     <form method="post" asp-controller="Points" 
                                         asp-action="Delete" 
                                         asp-route-projectId="@ViewBag.ProjectId"
-                                        asp-route-pointId="@point.Id">
+                                        asp-route-id="@point.Id">
                             <button class="btn btn-danger">Delete</button>
                     </form>
                 </div>

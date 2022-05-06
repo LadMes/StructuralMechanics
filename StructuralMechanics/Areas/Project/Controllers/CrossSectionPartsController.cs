@@ -89,14 +89,14 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int crossSectionPartId)
+        public IActionResult Edit(int id)
         {
             if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
 
-            var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(crossSectionPartId, Structure!.Id);
+            var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(id, Structure!.Id);
             if (crossSectionPart == null)
             {
                 ViewBag.ErrorMessage = "The cross-section part is not found or the current user doesn't have access to this element";
@@ -150,14 +150,14 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int crossSectionPartId)
+        public IActionResult Delete(int id)
         {
             if (!IsAllBaseInformationReady)
             {
                 return View("NotFound");
             }
 
-            var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(crossSectionPartId, Structure!.Id);
+            var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(id, Structure!.Id);
             if (crossSectionPart == null)
             {
                 ViewBag.ErrorMessage = "The cross-section part is not found or the current user doesn't have access to this element";

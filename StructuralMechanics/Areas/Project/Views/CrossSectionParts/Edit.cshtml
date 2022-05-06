@@ -18,7 +18,7 @@
 }
 
 <form method="post" asp-controller="CrossSectionParts" asp-action="Edit" asp-route-projectId="@ViewBag.ProjectId" 
-                                                                         asp-route-crossSectionPartId="@Model.Id">
+                                                                         asp-route-id="@Model.Id">
     <input hidden asp-for="Id"/>
     <partial name="_FormFields">
     <div class="form-row">
