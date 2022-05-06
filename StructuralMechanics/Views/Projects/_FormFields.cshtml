@@ -8,7 +8,7 @@
     </div>
     <div class="form-item">
         <label asp-for="StructureType"></label>
-        @if (Model == null || Model.StructureType == null)
+        @if (Model == null || Model.IsCreateView)
         {
             <select id="structureTypes" asp-for="StructureType" asp-items="Html.GetEnumSelectList<StructureType>()" 
                                                                 onChange="structureTypeChanged(@((int)StructureType.ThinWalledStructure))">

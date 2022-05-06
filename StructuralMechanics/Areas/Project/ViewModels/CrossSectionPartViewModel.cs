@@ -10,7 +10,8 @@ namespace StructuralMechanics.Areas.Project.ViewModels
 
         [Required]
         [Display(Name = "Cross-Section Part Type")]
-        public CrossSectionPartType? Type { get; set; }
+        public CrossSectionPartType Type { get; set; }
+        public bool IsCreateView { get; set; }
 
         [Required]
         [AboveZero(ErrorMessage = "Thickness cannot be 0 or less")]

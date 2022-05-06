@@ -15,9 +15,9 @@ namespace StructuralMechanics.Models.CrossSection
 
         public static (bool, CrossSectionPart?) GetSimpleShapeObject(CrossSectionPartViewModel model)
         {
-            if (model != null && model.Type != null && Enum.IsDefined(typeof(CrossSectionPartType), model.Type))
+            if (model != null && Enum.IsDefined(typeof(CrossSectionPartType), model.Type))
             {
-                var createMethod = GetCreateMethod(model.Type.GetValueOrDefault());
+                var createMethod = GetCreateMethod(model.Type);
                 return (true, createMethod(model.FirstPoint!, model.SecondPoint!, model.Thickness));
             }
             else

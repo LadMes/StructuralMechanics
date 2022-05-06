@@ -35,6 +35,7 @@ namespace StructuralMechanics.Controllers
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
         public IActionResult Create(ProjectViewModel model)
         {
+            model.IsCreateView = true;
             if (ModelState.IsValid)
             {
                 if (ApplicationUser == null)
@@ -46,7 +47,6 @@ namespace StructuralMechanics.Controllers
 
                 if (!isStructureValid)
                 {
-                    model.StructureType = null;
                     ModelState.AddModelError(string.Empty, errorMessage);
                     return View(model);
                 }
@@ -63,7 +63,6 @@ namespace StructuralMechanics.Controllers
                 return RedirectToAction("Overview", $"{structure!.Type}", new { projectId = $"{project.Id}", area = "Project" });
             }
 
-            model.StructureType = null;
             return View(model);
         }
 

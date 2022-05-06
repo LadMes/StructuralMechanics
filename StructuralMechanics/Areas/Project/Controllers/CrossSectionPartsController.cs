@@ -49,7 +49,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
 
-            return View(new CrossSectionPartViewModel { Points = points });
+            return View(new CrossSectionPartViewModel { Points = points, IsCreateView = true });
         }
 
         [HttpPost]
@@ -61,6 +61,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
             }
             var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
             model.Points = points;
+            model.IsCreateView = true;
 
             if (ModelState.IsValid)
             {
@@ -84,7 +85,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 crossSectionElementRepository.AddCrossSectionElement(crossSectionPart!);
                 return RedirectToAction("Index", "CrossSectionParts");
             }
-            model.Type = null;
+
             return View(model);
         }
 

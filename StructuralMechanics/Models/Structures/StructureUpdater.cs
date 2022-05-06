@@ -13,9 +13,9 @@ namespace StructuralMechanics.Models.Structures
         };
         public static (bool, string, Structure) GetUpdatedStructure(ProjectViewModel model, Structure structure)
         {
-            if (model != null && model.StructureType != null && Enum.IsDefined(typeof(StructureType), model.StructureType))
+            if (model != null && Enum.IsDefined(typeof(StructureType), model.StructureType))
             {
-                var updateMethod = GetUpdateMethod(model.StructureType.GetValueOrDefault());
+                var updateMethod = GetUpdateMethod(model.StructureType);
                 return updateMethod(model, structure);
             }
             else

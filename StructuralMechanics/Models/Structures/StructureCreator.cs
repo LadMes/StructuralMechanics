@@ -13,9 +13,9 @@ namespace StructuralMechanics.Models.Structures
         };
         public static (bool, string, Structure?) GetStructure(ProjectViewModel model)
         {
-            if (model != null && model.StructureType != null && Enum.IsDefined(typeof(StructureType), model.StructureType))
+            if (model != null && Enum.IsDefined(typeof(StructureType), model.StructureType))
             {
-                var creatorMethod = GetCreateMethod(model.StructureType.GetValueOrDefault());
+                var creatorMethod = GetCreateMethod(model.StructureType);
                 return creatorMethod(model);
             }
             else

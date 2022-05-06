@@ -17,7 +17,7 @@
 <div class="form-row">
     <div class="form-item">
         <label asp-for="Type"></label>
-        @if (Model.Type == null)
+        @if (Model.IsCreateView)
         {
             <select asp-for="Type" asp-items="Html.GetEnumSelectList<CrossSectionPartType>()">
             </select>
