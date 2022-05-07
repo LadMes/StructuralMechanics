@@ -23,11 +23,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
 
             var points = pointsRepository.GetPointsByStructureId(Structure!.Id);
@@ -37,22 +32,12 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(PointViewModel model)
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             if (ModelState.IsValid)
             {
                 Point point = new Point(model.X, model.Y);
@@ -69,11 +54,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             var point = pointsRepository.GetPoint(id, Structure!.Id);
             if (point == null)
             {

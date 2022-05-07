@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using StructuralMechanics.Controllers;
 
@@ -13,8 +14,8 @@ namespace StructuralMechanics.Filters
         private string ErrorMessage { get; set; } = "";
 
         public SetProjectRelatedDataFilter(UserManager<ApplicationUser> userManager,
-                                               IProjectRepository projectRepository,
-                                               IStructureRepository structureRepository)
+                                           IProjectRepository projectRepository,
+                                           IStructureRepository structureRepository)
         {
             this.userManager = userManager;
             this.projectRepository = projectRepository;
@@ -25,8 +26,18 @@ namespace StructuralMechanics.Filters
         {
             BaseInformationController = (BaseInformationController)context.Controller;
             string projectId = GetProjectId("projectId", context);
-
             await SetProjectRelatedData(projectId, context);
+            if (ErrorMessage != "")
+            {
+                context.Result = new ViewResult()
+                {
+                    ViewName = "NotFound",
+                    ViewData = BaseInformationController.ViewData
+                };
+                BaseInformationController.ViewBag.ErrorMessage = ErrorMessage;
+                return;
+            }
+
             await next();
         }
 
@@ -39,18 +50,7 @@ namespace StructuralMechanics.Filters
                 if (BaseInformationController.Project != null && ErrorMessage == "")
                 {
                     FindStructure(projectId);
-                    if (BaseInformationController.Structure != null)
-                    {
-                        BaseInformationController.IsAllBaseInformationReady = true;
-                        BaseInformationController.ViewBag.ProjectId = BaseInformationController.Project.Id;
-                        BaseInformationController.ViewBag.StructureType = BaseInformationController.Structure.Type;
-                    }
                 }
-            }
-
-            if (ErrorMessage != "")
-            {
-                BaseInformationController.ViewBag.ErrorMessage = ErrorMessage;
             }
         }
 
@@ -65,15 +65,22 @@ namespace StructuralMechanics.Filters
 
         private void FindProject(string userId, string projectId)
         {
-            BaseInformationController.Project = projectRepository.GetProjectById(projectId);
-            if (BaseInformationController.Project == null)
+            if (projectId != "")
             {
-                ErrorMessage = "Project is not found";
-            }
-            else if (BaseInformationController.Project.ApplicationUserId != userId)
-            {
-                ErrorMessage = "The current user doesn't have access to this project";
-            }
+                BaseInformationController.Project = projectRepository.GetProjectById(projectId);
+                if (BaseInformationController.Project == null)
+                {
+                    ErrorMessage = "Project is not found";
+                }
+                else if (BaseInformationController.Project.ApplicationUserId != userId)
+                {
+                    ErrorMessage = "The current user doesn't have access to this project";
+                }
+                else
+                {
+                    BaseInformationController.ViewBag.ProjectId = BaseInformationController.Project.Id;
+                }
+            }   
         }
 
         private void FindStructure(string projectId)
@@ -82,6 +89,10 @@ namespace StructuralMechanics.Filters
             if (BaseInformationController.Structure == null)
             {
                 ErrorMessage = "Structure is not found";
+            }
+            else
+            {
+                BaseInformationController.ViewBag.StructureType = BaseInformationController.Structure.Type;
             }
         }
 

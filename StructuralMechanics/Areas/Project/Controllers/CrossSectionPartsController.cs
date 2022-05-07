@@ -28,11 +28,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
 
             var crossSectionParts = crossSectionPartRepository.GetCrossSectionPartsByStructureId(Structure!.Id);
@@ -42,11 +37,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
 
             return View(new CrossSectionPartViewModel { Points = points, IsCreateView = true });
@@ -55,10 +45,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpPost]
         public IActionResult Create(CrossSectionPartViewModel model)
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
             var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
             model.Points = points;
             model.IsCreateView = true;
@@ -92,11 +78,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(id, Structure!.Id);
             if (crossSectionPart == null)
             {
@@ -114,10 +95,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpPost]
         public IActionResult Edit(CrossSectionPartViewModel model)
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
             var points = pointRepository.GetPointsForSelectListByStructureId(Structure!.Id);
             model.Points = points;
 
@@ -153,11 +130,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(id, Structure!.Id);
             if (crossSectionPart == null)
             {

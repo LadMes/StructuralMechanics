@@ -17,12 +17,7 @@ namespace StructuralMechanics.Controllers
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
         public IActionResult Index()
         {
-            if (ApplicationUser == null)
-            {
-                return View("NotFound");
-            }
-
-            return View(ProjectsQuery.Query(ApplicationUser, projectRepository, structureRepository));
+            return View(ProjectsQuery.Query(ApplicationUser!, projectRepository, structureRepository));
         }
 
         [HttpGet]
@@ -38,11 +33,6 @@ namespace StructuralMechanics.Controllers
             model.IsCreateView = true;
             if (ModelState.IsValid)
             {
-                if (ApplicationUser == null)
-                {
-                    return View("NotFound");
-                }
-
                 (bool isStructureValid, string errorMessage, Structure? structure) = StructureCreator.GetStructure(model);
 
                 if (!isStructureValid)
@@ -54,7 +44,7 @@ namespace StructuralMechanics.Controllers
                 Project project = new Project()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    ApplicationUser = ApplicationUser,
+                    ApplicationUser = ApplicationUser!,
                     ProjectName = model.ProjectName,
                     Structure = structure!
                 };
@@ -71,11 +61,6 @@ namespace StructuralMechanics.Controllers
         [Route("Edit/{projectId}")]
         public IActionResult Edit()
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             ProjectViewModel model = ProjectMapper.Map(Project!, Structure!);
 
             return View(model);
@@ -88,11 +73,6 @@ namespace StructuralMechanics.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!IsAllBaseInformationReady)
-                {
-                    return View("NotFound");
-                }
-
                 (bool isStructureValid, string errorMessage, Structure structure) = StructureUpdater.GetUpdatedStructure(model, Structure!);
                 if (!isStructureValid)
                 {
@@ -115,11 +95,6 @@ namespace StructuralMechanics.Controllers
         [Route("Delete/{projectId}")]
         public IActionResult Delete()
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             structureRepository.DeleteStructure(Structure!);
             projectRepository.DeleteProject(Project!);
 

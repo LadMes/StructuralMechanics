@@ -16,11 +16,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
         public override IActionResult Overview()
         {
-            if (!IsAllBaseInformationReady)
-            {
-                return View("NotFound");
-            }
-
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
 
             var crossSectionElements = crossSectionElementRepository.GetCrossSectionElementsByStructureId(Structure!.Id);
