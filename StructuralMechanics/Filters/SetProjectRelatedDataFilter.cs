@@ -27,7 +27,7 @@ namespace StructuralMechanics.Filters
             BaseInformationController = (BaseInformationController)context.Controller;
             string projectId = GetProjectId("projectId", context);
             await SetProjectRelatedData(projectId, context);
-            if (ErrorMessage != "")
+            if (ErrorMessage != "" && BaseInformationController.ApplicationUser != null)
             {
                 context.Result = new ViewResult()
                 {
@@ -57,10 +57,6 @@ namespace StructuralMechanics.Filters
         private async Task FindUser(ActionExecutingContext context)
         {
             BaseInformationController.ApplicationUser = await userManager.GetUserAsync(context.HttpContext.User);
-            if (BaseInformationController.ApplicationUser == null)
-            {
-                ErrorMessage = "User is not found";
-            }
         }
 
         private void FindProject(string userId, string projectId)
@@ -80,7 +76,7 @@ namespace StructuralMechanics.Filters
                 {
                     BaseInformationController.ViewBag.ProjectId = BaseInformationController.Project.Id;
                 }
-            }   
+            }
         }
 
         private void FindStructure(string projectId)
