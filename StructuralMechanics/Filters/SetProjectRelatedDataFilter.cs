@@ -27,7 +27,7 @@ namespace StructuralMechanics.Filters
             BaseInformationController = (BaseInformationController)context.Controller;
             string projectId = GetProjectId("projectId", context);
             await SetProjectRelatedData(projectId, context);
-            if (ErrorMessage != "" && BaseInformationController.ApplicationUser != null)
+            if (ErrorMessage != "")
             {
                 context.Result = new ViewResult()
                 {

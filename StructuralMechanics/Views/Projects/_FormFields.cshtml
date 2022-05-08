@@ -1,5 +1,11 @@
 ﻿@model ProjectViewModel
 
+@{
+    string displayStyle = "display: none;";
+    if (Model != null && Model.StructureType == StructureType.ThinWalledStructure)
+        displayStyle = "";
+}
+
 <div class="form-row">
     <div class="form-item">
         <label asp-for="ProjectName"></label>
@@ -12,7 +18,7 @@
         {
             <select id="structureTypes" asp-for="StructureType" asp-items="Html.GetEnumSelectList<StructureType>()" 
                                                                 onChange="structureTypeChanged(@((int)StructureType.ThinWalledStructure))">
-                <option value="">Please select structure type</option>
+                <option value="Please select structure type">Please select structure type</option>
             </select>
         }
         else
@@ -23,27 +29,12 @@
         <span asp-validation-for="StructureType" class="error-message"></span>
     </div>
 </div>
-@if (Model != null && Model.StructureType == StructureType.ThinWalledStructure)
-{
-    <div id="thinWalledStructure" class="form-row">
-        <div class="form-item">
-            <label asp-for="ThinWalledStructureType"></label>
-            <select asp-for="ThinWalledStructureType" asp-items="Html.GetEnumSelectList<ThinWalledStructureType>()">
-                <option value="">Please select thin-walled type</option>
-            </select>
-            <span asp-validation-for="ThinWalledStructureType" class="error-message"></span>
-        </div>
+<div id="thinWalledStructure" class="form-row" style="@displayStyle">
+    <div class="form-item">
+        <label asp-for="ThinWalledStructureType"></label>
+        <select asp-for="ThinWalledStructureType" asp-items="Html.GetEnumSelectList<ThinWalledStructureType>()">
+            <option value="Please select thin-walled type">Please select thin-walled type</option>
+        </select>
+        <span asp-validation-for="ThinWalledStructureType" class="error-message"></span>
     </div>
-}
-else
-{
-    <div id="thinWalledStructure" class="form-row" style="display: none;">
-        <div class="form-item">
-            <label asp-for="ThinWalledStructureType"></label>
-            <select asp-for="ThinWalledStructureType" asp-items="Html.GetEnumSelectList<ThinWalledStructureType>()">
-                <option value="">Please select thin-walled type</option>
-            </select>
-            <span asp-validation-for="ThinWalledStructureType" class="error-message"></span>
-        </div>
-    </div>
-}
+</div>

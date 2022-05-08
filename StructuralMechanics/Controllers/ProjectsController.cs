@@ -28,18 +28,13 @@ namespace StructuralMechanics.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        [TypeFilter(typeof(ProjectViewModelValidatorFilter))]
         public IActionResult Create(ProjectViewModel model)
         {
             model.IsCreateView = true;
             if (ModelState.IsValid)
             {
-                (bool isStructureValid, string errorMessage, Structure? structure) = StructureCreator.GetStructure(model);
-
-                if (!isStructureValid)
-                {
-                    ModelState.AddModelError(string.Empty, errorMessage);
-                    return View(model);
-                }
+                Structure structure = StructureCreator.GetStructure(model);
 
                 Project project = new Project()
                 {
@@ -68,22 +63,17 @@ namespace StructuralMechanics.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        [TypeFilter(typeof(ProjectViewModelValidatorFilter))]
         [Route("Edit/{projectId}")]
         public IActionResult Edit(ProjectViewModel model)
         {
             if (ModelState.IsValid)
             {
-                (bool isStructureValid, string errorMessage, Structure structure) = StructureUpdater.GetUpdatedStructure(model, Structure!);
-                if (!isStructureValid)
-                {
-                    ModelState.AddModelError(string.Empty, errorMessage);
-                    return View(model);
-                }
-
+                Structure structure = StructureUpdater.GetUpdatedStructure(model, Structure!);
                 Project!.ProjectName = model.ProjectName;
-                // If we don't update structure info there's no need for calling update structure
                 structureRepository.UpdateStructure(structure);
                 projectRepository.UpdateProject(Project);
+
                 return RedirectToAction("Index");
             }
 

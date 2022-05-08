@@ -4,53 +4,33 @@ namespace StructuralMechanics.Models.Structures
 {
     public static class StructureCreator
     {
-        private delegate (bool, string, Structure?) CreateStructure(ProjectViewModel model);
+        private delegate Structure CreateStructure(ProjectViewModel model);
         private readonly static Dictionary<StructureType, CreateStructure> structureCreators = new()
         {
             { StructureType.ThinWalledStructure, CreateThinWalledStructure },
             { StructureType.CirclePlate, CreateCirclePlate },
             { StructureType.RotationalShell, CreateRotationalShell },
         };
-        public static (bool, string, Structure?) GetStructure(ProjectViewModel model)
+
+        public static Structure GetStructure(ProjectViewModel model)
         {
-            if (model != null && Enum.IsDefined(typeof(StructureType), model.StructureType))
-            {
-                var creatorMethod = GetCreateMethod(model.StructureType);
-                return creatorMethod(model);
-            }
-            else
-            {
-                return (false, "Select Structure Type", null);
-            }
+            var create = structureCreators[model.StructureType];
+            return create(model);
         }
 
-        private static CreateStructure GetCreateMethod(StructureType type)
+        private static Structure CreateThinWalledStructure(ProjectViewModel model)
         {
-            return structureCreators[type];
+            return new ThinWalledStructure(model.ThinWalledStructureType!.Value);
         }
-        private static (bool, string, Structure?) CreateThinWalledStructure(ProjectViewModel model)
+
+        private static Structure CreateCirclePlate(ProjectViewModel model)
         {
-            string errorMessage = "";
-            if (model.ThinWalledStructureType == null)
-            {
-                errorMessage = "Select Thin-walled Structure Type";
-            }
-            else if (model.ThinWalledStructureType == ThinWalledStructureType.OneTimeClosed)
-            {
-                errorMessage = "One-time closed Thin-walled Structure type is not supported right now";
-            }
-            return errorMessage == "" ? (true, errorMessage, new ThinWalledStructure(model.ThinWalledStructureType!.Value)) 
-                                      : (false, errorMessage, null);
+            return new CirclePlate();
         }
-        private static (bool, string, Structure?) CreateCirclePlate(ProjectViewModel model)
+
+        private static Structure CreateRotationalShell(ProjectViewModel model)
         {
-            string errorMessage = "Others types aren't supported right now";
-            return (false, errorMessage, null);
-        }
-        private static (bool, string, Structure?) CreateRotationalShell(ProjectViewModel model)
-        {
-            string errorMessage = "Others types aren't supported right now";
-            return (false, errorMessage, null);
+            return new RotationalShell();
         }
     }
 }
