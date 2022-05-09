@@ -31,24 +31,23 @@ namespace StructuralMechanics.Controllers
         [TypeFilter(typeof(ProjectViewModelValidatorFilter))]
         public IActionResult Create(ProjectViewModel model)
         {
-            model.IsCreateView = true;
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Structure structure = StructureCreator.GetStructure(model);
-
-                Project project = new Project()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    ApplicationUser = ApplicationUser!,
-                    ProjectName = model.ProjectName,
-                    Structure = structure!
-                };
-
-                projectRepository.AddProject(project);
-                return RedirectToAction("Overview", $"{structure!.Type}", new { projectId = $"{project.Id}", area = "Project" });
+                model.IsCreateView = true;
+                return View(model);
             }
 
-            return View(model);
+            Structure structure = StructureCreator.GetStructure(model);
+            Project project = new Project()
+            {
+                Id = Guid.NewGuid().ToString(),
+                ApplicationUser = ApplicationUser!,
+                ProjectName = model.ProjectName,
+                Structure = structure!
+            };
+
+            projectRepository.AddProject(project);
+            return RedirectToAction("Overview", $"{structure!.Type}", new { projectId = $"{project.Id}", area = "Project" });
         }
 
         [HttpGet]
@@ -67,17 +66,17 @@ namespace StructuralMechanics.Controllers
         [Route("Edit/{projectId}")]
         public IActionResult Edit(ProjectViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Structure structure = StructureUpdater.GetUpdatedStructure(model, Structure!);
-                Project!.ProjectName = model.ProjectName;
-                structureRepository.UpdateStructure(structure);
-                projectRepository.UpdateProject(Project);
-
-                return RedirectToAction("Index");
+                return View(model);
             }
 
-            return View(model);
+            Structure structure = StructureUpdater.GetUpdatedStructure(model, Structure!);
+            Project!.ProjectName = model.ProjectName;
+            structureRepository.UpdateStructure(structure);
+            projectRepository.UpdateProject(Project);
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

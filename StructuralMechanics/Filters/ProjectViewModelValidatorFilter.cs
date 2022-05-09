@@ -19,11 +19,10 @@ namespace StructuralMechanics.Filters
         {
             GetModelFromContext(context);
             if (context.ModelState.IsValid)
-                Validate(Model.StructureType);
-            if (ErrorMessage != "")
             {
-                context.ModelState.AddModelError(string.Empty, ErrorMessage);
-                return;
+                Validate(Model.StructureType);
+                if (ErrorMessage != "")
+                    context.ModelState.AddModelError(string.Empty, ErrorMessage);
             }
         }
 

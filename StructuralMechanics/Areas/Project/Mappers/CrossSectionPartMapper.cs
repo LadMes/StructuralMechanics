@@ -5,7 +5,7 @@ namespace StructuralMechanics.Areas.Project.Mappers
 {
     public static class CrossSectionPartMapper
     {
-        public static CrossSectionPartViewModel Map(CrossSectionPart crossSectionPart, SelectList points)
+        public static CrossSectionPartViewModel Map(CrossSectionPart crossSectionPart)
         {
             return new CrossSectionPartViewModel()
             {
@@ -16,7 +16,6 @@ namespace StructuralMechanics.Areas.Project.Mappers
                 Thickness = crossSectionPart.Thickness,
                 FirstPointId = crossSectionPart.FirstPointId,
                 SecondPointId = crossSectionPart.SecondPointId,
-                Points = points
             };
         }
     }
