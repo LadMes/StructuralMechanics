@@ -10,18 +10,15 @@ namespace StructuralMechanics.Areas.Project.Controllers
     public class CrossSectionPartsController : BaseInformationController
     {
         private readonly ICrossSectionElementRepository crossSectionElementRepository;
-        private readonly IPointRepository pointRepository;
         private readonly ICrossSectionPartRepository crossSectionPartRepository;
 
         public CrossSectionPartsController(IProjectRepository projectRepository, 
                                            IStructureRepository structureRepository,
                                            ICrossSectionElementRepository crossSectionElementRepository,
-                                           IPointRepository pointRepository,
                                            ICrossSectionPartRepository crossSectionPartRepository) 
                                            : base(projectRepository, structureRepository)
         {
             this.crossSectionElementRepository = crossSectionElementRepository;
-            this.pointRepository = pointRepository;
             this.crossSectionPartRepository = crossSectionPartRepository;
         }
 
@@ -42,7 +39,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(GetPointsForCrossSectionPartFilter))]
-        [TypeFilter(typeof(GetPointsForViewModelFilter))]
         public IActionResult Create(CrossSectionPartViewModel model)
         {
             if (!ModelState.IsValid)
@@ -74,13 +70,11 @@ namespace StructuralMechanics.Areas.Project.Controllers
             }
 
             CrossSectionPartViewModel model = CrossSectionPartMapper.Map(crossSectionPart);
-
             return View(model);
         }
 
         [HttpPost]
         [TypeFilter(typeof(GetPointsForCrossSectionPartFilter))]
-        [TypeFilter(typeof(GetPointsForViewModelFilter))]
         public IActionResult Edit(CrossSectionPartViewModel model)
         {
             if (!ModelState.IsValid)

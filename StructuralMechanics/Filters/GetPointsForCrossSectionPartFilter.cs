@@ -21,7 +21,7 @@ namespace StructuralMechanics.Filters
         {
             GetControllerFromContext(context);
             GetModelFromContext(context);
-            SetPointsForModel();
+            SetPointsForModel(context);
             if (ErrorMessage != "")
             {
                 context.Result = new ViewResult()
@@ -54,18 +54,21 @@ namespace StructuralMechanics.Filters
             }
         }
 
-        private void SetPointsForModel()
+        private void SetPointsForModel(ActionExecutingContext context)
         {
-            var firstPoint = pointRepository.GetPoint(Model.FirstPointId, Controller.Structure!.Id);
-            var secondPoint = pointRepository.GetPoint(Model.SecondPointId, Controller.Structure!.Id);
-            if (firstPoint == null || secondPoint == null)
-            {
-                ErrorMessage = "The point is not found or the current user doesn't have access to this point";
-            }
+            if (!context.ModelState.IsValid)
+                Model.Points = pointRepository.GetPointsForSelectListByStructureId(Controller.Structure!.Id);
             else
             {
-                Model.FirstPoint = firstPoint;
-                Model.SecondPoint = secondPoint;
+                var firstPoint = pointRepository.GetPoint(Model.FirstPointId, Controller.Structure!.Id);
+                var secondPoint = pointRepository.GetPoint(Model.SecondPointId, Controller.Structure!.Id);
+                if (firstPoint == null || secondPoint == null)
+                    ErrorMessage = "The point is not found or the current user doesn't have access to this point";
+                else
+                {
+                    Model.FirstPoint = firstPoint;
+                    Model.SecondPoint = secondPoint;
+                }
             }
         }
 
