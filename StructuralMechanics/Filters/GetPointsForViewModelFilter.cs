@@ -4,11 +4,11 @@ using StructuralMechanics.Controllers;
 
 namespace StructuralMechanics.Filters
 {
-    public class GetPointsForViewModelFilter : IResultFilter
+    public class GetPointsForViewModelFilter<T> : IResultFilter where T : PointsViewModel, new()
     {
         private readonly IPointRepository pointRepository;
         private BaseInformationController Controller { get; set; }
-        private CrossSectionPartViewModel Model { get; set; } = new();
+        private T Model { get; set; } = new();
 
         public GetPointsForViewModelFilter(IPointRepository pointRepository)
         {
@@ -38,7 +38,7 @@ namespace StructuralMechanics.Filters
             var model = Controller.ViewData.Model;
             if (model != null)
             {
-                Model = (CrossSectionPartViewModel)model;
+                Model = (T)model;
             }
         }
 

@@ -31,7 +31,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        [TypeFilter(typeof(GetPointsForViewModelFilter))]
+        [TypeFilter(typeof(GetPointsForViewModelFilter<CrossSectionPartViewModel>))]
         public IActionResult Create()
         {
             return View(new CrossSectionPartViewModel { IsCreateView = true });
@@ -47,19 +47,20 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 return View(model);
             }
 
-            (bool isValid, CrossSectionPart? crossSectionPart) = CrossSectionPartCreator.GetSimpleShapeObject(model);
-            if (!isValid)
+            var crossSectionPart = CrossSectionPartCreator.Create(model);
+            if (crossSectionPart == null)
             {
                 ModelState.AddModelError(string.Empty, "Choose Cross-section Part Type");
                 return View(model);
             }
-            crossSectionPart!.StructureId = Structure!.Id;
-            crossSectionElementRepository.AddCrossSectionElement(crossSectionPart!);
+
+            crossSectionPart.StructureId = Structure!.Id;
+            crossSectionElementRepository.AddCrossSectionElement(crossSectionPart);
             return RedirectToAction("Index", "CrossSectionParts");
         }
 
         [HttpGet]
-        [TypeFilter(typeof(GetPointsForViewModelFilter))]
+        [TypeFilter(typeof(GetPointsForViewModelFilter<CrossSectionPartViewModel>))]
         public IActionResult Edit(int id)
         {
             var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(id, Structure!.Id);
@@ -103,7 +104,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
             }
 
             crossSectionElementRepository.DeleteCrossSectionElement(crossSectionPart);
-
             return RedirectToAction("Index", "CrossSectionParts");
         }
     }

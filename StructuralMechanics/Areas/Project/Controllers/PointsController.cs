@@ -38,17 +38,13 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [HttpPost]
         public IActionResult Create(PointViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                Point point = new Point(model.X, model.Y);
-                point.Structure = Structure!;
+            if (!ModelState.IsValid)
+                return View(model);
 
-                crossSectionElementRepository.AddCrossSectionElement(point);
-
-                return RedirectToAction("Index", "Points");
-            }
-
-            return View(model);
+            Point point = new Point(model.X, model.Y);
+            point.Structure = Structure!;
+            crossSectionElementRepository.AddCrossSectionElement(point);
+            return RedirectToAction("Index", "Points");
         }
 
         [HttpGet]

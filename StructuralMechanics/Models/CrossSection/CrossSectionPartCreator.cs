@@ -13,16 +13,16 @@ namespace StructuralMechanics.Models.CrossSection
             { CrossSectionPartType.VerticalLine,  CreateVerticalLine },
         };
 
-        public static (bool, CrossSectionPart?) GetSimpleShapeObject(CrossSectionPartViewModel model)
+        public static CrossSectionPart? Create(CrossSectionPartViewModel model)
         {
             if (model != null && Enum.IsDefined(typeof(CrossSectionPartType), model.Type))
             {
-                var createMethod = GetCreateMethod(model.Type);
-                return (true, createMethod(model.FirstPoint!, model.SecondPoint!, model.Thickness));
+                var create = GetCreateMethod(model.Type);
+                return create(model.FirstPoint!, model.SecondPoint!, model.Thickness);
             }
             else
             {
-                return (false, null);
+                return null;
             }
         }
 
@@ -30,18 +30,22 @@ namespace StructuralMechanics.Models.CrossSection
         {
             return crossSectionPartCreators[type];
         }
+
         private static Arc CreateArc(Point firstPoint, Point secondPoint, double thickness)
         {
             return new Arc(firstPoint, secondPoint, thickness);
         }
+
         private static SlopeLine CreateSlopeLine(Point firstPoint, Point secondPoint, double thickness)
         {
             return new SlopeLine(firstPoint, secondPoint, thickness);
         }
+
         private static HorizontalLine CreateHorizontalLine(Point firstPoint, Point secondPoint, double thickness)
         {
             return new HorizontalLine(firstPoint, secondPoint, thickness);
         }
+
         private static VerticalLine CreateVerticalLine(Point firstPoint, Point secondPoint, double thickness)
         {
             return new VerticalLine(firstPoint, secondPoint, thickness);

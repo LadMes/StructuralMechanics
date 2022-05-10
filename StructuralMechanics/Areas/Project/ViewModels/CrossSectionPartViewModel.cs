@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StructuralMechanics.Areas.Project.ViewModels
 {
-    public class CrossSectionPartViewModel
+    public class CrossSectionPartViewModel : PointsViewModel
     {
         public int Id { get; set; }
 
@@ -25,8 +25,6 @@ namespace StructuralMechanics.Areas.Project.ViewModels
         [Display(Name = "Second Point")]
         public int SecondPointId { get; set; }
 
-
-        public SelectList? Points { get; set; }
         public Point? FirstPoint { get; set; }
         public Point? SecondPoint { get; set; }
     }
