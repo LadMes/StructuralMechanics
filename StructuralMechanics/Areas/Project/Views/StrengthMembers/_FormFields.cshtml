@@ -1,0 +1,22 @@
+﻿@model StrengthMemberViewModel
+
+<div class="form-row">
+    <div class=form-item>
+        <label asp-for="Area"></label>
+        <input asp-for="Area" />
+        <span asp-validation-for="Area" class="error-message"></span>
+    </div>
+    <div class="form-item">
+        <label asp-for="ReductionCoefficient"></label>
+        <input asp-for="ReductionCoefficient" />
+        <span asp-validation-for="ReductionCoefficient" class="error-message"></span>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-item">
+        <label asp-for="LocationId"></label>
+        <select asp-for="LocationId" asp-items="@Model.Points">
+        </select>
+        <span asp-validation-for="LocationId" class="error-message"></span>
+    </div>
+</div>

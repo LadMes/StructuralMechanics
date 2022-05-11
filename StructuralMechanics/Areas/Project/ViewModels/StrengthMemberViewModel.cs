@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using StructuralMechanics.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace StructuralMechanics.Areas.Project.ViewModels
 {
@@ -6,10 +7,12 @@ namespace StructuralMechanics.Areas.Project.ViewModels
     {
         [Required]
         [Display(Name = "Reduction Coefficient")]
+        [AboveZero(ErrorMessage = "Reduction Coefficient cannot be 0 or less")]
         public double ReductionCoefficient { get; private set; }
 
         [Required]
         [Display(Name = "Area")]
+        [AboveZero(ErrorMessage = "Area cannot be 0 or less")]
         public double Area { get; private set; }
 
         [Required]

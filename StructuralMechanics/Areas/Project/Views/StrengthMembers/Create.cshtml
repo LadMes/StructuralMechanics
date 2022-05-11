@@ -1,7 +1,7 @@
-﻿@model PointViewModel
+﻿@model StrengthMemberViewModel
 
 @{
-    ViewBag.Title = "Edit Point";
+    ViewBag.Title = "Create Strength Member";
 }
 
 @section SidebarNavigation {
@@ -11,17 +11,17 @@
                asp-action="Overview" 
                asp-route-projectId="@ViewBag.ProjectId">Back to Structure</a></li>
         <li><a asp-area="Project" 
-               asp-controller="Points" 
+               asp-controller="StrengthMembers" 
                asp-action="Index" 
-               asp-route-projectId="@ViewBag.ProjectId">Back to Points</a></li>
+               asp-route-projectId="@ViewBag.ProjectId">Back to Strength Members</a></li>
     </ul>
 }
 
-<form method="post" asp-controller="Points" asp-action="Edit">
-    <partial name="_FormFields" />
+<form method="post" asp-controller="CrossSectionParts" asp-action="Create">
+    <partial name="_FormFields"/>
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>
     </div>
     <hr class="main-hr" />
-    <button type="submit" class="btn btn-primary">Edit</button>
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>

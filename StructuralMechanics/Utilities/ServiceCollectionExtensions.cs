@@ -13,6 +13,7 @@
             serviceCollection.AddScoped<IVectorPhysicalQuantityRepository, SQLServerVectorPhysicalQuantityRepository>();
             serviceCollection.AddScoped<IPointRepository, SQLServerPointRepository>();
             serviceCollection.AddScoped<ICrossSectionPartRepository, SQLServerCrossSectionPartRepository>();
+            serviceCollection.AddScoped<IStrengthMemberRepository, SQLServerStrengthMemberRepository>();
         }
     }
 }

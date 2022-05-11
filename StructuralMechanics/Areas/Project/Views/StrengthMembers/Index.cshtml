@@ -1,0 +1,59 @@
+﻿@model List<StrengthMember>
+
+@{
+    ViewBag.Title = ViewBag.ProjectName;
+}
+
+@section SidebarNavigation {
+    <ul>
+        <li><a asp-area="Project" asp-controller="StrengthMembers" 
+                                  asp-action="Create" 
+                                  asp-route-projectId="@ViewBag.ProjectId">Create strength member</a></li>
+        <li><a asp-area="Project" asp-controller="@ViewBag.StructureType" asp-action="Overview" asp-route-projectId="@ViewBag.ProjectId">Back</a></li>
+    </ul>
+}
+
+@if (Model.Any())
+{
+    <div class="info-cards"> 
+        @foreach (var strengthMember in Model)
+        {
+            <div class="info-card">      
+                <div class="info-card-text">
+                    Area: @strengthMember.Area
+                </div>
+                <div class="info-card-text">
+                    Reduction Coefficient: @strengthMember.ReductionCoefficient
+                </div>
+                <div class="info-card-text">
+                    First Moment of Area: @strengthMember.FirstMomentOfArea
+                </div>
+                <div class="info-card-text">
+                    Location: @strengthMember.Location.ToString();
+                </div>
+                <div class="info-card-text">
+                    Second Moment of Area: @strengthMember.SecondMomentOfArea
+                </div>
+                <div class="info-card-buttons"> 
+                    <a class="btn btn-primary" asp-controller="StrengthMembers" 
+                                               asp-action="Edit" 
+                                               asp-route-projectId="@ViewBag.ProjectId"
+                                               asp-route-id="@strengthMember.Id">Edit</a>
+                    <form method="post" asp-controller="StrengthMembers"
+                                        asp-action="Delete" 
+                                        asp-route-projectId="@ViewBag.ProjectId"
+                                        asp-route-id="@strengthMember.Id">
+                            <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="info-message">
+        <h1>There's no strength members! Create one.</h1>
+        <a class="btn btn-primary" asp-controller="StrengthMembers" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Create</a>
+    </div>   
+}
