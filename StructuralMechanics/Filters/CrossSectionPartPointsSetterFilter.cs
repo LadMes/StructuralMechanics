@@ -5,14 +5,14 @@ using StructuralMechanics.Controllers;
 
 namespace StructuralMechanics.Filters
 {
-    public class GetPointsForCrossSectionPartFilter : IActionFilter
+    public class CrossSectionPartPointsSetterFilter : IActionFilter
     {
         private readonly IPointRepository pointRepository;
         private BaseInformationController Controller { get; set; }
         private CrossSectionPartViewModel Model { get; set; } = new();
         private string ErrorMessage { get; set; } = "";
 
-        public GetPointsForCrossSectionPartFilter(IPointRepository pointRepository)
+        public CrossSectionPartPointsSetterFilter(IPointRepository pointRepository)
         {
             this.pointRepository = pointRepository;
         }

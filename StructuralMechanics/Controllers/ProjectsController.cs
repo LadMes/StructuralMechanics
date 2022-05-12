@@ -14,7 +14,7 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpGet]
-        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
         public IActionResult Index()
         {
             return View(ProjectsQuery.Query(ApplicationUser!, projectRepository, structureRepository));
@@ -27,7 +27,7 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
         [TypeFilter(typeof(ProjectViewModelValidatorFilter))]
         public IActionResult Create(ProjectViewModel model)
         {
@@ -51,7 +51,7 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpGet]
-        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
         [Route("Edit/{projectId}")]
         public IActionResult Edit()
         {
@@ -61,7 +61,7 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
         [TypeFilter(typeof(ProjectViewModelValidatorFilter))]
         [Route("Edit/{projectId}")]
         public IActionResult Edit(ProjectViewModel model)
@@ -80,7 +80,7 @@ namespace StructuralMechanics.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
         [Route("Delete/{projectId}")]
         public IActionResult Delete()
         {

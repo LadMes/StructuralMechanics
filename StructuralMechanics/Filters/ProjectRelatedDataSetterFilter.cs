@@ -5,7 +5,7 @@ using StructuralMechanics.Controllers;
 
 namespace StructuralMechanics.Filters
 {
-    public class SetProjectRelatedDataFilter : IAsyncActionFilter
+    public class ProjectRelatedDataSetterFilter : IAsyncActionFilter
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IProjectRepository projectRepository;
@@ -13,7 +13,7 @@ namespace StructuralMechanics.Filters
         private BaseInformationController BaseInformationController { get; set; }
         private string ErrorMessage { get; set; } = "";
 
-        public SetProjectRelatedDataFilter(UserManager<ApplicationUser> userManager,
+        public ProjectRelatedDataSetterFilter(UserManager<ApplicationUser> userManager,
                                            IProjectRepository projectRepository,
                                            IStructureRepository structureRepository)
         {

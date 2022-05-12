@@ -13,7 +13,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
                                             : base(projectRepository, structureRepository,
                                                    crossSectionElementRepository, vectorPhysicalQuantityRepository) { }
 
-        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
         public override IActionResult Overview()
         {
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";

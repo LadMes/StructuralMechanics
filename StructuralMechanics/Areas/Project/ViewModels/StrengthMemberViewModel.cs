@@ -8,12 +8,12 @@ namespace StructuralMechanics.Areas.Project.ViewModels
         [Required]
         [Display(Name = "Reduction Coefficient")]
         [AboveZero(ErrorMessage = "Reduction Coefficient cannot be 0 or less")]
-        public double ReductionCoefficient { get; private set; }
+        public double ReductionCoefficient { get; set; }
 
         [Required]
         [Display(Name = "Area")]
         [AboveZero(ErrorMessage = "Area cannot be 0 or less")]
-        public double Area { get; private set; }
+        public double Area { get; set; }
 
         [Required]
         [Display(Name = "Location")]

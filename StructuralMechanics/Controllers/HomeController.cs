@@ -14,7 +14,7 @@ namespace StructuralMechanics.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+        [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
         public IActionResult Index()
         {
             if (ApplicationUser != null)

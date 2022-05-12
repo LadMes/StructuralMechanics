@@ -5,7 +5,7 @@ using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
-    [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+    [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
     public class PointsController : BaseInformationController
     {
         private readonly ICrossSectionElementRepository crossSectionElementRepository;

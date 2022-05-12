@@ -6,7 +6,7 @@ using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
-    [TypeFilter(typeof(SetProjectRelatedDataFilter))]
+    [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
     public class CrossSectionPartsController : BaseInformationController
     {
         private readonly ICrossSectionElementRepository crossSectionElementRepository;
@@ -31,14 +31,14 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        [TypeFilter(typeof(GetPointsForViewModelFilter<CrossSectionPartViewModel>))]
+        [TypeFilter(typeof(PointsSelectListGetterFilter<CrossSectionPartViewModel>))]
         public IActionResult Create()
         {
             return View(new CrossSectionPartViewModel { IsCreateView = true });
         }
 
         [HttpPost]
-        [TypeFilter(typeof(GetPointsForCrossSectionPartFilter))]
+        [TypeFilter(typeof(CrossSectionPartPointsSetterFilter))]
         public IActionResult Create(CrossSectionPartViewModel model)
         {
             if (!ModelState.IsValid)
@@ -60,7 +60,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpGet]
-        [TypeFilter(typeof(GetPointsForViewModelFilter<CrossSectionPartViewModel>))]
+        [TypeFilter(typeof(PointsSelectListGetterFilter<CrossSectionPartViewModel>))]
         public IActionResult Edit(int id)
         {
             var crossSectionPart = crossSectionPartRepository.GetCrossSectionPart(id, Structure!.Id);
@@ -75,7 +75,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(GetPointsForCrossSectionPartFilter))]
+        [TypeFilter(typeof(CrossSectionPartPointsSetterFilter))]
         public IActionResult Edit(CrossSectionPartViewModel model)
         {
             if (!ModelState.IsValid)

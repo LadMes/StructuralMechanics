@@ -4,13 +4,13 @@ using StructuralMechanics.Controllers;
 
 namespace StructuralMechanics.Filters
 {
-    public class GetPointsForViewModelFilter<T> : IResultFilter where T : PointsViewModel, new()
+    public class PointsSelectListGetterFilter<T> : IResultFilter where T : PointsViewModel, new()
     {
         private readonly IPointRepository pointRepository;
         private BaseInformationController Controller { get; set; }
         private T Model { get; set; } = new();
 
-        public GetPointsForViewModelFilter(IPointRepository pointRepository)
+        public PointsSelectListGetterFilter(IPointRepository pointRepository)
         {
             this.pointRepository = pointRepository;
         }
