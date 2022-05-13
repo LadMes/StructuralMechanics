@@ -6,8 +6,6 @@ namespace StructuralMechanics.Areas.Project.ViewModels
 {
     public class CrossSectionPartViewModel : PointsViewModel
     {
-        public int Id { get; set; }
-
         [Required]
         [Display(Name = "Cross-Section Part Type")]
         public CrossSectionPartType Type { get; set; }

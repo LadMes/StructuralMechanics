@@ -1,7 +1,7 @@
-﻿@model CrossSectionPartViewModel
+﻿@model StrengthMemberViewModel
 
 @{
-    ViewBag.Title = "Edit Cross-Section Part";
+    ViewBag.Title = "Edit Strength Member";
 }
 
 @section SidebarNavigation {
@@ -11,15 +11,14 @@
                asp-action="Overview" 
                asp-route-projectId="@ViewBag.ProjectId">Back to Structure</a></li>
         <li><a asp-area="Project" 
-               asp-controller="CrossSectionParts" 
+               asp-controller="StrengthMembers" 
                asp-action="Index" 
-               asp-route-projectId="@ViewBag.ProjectId">Back to Cross-Section Parts</a></li>
+               asp-route-projectId="@ViewBag.ProjectId">Back to Strength Members</a></li>
     </ul>
 }
 
-<form method="post" asp-controller="CrossSectionParts" asp-action="Edit">
-    <input hidden asp-for="Id"/>
-    <partial name="_FormFields">
+<form method="post" asp-controller="StrengthMembers" asp-action="Edit">
+    <partial name="_FormFields"/>
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>
     </div>
