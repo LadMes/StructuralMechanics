@@ -2,7 +2,7 @@
 
 namespace StructuralMechanics.Models.CrossSection
 {
-    public class StrengthMember : AreaProperties
+    public class StrengthMember : AreaProperties, IPointChangedListener
     {
         [Required]
         public double ReductionCoefficient { get; private set; }

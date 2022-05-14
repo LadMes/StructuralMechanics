@@ -5,6 +5,8 @@ namespace StructuralMechanics.Areas.Project.ViewModels
 {
     public class PointViewModel
     {
+        public int Id { get; set; }
+
         [Required]
         [Display(Name = "Coord. X:")]
         [NotBelowZero(ErrorMessage = "Coordinate must be positive")]

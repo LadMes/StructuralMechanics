@@ -60,6 +60,35 @@ namespace StructuralMechanics.Areas.Project.Controllers
             return View(new PointViewModel() { X = point.X, Y = point.Y });
         }
 
-        //HttpPost for Edit and Delete will be added after completing the Create action for Simple Shapes and Strength Members
+        [HttpPost]
+        [TypeFilter(typeof(PointChangedListenersFetcherFilter))]
+        public IActionResult Edit(PointViewModel model, List<IPointChangedListener> listeners)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var point = pointsRepository.GetPoint(model.Id, Structure!.Id);
+            if (point == null)
+            {
+                ViewBag.ErrorMessage = "The point is not found or the current user doesn't have access to this point";
+                return View("NotFound");
+            }
+
+            point.AddEventListeners(listeners);
+            point.Edit(model.X, model.Y);
+            crossSectionElementRepository.UpdateCrossSectionElement(point);
+            foreach (var listener in listeners)
+            {
+                crossSectionElementRepository.UpdateCrossSectionElement((CrossSectionElement)listener);
+            }
+            return RedirectToAction("Index", "Points");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            // ...
+            return RedirectToAction("Index", "Points");
+        }
     }
 }

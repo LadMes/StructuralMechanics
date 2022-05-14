@@ -32,6 +32,14 @@ namespace StructuralMechanics.Models.CrossSection
             AssignPointPositionProperty();
         }
 
+        public void AddEventListeners(List<IPointChangedListener> listeners)
+        {
+            foreach (var listener in listeners)
+            {
+                PointChanged += listener.OnPointChanged;
+            }
+        }
+
         private void AssignPointPositionProperty()
         {
             if (X != 0 && Y != 0)

@@ -2,7 +2,7 @@
 
 namespace StructuralMechanics.Models.CrossSection
 {
-    public abstract class CrossSectionPart : AreaProperties
+    public abstract class CrossSectionPart : AreaProperties, IPointChangedListener
     {
         private double length;
         [Required]
