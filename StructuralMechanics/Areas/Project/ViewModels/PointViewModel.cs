@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StructuralMechanics.Areas.Project.ViewModels
 {
-    public class PointViewModel
+    public class PointViewModel : CrossSectionElementViewModel
     {
-        public int Id { get; set; }
-
         [Required]
         [Display(Name = "Coord. X:")]
         [NotBelowZero(ErrorMessage = "Coordinate must be positive")]

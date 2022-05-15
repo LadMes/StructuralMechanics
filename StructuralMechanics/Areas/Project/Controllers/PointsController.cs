@@ -77,10 +77,6 @@ namespace StructuralMechanics.Areas.Project.Controllers
             point.AddEventListeners(listeners);
             point.Edit(model.X, model.Y);
             crossSectionElementRepository.UpdateCrossSectionElement(point);
-            foreach (var listener in listeners)
-            {
-                crossSectionElementRepository.UpdateCrossSectionElement((CrossSectionElement)listener);
-            }
             return RedirectToAction("Index", "Points");
         }
 

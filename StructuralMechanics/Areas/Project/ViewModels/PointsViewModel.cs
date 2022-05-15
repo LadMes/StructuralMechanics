@@ -2,9 +2,8 @@
 
 namespace StructuralMechanics.Areas.Project.ViewModels
 {
-    public class PointsViewModel
+    public class PointsViewModel : CrossSectionElementViewModel
     {
-        public int Id { get; set; }
         public SelectList? Points { get; set; }
     }
 }

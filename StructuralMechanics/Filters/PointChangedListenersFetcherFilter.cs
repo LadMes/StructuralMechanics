@@ -32,7 +32,10 @@ namespace StructuralMechanics.Filters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            
+            foreach (var listener in Listeners)
+            {
+                crossSectionElementRepository.UpdateCrossSectionElement((CrossSectionElement)listener);
+            }
         }
 
         private void GetControllerFromContext(ActionExecutingContext context)
