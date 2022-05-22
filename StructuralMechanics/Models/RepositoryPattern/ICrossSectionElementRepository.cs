@@ -2,9 +2,9 @@
 {
     public interface ICrossSectionElementRepository
     {
-        List<CrossSectionElement>? GetCrossSectionElementsByStructureId(int structureId);
-        CrossSectionElement AddCrossSectionElement(CrossSectionElement crossSectionElement);
-        CrossSectionElement UpdateCrossSectionElement(CrossSectionElement crossSectionElement);
-        CrossSectionElement DeleteCrossSectionElement(CrossSectionElement crossSectionElement);
+        List<CrossSectionElement>? GetElementsByStructureId(int structureId);
+        CrossSectionElement Add(CrossSectionElement crossSectionElement);
+        CrossSectionElement Update(CrossSectionElement crossSectionElement);
+        CrossSectionElement Delete(CrossSectionElement crossSectionElement);
     }
 }

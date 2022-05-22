@@ -43,14 +43,14 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             Point point = new Point(model.X, model.Y);
             point.Structure = Structure!;
-            crossSectionElementRepository.AddCrossSectionElement(point);
+            crossSectionElementRepository.Add(point);
             return RedirectToAction("Index", "Points");
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var point = pointsRepository.GetPoint(id, Structure!.Id);
+            var point = pointsRepository.Get(id, Structure!.Id);
             if (point == null)
             {
                 ViewBag.ErrorMessage = "The point is not found or the current user doesn't have access to this point";
@@ -67,7 +67,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var point = pointsRepository.GetPoint(model.Id, Structure!.Id);
+            var point = pointsRepository.Get(model.Id, Structure!.Id);
             if (point == null)
             {
                 ViewBag.ErrorMessage = "The point is not found or the current user doesn't have access to this point";
@@ -76,7 +76,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             point.AddEventListeners(listeners);
             point.Edit(model.X, model.Y);
-            crossSectionElementRepository.UpdateCrossSectionElement(point);
+            crossSectionElementRepository.Update(point);
             return RedirectToAction("Index", "Points");
         }
 

@@ -2,7 +2,7 @@
 {
     public interface ICrossSectionPartRepository
     {
-        List<CrossSectionPart> GetCrossSectionPartsByStructureId(int structureId);
-        CrossSectionPart? GetCrossSectionPart(int crossSectionPartId, int structureId);
+        List<CrossSectionPart> GetPartsByStructureId(int structureId);
+        CrossSectionPart? Get(int crossSectionPartId, int structureId);
     }
 }

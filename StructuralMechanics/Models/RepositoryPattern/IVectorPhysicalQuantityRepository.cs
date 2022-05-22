@@ -2,6 +2,9 @@
 {
     public interface IVectorPhysicalQuantityRepository
     {
-        List<VectorPhysicalQuantity> GetVectorPhysicalQuantitiesByStructureId(int structureId);
+        List<VectorPhysicalQuantity> GetQuantitiesByStructureId(int structureId);
+        VectorPhysicalQuantity Add(VectorPhysicalQuantity quantity);
+        VectorPhysicalQuantity Update(VectorPhysicalQuantity quantity);
+        VectorPhysicalQuantity Delete(VectorPhysicalQuantity quantity);
     }
 }

@@ -45,7 +45,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
 
             var strengthMember = new StrengthMember(model.ReductionCoefficient, model.Area, model.Location!);
             strengthMember.Structure = Structure!;
-            crossSectionElementRepository.AddCrossSectionElement(strengthMember);
+            crossSectionElementRepository.Add(strengthMember);
             return RedirectToAction("Index", "StrengthMembers");
         }
 
@@ -53,7 +53,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         [TypeFilter(typeof(PointsSelectListGetterFilter<StrengthMemberViewModel>))]
         public IActionResult Edit(int id)
         {
-            var strengthMember = strengthMemberRepository.GetStrengthMember(id, Structure!.Id);
+            var strengthMember = strengthMemberRepository.Get(id, Structure!.Id);
             if (strengthMember == null)
             {
                 ViewBag.ErrorMessage = "The strength member is not found or the current user doesn't have access to this element";
@@ -71,7 +71,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var strengthMember = strengthMemberRepository.GetStrengthMember(model.Id, Structure!.Id);
+            var strengthMember = strengthMemberRepository.Get(model.Id, Structure!.Id);
             if (strengthMember == null)
             {
                 ViewBag.ErrorMessage = "The strength member is not found or the current user doesn't have access to this element";
@@ -79,21 +79,21 @@ namespace StructuralMechanics.Areas.Project.Controllers
             }
 
             strengthMember.Edit(model.ReductionCoefficient, model.Area, model.Location!);
-            crossSectionElementRepository.UpdateCrossSectionElement(strengthMember);
+            crossSectionElementRepository.Update(strengthMember);
             return RedirectToAction("Index", "StrengthMembers");
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var strengthMember = strengthMemberRepository.GetStrengthMember(id, Structure!.Id);
+            var strengthMember = strengthMemberRepository.Get(id, Structure!.Id);
             if (strengthMember == null)
             {
                 ViewBag.ErrorMessage = "The strength member is not found or the current user doesn't have access to this element";
                 return View("NotFound");
             }
 
-            crossSectionElementRepository.DeleteCrossSectionElement(strengthMember);
+            crossSectionElementRepository.Delete(strengthMember);
             return RedirectToAction("Index", "StrengthMembers");
         }
     }

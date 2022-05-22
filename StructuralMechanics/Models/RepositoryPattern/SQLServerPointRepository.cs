@@ -11,7 +11,7 @@ namespace StructuralMechanics.Models.RepositoryPattern
             this.context = context;
         }
 
-        public Point? GetPoint(int pointId, int structureId)
+        public Point? Get(int pointId, int structureId)
         {
             var point = context.Points.Find(pointId);
             if (point == null || point.StructureId != structureId)

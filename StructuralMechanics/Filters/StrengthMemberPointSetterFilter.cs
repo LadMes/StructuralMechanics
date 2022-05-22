@@ -60,7 +60,7 @@ namespace StructuralMechanics.Filters
                 Model.Points = pointRepository.GetPointsForSelectListByStructureId(Controller.Structure!.Id);
             else
             {
-                var point = pointRepository.GetPoint(Model.LocationId, Controller.Structure!.Id);
+                var point = pointRepository.Get(Model.LocationId, Controller.Structure!.Id);
                 if (point == null)
                     ErrorMessage = "The point is not found or the current user doesn't have access to this point";
                 else

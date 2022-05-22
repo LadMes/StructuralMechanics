@@ -34,7 +34,7 @@ namespace StructuralMechanics.Filters
         {
             foreach (var listener in Listeners)
             {
-                crossSectionElementRepository.UpdateCrossSectionElement((CrossSectionElement)listener);
+                crossSectionElementRepository.Update((CrossSectionElement)listener);
             }
         }
 
@@ -59,7 +59,7 @@ namespace StructuralMechanics.Filters
 
         private void AddCrossSectionPartsListeners()
         {
-            Listeners.AddRange(crossSectionPartRepository.GetCrossSectionPartsByStructureId(Controller.Structure!.Id)
+            Listeners.AddRange(crossSectionPartRepository.GetPartsByStructureId(Controller.Structure!.Id)
                                                   .Where(p => p.FirstPointId == Model.Id || p.SecondPointId == Model.Id));
         }
 

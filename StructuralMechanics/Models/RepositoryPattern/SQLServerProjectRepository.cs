@@ -9,14 +9,14 @@
             this.context = context;
         }
 
-        public Project AddProject(Project project)
+        public Project Add(Project project)
         {
             context.Projects.Add(project);
             context.SaveChanges();
             return project;
         }
 
-        public Project DeleteProject(Project project)
+        public Project Delete(Project project)
         {
             context.Projects.Remove(project);
             context.SaveChanges(); 
@@ -33,10 +33,10 @@
             return context.Projects.Where(p => p.ApplicationUser.Id == userId);
         }
 
-        public Project UpdateProject(Project project)
+        public Project Update(Project project)
         {
-            var projectToUpdate = context.Projects.Attach(project);
-            projectToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var entity = context.Projects.Attach(project);
+            entity.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             context.SaveChanges();
             return project;
         }

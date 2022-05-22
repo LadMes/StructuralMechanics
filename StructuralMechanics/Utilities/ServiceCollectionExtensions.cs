@@ -14,6 +14,8 @@
             serviceCollection.AddScoped<IPointRepository, SQLServerPointRepository>();
             serviceCollection.AddScoped<ICrossSectionPartRepository, SQLServerCrossSectionPartRepository>();
             serviceCollection.AddScoped<IStrengthMemberRepository, SQLServerStrengthMemberRepository>();
+            serviceCollection.AddScoped<IShearForceRepository, SQLServerShearForceRepository>();
+            serviceCollection.AddScoped<IMomentRepository, SQLServerMomentRepository>();
         }
     }
 }

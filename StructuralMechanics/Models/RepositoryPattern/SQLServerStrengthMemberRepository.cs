@@ -9,7 +9,7 @@
             this.context = context;
         }
 
-        public StrengthMember? GetStrengthMember(int strengthMemberId, int structureId)
+        public StrengthMember? Get(int strengthMemberId, int structureId)
         {
             var strengthMember = context.StrengthMembers.Find(strengthMemberId);
             if (strengthMember == null || strengthMember.StructureId != structureId)

@@ -18,8 +18,8 @@ namespace StructuralMechanics.Areas.Project.Controllers
         {
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
 
-            var crossSectionElements = crossSectionElementRepository.GetCrossSectionElementsByStructureId(Structure!.Id);
-            var vectors = vectorPhysicalQuantityRepository.GetVectorPhysicalQuantitiesByStructureId(Structure!.Id);
+            var crossSectionElements = crossSectionElementRepository.GetElementsByStructureId(Structure!.Id);
+            var vectors = vectorPhysicalQuantityRepository.GetQuantitiesByStructureId(Structure!.Id);
 
             return View(new ThinWalledStructureOverviewViewModel(crossSectionElements, vectors));
         }

@@ -5,8 +5,8 @@
         IEnumerable<Structure> GetAllStructures();
         Structure? GetStructureByStructureId(int structureId);
         Structure? GetStructureByProjectId(string projectId);
-        Structure AddStructure(Structure structure);
-        Structure UpdateStructure(Structure structure);
-        Structure DeleteStructure(Structure structure);
+        Structure Add(Structure structure);
+        Structure Update(Structure structure);
+        Structure Delete(Structure structure);
     }
 }

@@ -46,7 +46,7 @@ namespace StructuralMechanics.Controllers
                 Structure = structure!
             };
 
-            projectRepository.AddProject(project);
+            projectRepository.Add(project);
             return RedirectToAction("Overview", $"{structure!.Type}", new { projectId = $"{project.Id}", area = "Project" });
         }
 
@@ -73,8 +73,8 @@ namespace StructuralMechanics.Controllers
 
             Structure structure = StructureUpdater.GetUpdatedStructure(model, Structure!);
             Project!.ProjectName = model.ProjectName;
-            structureRepository.UpdateStructure(structure);
-            projectRepository.UpdateProject(Project);
+            structureRepository.Update(structure);
+            projectRepository.Update(Project);
 
             return RedirectToAction("Index");
         }
@@ -84,8 +84,8 @@ namespace StructuralMechanics.Controllers
         [Route("Delete/{projectId}")]
         public IActionResult Delete()
         {
-            structureRepository.DeleteStructure(Structure!);
-            projectRepository.DeleteProject(Project!);
+            structureRepository.Delete(Structure!);
+            projectRepository.Delete(Project!);
 
             return RedirectToAction("Index", "Projects");
         }

@@ -9,14 +9,14 @@
             this.context = context;
         }
 
-        public Structure AddStructure(Structure structure)
+        public Structure Add(Structure structure)
         {
             context.Structures.Add(structure);
             context.SaveChanges();
             return structure;
         }
 
-        public Structure DeleteStructure(Structure structure)
+        public Structure Delete(Structure structure)
         {
             context.Structures.Remove(structure);
             context.SaveChanges();
@@ -39,10 +39,10 @@
             return context.Structures.Find(structureId);
         }
 
-        public Structure UpdateStructure(Structure structure)
+        public Structure Update(Structure structure)
         {
-            var structureToUpdate = context.Structures.Attach(structure);
-            structureToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var entity = context.Structures.Attach(structure);
+            entity.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             context.SaveChanges();
             return structure;
         }
