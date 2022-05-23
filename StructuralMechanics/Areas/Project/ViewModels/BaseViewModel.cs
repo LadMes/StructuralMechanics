@@ -1,6 +1,6 @@
 ﻿namespace StructuralMechanics.Areas.Project.ViewModels
 {
-    public abstract class CrossSectionElementViewModel
+    public abstract class BaseViewModel
     {
         public int Id { get; set; }
     }

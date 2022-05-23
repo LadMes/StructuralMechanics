@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StructuralMechanics.Areas.Project.ViewModels
 {
-    public class PointViewModel : CrossSectionElementViewModel
+    public class PointViewModel : BaseViewModel
     {
         [Required]
         [Display(Name = "Coord. X:")]
