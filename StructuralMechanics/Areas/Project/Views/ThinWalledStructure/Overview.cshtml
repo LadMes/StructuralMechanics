@@ -12,7 +12,8 @@
                 <li><a asp-controller="Points" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Point</a></li>
                 <li><a asp-controller="CrossSectionParts" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Cross-section part</a></li>
                 <li><a asp-controller="StrengthMembers" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Strength Member</a></li>
-                <li><a asp-controller="VectorPhysicalQuantities" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Vector Quantity</a></li>
+                <li><a asp-controller="ShearForces" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Shear Force</a></li>
+                <li><a asp-controller="Moments" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Moment</a></li>
             </ul>
         </li>
         <li id="btnShowMenu"><button onclick="showHiddenMenu('showMenu', 'btnShowMenu')">Show</button></li>
@@ -21,7 +22,8 @@
                 <li><a asp-controller="Points" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Points</a></li>
                 <li><a asp-controller="CrossSectionParts" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Cross-section parts</a></li>
                 <li><a asp-controller="StrengthMembers" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Strength Members</a></li>
-                <li><a asp-controller="VectorPhysicalQuantities" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Vector Quantities</a></li>
+                <li><a asp-controller="ShearForces" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Shear Forces</a></li>
+                <li><a asp-controller="Moments" asp-action="Index" asp-route-projectId="@ViewBag.ProjectId">Moments</a></li>
             </ul>
         </li>
         <li><button disabled>Solve</button></li>

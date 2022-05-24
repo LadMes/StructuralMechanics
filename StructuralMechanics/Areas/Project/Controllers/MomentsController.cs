@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StructuralMechanics.Controllers;
+using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
+    [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
     public class MomentsController : BaseInformationController
     {
         private readonly IVectorPhysicalQuantityRepository vectorRepository;

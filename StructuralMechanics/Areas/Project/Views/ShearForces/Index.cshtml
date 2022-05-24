@@ -1,0 +1,53 @@
+﻿@model List<ShearForce>
+
+@{
+    ViewBag.Title = ViewBag.ProjectName;
+}
+
+@section SidebarNavigation {
+    <ul>
+        <li><a asp-area="Project" asp-controller="ShearForces" 
+                                  asp-action="Create" 
+                                  asp-route-projectId="@ViewBag.ProjectId">Add shear force</a></li>
+        <li><a asp-area="Project" asp-controller="@ViewBag.StructureType" asp-action="Overview" asp-route-projectId="@ViewBag.ProjectId">Back</a></li>
+    </ul>
+}
+
+@if (Model.Any())
+{
+    <div class="info-cards"> 
+        @foreach (var force in Model)
+        {
+            <div class="info-card">      
+                <div class="info-card-text">
+                    Shear Force Magnitude: @force.Magnitude
+                </div>
+                <div class="info-card-text">
+                    Location: @force.Location.ToString();
+                </div>
+                <div class="info-card-text">
+                    Direction: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(force.Direction);
+                </div>
+                <div class="info-card-buttons"> 
+                    <a class="btn btn-primary" asp-controller="ShearForces" 
+                                               asp-action="Edit"
+                                               asp-route-projectId="@ViewBag.ProjectId"
+                                               asp-route-id="@force.Id">Edit</a>
+                    <form method="post" asp-controller="ShearForces"
+                                        asp-action="Delete" 
+                                        asp-route-projectId="@ViewBag.ProjectId"
+                                        asp-route-id="@force.Id">
+                            <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="info-message">
+        <h1>There's no shear forces! Create one.</h1>
+        <a class="btn btn-primary" asp-controller="ShearForces" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Create</a>
+    </div>   
+}

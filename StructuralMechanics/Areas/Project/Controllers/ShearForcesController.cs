@@ -5,6 +5,7 @@ using StructuralMechanics.Filters;
 
 namespace StructuralMechanics.Areas.Project.Controllers
 {
+    [TypeFilter(typeof(ProjectRelatedDataSetterFilter))]
     public class ShearForcesController : BaseInformationController
     {
         private readonly IVectorPhysicalQuantityRepository vectorRepository;

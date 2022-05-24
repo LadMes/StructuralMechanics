@@ -1,0 +1,50 @@
+﻿@model List<Moment>
+
+@{
+    ViewBag.Title = ViewBag.ProjectName;
+}
+
+@section SidebarNavigation {
+    <ul>
+        <li><a asp-area="Project" asp-controller="Moments" 
+                                  asp-action="Create" 
+                                  asp-route-projectId="@ViewBag.ProjectId">Add moment</a></li>
+        <li><a asp-area="Project" asp-controller="@ViewBag.StructureType" asp-action="Overview" asp-route-projectId="@ViewBag.ProjectId">Back</a></li>
+    </ul>
+}
+
+@if (Model.Any())
+{
+    <div class="info-cards"> 
+        @foreach (var moment in Model)
+        {
+            <div class="info-card">      
+                <div class="info-card-text">
+                    Moment Magnitude: @moment.Magnitude
+                </div>
+                <div class="info-card-text">
+                    Direction: @StructuralMechanics.Utilities.EnumDisplayHelper.GetDisplayName(moment.Direction);
+                </div>
+                <div class="info-card-buttons"> 
+                    <a class="btn btn-primary" asp-controller="Moments" 
+                                               asp-action="Edit"
+                                               asp-route-projectId="@ViewBag.ProjectId"
+                                               asp-route-id="@moment.Id">Edit</a>
+                    <form method="post" asp-controller="Moments"
+                                        asp-action="Delete" 
+                                        asp-route-projectId="@ViewBag.ProjectId"
+                                        asp-route-id="@moment.Id">
+                            <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="info-message">
+        <h1>There's no moments! Create one.</h1>
+        <a class="btn btn-primary" asp-controller="Moments" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Create</a>
+    </div>   
+}
