@@ -1,0 +1,27 @@
+﻿@model MomentViewModel
+
+@{
+    ViewBag.Title = "Create Moment";
+}
+
+@section SidebarNavigation {
+    <ul>
+        <li><a asp-area="Project" 
+               asp-controller="@ViewBag.StructureType" 
+               asp-action="Overview" 
+               asp-route-projectId="@ViewBag.ProjectId">Back to Structure</a></li>
+        <li><a asp-area="Project" 
+               asp-controller="Moments" 
+               asp-action="Index" 
+               asp-route-projectId="@ViewBag.ProjectId">Back to Moments</a></li>
+    </ul>
+}
+
+<form method="post" asp-controller="Moments" asp-action="Create">
+    <partial name="_FormFields"/>
+    <div class="form-row">
+        <div asp-validation-summary="All" class="error-message"></div>
+    </div>
+    <hr class="main-hr" />
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
