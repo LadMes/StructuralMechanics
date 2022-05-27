@@ -6,10 +6,4 @@
         <input asp-for="Magnitude" />
         <span asp-validation-for="Magnitude" class="error-message"></span>
     </div>
-    <div class="form-item">
-        <label asp-for="Direction"></label>
-        <select asp-for="Direction" asp-items="Html.GetEnumSelectList<Direction>()">
-        </select>
-        <span asp-validation-for="Direction" class="error-message"></span>
-    </div>
 </div>

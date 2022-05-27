@@ -5,14 +5,14 @@ using StructuralMechanics.Controllers;
 
 namespace StructuralMechanics.Filters
 {
-    public class StrengthMemberPointSetterFilter : IActionFilter
+    public class PointSetterFilter<T> : IActionFilter where T : ILocation, new()
     {
         private readonly IPointRepository pointRepository;
         private BaseInformationController Controller { get; set; }
-        private StrengthMemberViewModel Model { get; set; } = new();
+        private T Model { get; set; } = new();
         private string ErrorMessage { get; set; } = "";
 
-        public StrengthMemberPointSetterFilter(IPointRepository pointRepository)
+        public PointSetterFilter(IPointRepository pointRepository)
         {
             this.pointRepository = pointRepository;
         }
@@ -50,7 +50,7 @@ namespace StructuralMechanics.Filters
         {
             if (context.ActionArguments.ContainsKey("model"))
             {
-                Model = (StrengthMemberViewModel)context.ActionArguments["model"]!;
+                Model = (T)context.ActionArguments["model"]!;
             }
         }
 

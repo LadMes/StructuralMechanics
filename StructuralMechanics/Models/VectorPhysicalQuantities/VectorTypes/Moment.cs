@@ -2,7 +2,7 @@
 {
     public class Moment : VectorPhysicalQuantity
     {
-        public Moment(double magnitude, Direction direction) : base(magnitude, direction)
+        public Moment(double magnitude) : base(magnitude)
         {
             Type = VectorType.Moment;
         }
@@ -29,8 +29,7 @@
 
         public override string ToString()
         {
-            return $"M = {Magnitude}" +
-                    $"Moment direction: {Direction}";
+            return $"M = {Magnitude}";
         }
     }
 }

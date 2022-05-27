@@ -8,8 +8,6 @@ namespace StructuralMechanics.Models.VectorPhysicalQuantities
         [Required]
         public double Magnitude { get; set; }
         [Required]
-        public Direction Direction { get; set; }
-        [Required]
         public VectorType Type { get; protected set; }
 
         //Navigation Properties
@@ -18,10 +16,9 @@ namespace StructuralMechanics.Models.VectorPhysicalQuantities
         public Structure Structure { get; set; }
 
 
-        public VectorPhysicalQuantity(double magnitude, Direction direction)
+        public VectorPhysicalQuantity(double magnitude)
         {
             Magnitude = magnitude;
-            Direction = direction;
         }
     }
 }

@@ -34,5 +34,18 @@ namespace StructuralMechanics.Areas.Project.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [TypeFilter(typeof(PointSetterFilter<ShearForceViewModel>))]
+        public IActionResult Create(ShearForceViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var force = new ShearForce(model.Magnitude, model.Location!);
+            force.Structure = Structure!;
+            vectorRepository.Add(force);
+            return RedirectToAction("Index", "ShearForces");
+        }
     }
 }

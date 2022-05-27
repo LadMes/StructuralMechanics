@@ -37,7 +37,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(StrengthMemberPointSetterFilter))]
+        [TypeFilter(typeof(PointSetterFilter<StrengthMemberViewModel>))]
         public IActionResult Create(StrengthMemberViewModel model)
         {
             if (!ModelState.IsValid)
@@ -65,7 +65,7 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(StrengthMemberPointSetterFilter))]
+        [TypeFilter(typeof(PointSetterFilter<StrengthMemberViewModel>))]
         public IActionResult Edit(StrengthMemberViewModel model)
         {
             if (!ModelState.IsValid)

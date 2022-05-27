@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StructuralMechanics.Areas.Project.ViewModels
 {
-    public class StrengthMemberViewModel : PointsViewModel
+    public class StrengthMemberViewModel : PointsViewModel, ILocation
     {
         [Required]
         [Display(Name = "Reduction Coefficient")]

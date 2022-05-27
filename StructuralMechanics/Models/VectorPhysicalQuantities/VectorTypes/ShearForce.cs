@@ -10,14 +10,14 @@ namespace StructuralMechanics.Models.VectorPhysicalQuantities
         public Point Location { get; set; }
 
 
-        public ShearForce(double magnitude, Direction direction, Point location) : base(magnitude, direction)
+        public ShearForce(double magnitude, Point location) : base(magnitude)
         {
             Location = location;
             Type = VectorType.ShearForce;
         }
 
         //Constructor for EF Core
-        private ShearForce(double magnitude, Direction direction) : base(magnitude, direction) => Type = VectorType.ShearForce;
+        private ShearForce(double magnitude) : base(magnitude) => Type = VectorType.ShearForce;
 
         public override bool Equals(object? obj)
         {
@@ -42,8 +42,7 @@ namespace StructuralMechanics.Models.VectorPhysicalQuantities
         public override string ToString()
         {
             return $"Q = {Magnitude} N" +
-                $"The location from the coordinate origin (x coordinate): {Location.X} mm" +
-                $"Force direction: {Direction}";
+                $"The location from the coordinate origin (x coordinate): {Location.X} mm";
         }
     }
 }

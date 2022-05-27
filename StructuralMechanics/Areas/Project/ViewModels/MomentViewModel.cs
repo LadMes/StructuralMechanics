@@ -6,7 +6,5 @@ namespace StructuralMechanics.Areas.Project.ViewModels
     {
         [Required]
         public double Magnitude { get; set; }
-        [Required]
-        public Direction Direction { get; set; }
     }
 }

@@ -2,12 +2,10 @@
 
 namespace StructuralMechanics.Areas.Project.ViewModels
 {
-    public class ShearForceViewModel : PointsViewModel
+    public class ShearForceViewModel : PointsViewModel, ILocation
     {
         [Required]
         public double Magnitude { get; set; }
-        [Required]
-        public Direction Direction { get; set; }
 
         [Required]
         [Display(Name = "Location")]

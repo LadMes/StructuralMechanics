@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
 using StructuralMechanics.Filters;
 
@@ -31,6 +32,18 @@ namespace StructuralMechanics.Areas.Project.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(MomentViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var moment = new Moment(model.Magnitude);
+            moment.Structure = Structure!;
+            vectorRepository.Add(moment);
+            return RedirectToAction("Index", "Moments");
         }
     }
 }
