@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StructuralMechanics.Areas.Project.Mappers;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
 using StructuralMechanics.Filters;
@@ -57,7 +58,8 @@ namespace StructuralMechanics.Areas.Project.Controllers
                 return View("NotFound");
             }
 
-            return View(new PointViewModel() { X = point.X, Y = point.Y });
+            var model = PointMapper.Map(point);
+            return View(model);
         }
 
         [HttpPost]

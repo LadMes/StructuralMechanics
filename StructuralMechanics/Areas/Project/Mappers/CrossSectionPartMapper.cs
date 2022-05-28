@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using StructuralMechanics.Areas.Project.ViewModels;
+﻿using StructuralMechanics.Areas.Project.ViewModels;
 
 namespace StructuralMechanics.Areas.Project.Mappers
 {

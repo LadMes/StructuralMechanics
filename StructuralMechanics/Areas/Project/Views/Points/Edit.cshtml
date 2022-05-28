@@ -18,6 +18,7 @@
 }
 
 <form method="post" asp-controller="Points" asp-action="Edit">
+    <input hidden asp-for="Id" />
     <partial name="_FormFields" />
     <div class="form-row">
         <div asp-validation-summary="All" class="error-message"></div>
