@@ -83,5 +83,19 @@ namespace StructuralMechanics.Areas.Project.Controllers
             vectorRepository.Update(force);
             return RedirectToAction("Index", "ShearForces");
         }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var force = forceRepository.Get(id, Structure!.Id);
+            if (force == null)
+            {
+                ViewBag.ErrorMessage = "The shear force is not found or the current user doesn't have access to this element";
+                return View("NotFound");
+            }
+
+            vectorRepository.Delete(force);
+            return RedirectToAction("Index", "ShearForces");
+        }
     }
 }

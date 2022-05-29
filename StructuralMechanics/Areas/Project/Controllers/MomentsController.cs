@@ -78,5 +78,19 @@ namespace StructuralMechanics.Areas.Project.Controllers
             vectorRepository.Update(moment);
             return RedirectToAction("Index", "Moments");
         }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var moment = momentRepository.Get(id, Structure!.Id);
+            if (moment == null)
+            {
+                ViewBag.ErrorMessage = "The moment is not found or the current user doesn't have access to this element";
+                return View("NotFound");
+            }
+
+            vectorRepository.Delete(moment);
+            return RedirectToAction("Index", "Moments");
+        }
     }
 }
