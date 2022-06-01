@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using StructuralMechanics.Areas.Project.Mappers;
 using StructuralMechanics.Areas.Project.ViewModels;
 using StructuralMechanics.Controllers;
@@ -25,8 +26,9 @@ namespace StructuralMechanics.Areas.Project.Controllers
         public IActionResult Index()
         {
             ViewBag.ProjectName = $"Project: {Project!.ProjectName}";
-
             var points = pointsRepository.GetPointsByStructureId(Structure!.Id);
+            if (TempData.ContainsKey("PointError"))
+                ModelState.AddModelError("PointError", TempData["PointError"].ToString());
             return View(points);
         }
 
@@ -83,9 +85,21 @@ namespace StructuralMechanics.Areas.Project.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(PointReferenceCheckFilter))]
         public IActionResult Delete(int id)
         {
-            // ...
+            if (ModelState.IsValid)
+            {
+                var point = pointsRepository.Get(id, Structure!.Id);
+                crossSectionElementRepository.Delete(point!);
+            }
+            else
+            {
+                if (ModelState.ContainsKey("PointError"))
+                    TempData["PointError"] = ModelState["PointError"].Errors.First().ErrorMessage;
+            }
+            
+            
             return RedirectToAction("Index", "Points");
         }
     }

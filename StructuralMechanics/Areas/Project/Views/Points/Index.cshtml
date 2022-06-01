@@ -46,3 +46,14 @@ else
         <a class="btn btn-primary" asp-controller="Points" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">Create</a>
     </div>   
 }
+
+@section Scripts {
+    <script>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <text>
+                alert("@ViewData.ModelState["PointError"].Errors.First().ErrorMessage");
+            </text>        
+        }  
+    </script>
+}
